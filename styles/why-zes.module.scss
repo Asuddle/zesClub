@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Freehand&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import '../styles/color-rules.scss';
+@import '../styles/typography-rules.scss';
+
+.eventManagementSolutionsWrapper {
+	position: relative;
+	width: 100%;
+	.image {
+		// width: 58% !important;
+		margin-top: 64px !important;
+		.styleDivider {
+			position: absolute;
+			border: 2px solid $orange-shade;
+			width: 711px;
+			height: 461px;
+			// padding: 18%;
+			margin-top: 32px;
+			/* margin-bottom: 400px; */
+			// padding-bottom: 4%;
+		}
+	}
+	// }
+	.eventManagementData {
+		margin-left: -5% !important;
+		margin-bottom: -64px !important;
+		background: #f8f8f8;
+		// padding-right: 63px !important;
+		width: calc(100% - 614px) !important;
+		// margin-top: 64px;
+		background: $light-grey-shade;
+		.dataWrapper {
+			padding: 8% 0px;
+			padding-left: 116px;
+			padding-right: 1%;
+			.heading {
+				margin-top: 48px;
+				@include module-heading;
+				margin-bottom: 36px;
+			}
+			.subHeading {
+				@include module-main-heading;
+				span {
+					font-weight: bold;
+				}
+			}
+			.description {
+				@include body-medium-para;
+				padding-right: 48px;
+			}
+		}
+	}
+}
+
+.clientSatisfaction {
+	max-width: 1080px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	.dataPortion {
+		background: $light-grey-shade;
+		padding: 5%; // padding-top: 48px;
+		.dataWrapper {
+			padding-left: 15%;
+			// border-left: 2px solid $orange-shade;
+			.verticalDivider {
+				left: 5%;
+				padding-left: 1.5px;
+				position: absolute;
+				height: 53%;
+				background: $orange-shade;
+				margin-top: 2%;
+			}
+			.heading {
+				margin-top: 48px;
+				@include module-heading;
+				margin-bottom: 24px;
+			}
+			.subHeading {
+				@include module-main-heading;
+				span {
+					font-weight: bold;
+				}
+			}
+			.description {
+				@include body-medium-para;
+				padding-right: 48px;
+				margin-top: 48px;
+			}
+		}
+	}
+	.imagePortion {
+		text-align: center;
+	}
+}

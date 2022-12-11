@@ -1,0 +1,218 @@
+@font-face {
+	font-family: 'Mistral';
+	src: local('Mistral'),
+		url('./fonts/Mistral/design.graffiti.mistral.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Metropolis';
+	src: local('Metropolis'),
+		url('./fonts/Metropolis/Metropolis-Regular.otf') format('openType');
+}
+
+$font-name: 'Montserrat', sans-serif;
+$font-1-name: 'Mistral', sans-serif;
+$font-2-name: 'Metropolis', sans-serif;
+
+$normal: 400;
+$medium: 500;
+$bold: 700;
+$semibold: 600;
+
+@mixin heading-main {
+	font-family: $font-1-name !important;
+	font-style: normal !important;
+	font-weight: $normal !important;
+	font-size: 150px !important;
+	line-height: 0.9;
+}
+
+@mixin heading-higher {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 113px !important;
+}
+
+@mixin heading-high {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 53px !important;
+}
+
+@mixin heading-basic {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 72px !important;
+	line-height: 1;
+}
+
+@mixin heading-sub {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $semibold !important;
+	font-size: 40px !important;
+	letter-spacing: 12px;
+}
+
+@mixin module-heading {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $semibold !important;
+	font-size: 18px !important;
+	text-transform: uppercase !important;
+	letter-spacing: 3px;
+}
+
+@mixin module-semibold-heading {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $semibold !important;
+	font-size: 38px !important;
+	line-height: 1.2;
+}
+
+@mixin module-main-heading {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $normal !important;
+	font-size: 36px !important;
+	line-height: 1.2;
+}
+
+@mixin caption-boldHeading {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 18px !important;
+}
+
+@mixin caption-mediumButton {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $medium !important;
+	font-size: 10px !important;
+}
+
+@mixin caption-mediumLink {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $medium !important;
+	font-size: 9px !important;
+}
+
+@mixin caption-boldPara {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 12px !important;
+}
+
+@mixin caption-mediumPara {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $medium !important;
+	font-size: 9px !important;
+}
+
+@mixin caption-heading {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 20px !important;
+}
+@mixin caption-sub-heading {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 26px !important;
+	text-transform: uppercase !important;
+}
+@mixin body-medium {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $medium !important;
+	font-size: 18px !important;
+}
+@mixin body-mediumButton {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 18px !important;
+}
+
+@mixin body-medium-para {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $medium !important;
+	font-size: 12px !important;
+}
+
+@mixin button-bold {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 44px !important;
+}
+
+@mixin body-bold {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 26px !important;
+}
+
+@mixin body-Bold16 {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 16px !important;
+}
+@mixin body-Regular16 {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $normal !important;
+	font-size: 16px !important;
+}
+
+@mixin body-medium-2 {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $medium !important;
+	font-size: 21px !important;
+}
+
+@mixin caption-high {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $medium !important;
+	font-size: 36px !important;
+}
+
+@mixin nav-link {
+	font-family: $font-2-name !important;
+	font-style: normal !important;
+	font-weight: $normal !important;
+	font-size: 14px !important;
+}
+
+@mixin dateFont {
+	font-family: $font-2-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 34px !important;
+}
+@mixin monthFont {
+	font-family: $font-2-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 21px !important;
+}
+
+@mixin body-boldTitle {
+	font-family: $font-name !important;
+	font-style: normal !important;
+	font-weight: $bold !important;
+	font-size: 15px !important;
+}

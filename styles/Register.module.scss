@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Freehand&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import '../styles/color-rules.scss';
+@import '../styles/typography-rules.scss';
+
+.inputLabel {
+	@include body-medium-para;
+	font-size: 16px !important;
+	color: $dark-grey-shade;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.formGroup {
+	// margin-left: auto;
+	margin-right: auto;
+	max-width: 300px;
+}
+.textField {
+	height: 40px !important;
+	max-width: 300px;
+	border-radius: 4px !important;
+	border: 1px solid $dark-grey-shade;
+	@include body-medium-para;
+	margin-left: auto;
+	margin-right: auto;
+	&::placeholder {
+		color: $moderate-grey-shade;
+	}
+}
+
+.textArea {
+	border-radius: 4px !important;
+	border: 1px solid $dark-grey-shade;
+	@include body-medium-para;
+	min-height: 120px !important;
+	// min-width: 500px;
+	// margin-left: auto;
+	// margin-right: auto;
+	&::placeholder {
+		color: $moderate-grey-shade;
+	}
+}
+
+.select {
+	height: 40px !important;
+	max-width: 300px;
+	// border-radius: 4px !important;
+	// border: 1px solid $dark-grey-shade !important;
+	@include body-medium-para;
+	// margin-left: auto;
+	// margin-right: auto;
+	.placeholder {
+		color: $moderate-grey-shade;
+	}
+	svg path {
+		stroke: red;
+	}
+}
+
+.tabLeft {
+	border-right: 1px solid $black-shade;
+	border-bottom: 1px solid $black-shade;
+	text-align: center;
+	@include body-mediumButton;
+	padding: 12px 0px !important;
+	cursor: pointer;
+	&:hover {
+		background: $grey-shadow;
+	}
+}
+
+.tabLeftActive {
+	border-right: 1px solid $black-shade;
+	border-bottom: 1px solid $black-shade;
+	text-align: center;
+	@include body-mediumButton;
+	padding: 12px 0px !important;
+	cursor: pointer;
+	background: $grey-shadow;
+}
+
+.tabRightActive {
+	@include body-mediumButton;
+	border-bottom: 1px solid $black-shade;
+	text-align: center;
+	padding: 12px 0px !important;
+	cursor: pointer;
+	background: $grey-shadow;
+}
+
+.tabRight {
+	@include body-mediumButton;
+	border-bottom: 1px solid $black-shade;
+	text-align: center;
+	padding: 12px 0px !important;
+	cursor: pointer;
+	&:hover {
+		background: $grey-shadow;
+	}
+}
+
+.card {
+	padding: 24px 48px !important;
+	border-radius: 0px !important;
+	box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+}

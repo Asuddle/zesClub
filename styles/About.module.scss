@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Freehand&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import '../styles/color-rules.scss';
+@import '../styles/typography-rules.scss';
+
+.whoWeAre {
+	padding: 160px 0px;
+	padding-top: 170px !important;
+	// padding-bottom: 106px !important;
+	.upperDivider {
+		border-top: 4px solid $orange-shade;
+		width: 107px;
+	}
+
+	.imageTitle {
+		@include body-boldTitle;
+	}
+	.imageCaption {
+		@include caption-mediumLink;
+	}
+	.aboutZesButton {
+		background-image: linear-gradient(90deg, #d4175c 0%, #fda700 100%);
+		width: 165px;
+		height: 54px;
+		color: white;
+		border: none;
+		@include body-mediumButton;
+		padding: 16px !important;
+		border-radius: 49px;
+		margin-bottom: 24px !important;
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
+			rgba(0, 0, 0, 0.05) 0px 5px 10px;
+		&:hover {
+			box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+		}
+	}
+	.imagePortion {
+		.parent {
+			position: relative;
+			top: -44px !important;
+			left: 0;
+			text-align: right;
+			@media screen and (max-width: 1000px) {
+				float: left !important;
+				margin-top: 128px !important;
+			}
+		}
+		.image1 {
+			position: relative;
+			top: 0;
+			left: 0;
+			border: 1px red solid;
+		}
+		.smallImageWrapper {
+			position: absolute;
+			// bottom: -26%;
+			left: 10%;
+			bottom: -34%;
+		}
+		.image2 {
+			position: absolute;
+			top: 30px;
+			left: 30px;
+			z-index: 99999;
+			border: 1px green solid;
+		}
+		.designDivider {
+			position: absolute;
+			border: 2px solid #fda700;
+			padding: 55px;
+			top: 40px;
+			left: 119px;
+			width: 458px;
+			height: 526px;
+			@media screen and (max-width: 1200px) {
+				width: 389px !important;
+			}
+		}
+	}
+}
+.headingWrapper {
+	padding-right: 20%;
+	margin-bottom: 32px !important;
+}
+.dataWrapper {
+	padding: 0px 24px;
+	.heading {
+		margin-top: 48px;
+		@include module-heading;
+		margin-bottom: 36px;
+	}
+	.subHeading {
+		@include module-main-heading;
+		span {
+			font-weight: bold;
+		}
+	}
+
+	.description {
+		@include body-medium-para;
+		padding-right: 48px;
+	}
+}
+
+.visionMissionWrapper {
+	min-height: 400px;
+	padding: 100px 0px;
+	padding-bottom: 160px;
+	background: $light-grey-shade;
+	.imageWrap {
+		position: relative;
+		.horizontalWrapper {
+			position: absolute;
+			left: 5px;
+			bottom: 23px;
+			border: 2px solid $orange-shade;
+			padding: 50px;
+			width: 75%;
+			margin-left: 1%;
+		}
+		.imageText {
+			position: absolute;
+			right: 12px;
+			padding: 30px;
+			background: #ffffff;
+			width: 350px;
+			font-weight: bold;
+			bottom: -6px;
+			box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+		}
+	}
+	button {
+		padding: 12px 30px;
+		border-radius: 50px;
+		background-color: $light-grey-shade;
+		color: $orange-shade;
+		@include caption-boldHeading;
+		border-image: $background-shade-1;
+		border-image: $background-shade-2;
+		border: 1px solid;
+		&:hover {
+			box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+		}
+
+		// background-shade-1
+		// background-shade-2
+	}
+}
+
+.ceoMessageWrapper {
+	padding: 150px 0px;
+	.ceoMessage {
+		height: 550px !important;
+		.dataPortion {
+			padding: 9% 3% !important;
+			// box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+			box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+			// clip-path: inset(-4px 0px -4px -4px);
+			.ceoName {
+				@include caption-heading;
+			}
+			.ceoWhoWeAre {
+				padding-top: 10%;
+				@include caption-sub-heading;
+				text-transform: capitalize !important;
+				// padding-right: 23%;
+				padding-top: 26%;
+			}
+		}
+		.imagePortion {
+			position: relative;
+			padding: 0px;
+			.ceoMessage {
+				position: absolute;
+				height: 100%;
+				width: 40%;
+				left: 0px;
+				// background-image: $background-shade-2;
+				// background-image: $background-shade-1;
+				background-image: linear-gradient(149deg, #d4175c 0%, #fda700 100%);
+				top: 0;
+				opacity: 0.9;
+				padding: 9% 4% !important;
+				&::after {
+					content: '';
+					display: block;
+					position: absolute;
+					z-index: 2;
+				}
+				.heading {
+					// filter: drop-shadow(0.5px 0.5px 0.5px white);
+					@include body-boldTitle;
+					color: $orange-shade;
+					margin-bottom: 24px !important;
+				}
+				.description {
+					@include body-medium-para;
+					padding-right: 32px;
+					color: #ffffff;
+				}
+			}
+		}
+	}
+}
+
+.founderMessageWrapper {
+	padding: 120px 0px;
+	background: $light-grey-shade !important;
+	.founderHeading {
+		@include caption-boldHeading;
+		@media screen and (max-width: 750px) {
+			margin-top: 32px !important;
+		}
+	}
+	.founderMessageHeading {
+		color: $orange-shade;
+		@include caption-boldHeading;
+	}
+	.description {
+		@include body-medium-para;
+		padding-right: 48px;
+	}
+	.founderMessage {
+		min-height: 500px;
+		background: $white-shade;
+		border-radius: 16px !important;
+		box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+		padding: 65px;
+		position: relative;
+		.founderImage {
+			// padding: 65px;
+			position: relative;
+			text-align: center;
+		}
+		.socialMedia {
+			position: relative;
+			// padding: 20px 50px;
+			background: white;
+			width: 270px;
+			box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: -32px;
+			z-index: 99999;
+
+			svg {
+				width: 25px !important;
+				height: 25px !important;
+				margin-bottom: 1px;
+				margin: 0px 12px !important;
+				color: $orange-shade !important;
+			}
+		}
+		.founderText {
+			.description {
+				@include body-medium-para;
+				padding-right: 48px;
+				@media screen and (max-width: 750px) {
+					padding-right: 0px !important;
+					margin-top: 32px !important;
+				}
+			}
+		}
+	}
+}
