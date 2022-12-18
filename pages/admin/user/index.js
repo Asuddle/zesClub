@@ -10,11 +10,16 @@ export default function UserTable() {
 	const [data, setData] = useState([]);
 	const [refresh, setRefresh] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
+	const [id, setId] = useState(0);
 	const router = useRouter();
 
-	const handleDeleteToggle = (ev) => {
+	const handleDeleteToggle = (ev, id = 0) => {
 		ev.stopPropagation();
+		setId(id);
 		setOpenDelete(!openDelete);
+	};
+	const handleRefresh = () => {
+		setRefresh(!refresh);
 	};
 	useEffect(() => {
 		axios.get('/api/auth').then((res) => {
@@ -36,8 +41,19 @@ export default function UserTable() {
 		ev.stopPropagation();
 		router.push(`/admin/user/${id}/edit`);
 	};
+	const handleDelete = () => {
+		axios
+			.delete(`/api/users/${id}`)
+			.then((res) => {
+				setOpenDelete(!openDelete);
+				setRefresh(!refresh);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	const handleDetails = (data) => {
-		// console.log('data', data);
 		router.push(`/admin/user/${data.user_id}/details`);
 	};
 
@@ -67,7 +83,7 @@ export default function UserTable() {
 						size='small'
 						variant='contained'
 						color='error'
-						onClick={handleDeleteToggle}
+						onClick={(ev) => handleDeleteToggle(ev, data.user_id)}
 					>
 						Delete
 					</Button>
@@ -91,7 +107,11 @@ export default function UserTable() {
 				data={data}
 				title='Customer Management'
 			/>
-			<Modal open={openDelete} toggle={handleDeleteToggle} />
+			<Modal
+				handleDelete={handleDelete}
+				open={openDelete}
+				toggle={handleDeleteToggle}
+			/>
 		</>
 	);
 }

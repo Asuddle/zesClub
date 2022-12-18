@@ -42,16 +42,34 @@ export default function ServiceComponent() {
 
 	const serviceArray = [
 		{
-			name: 'Service',
+			name: 'Corporate Events',
 			src: '/home/Service1.jpg',
+			description:
+				'* Team Building Events* Conferences* Recruiting Events* Product Launches* Networking Events* Seminars* Trade Shows / Expos* Corporate Dinners* Shareholder / Corporate Board Meetings* Year-End Functions/parties* Workshops/courses* Charity events',
 		},
 		{
-			name: 'Service',
+			name: 'Personal events and parties',
 			src: '/home/Service2.jpg',
+			description:
+				'* Birthday Parties* Engagement Parties* Themed Celebrations* Hens &amp; Bucks Parties* Baby showers* Family Events* VIP Events* Community Events',
 		},
 		{
-			name: 'Service',
+			name: 'Celebrity Functions and Award Ceremonies',
 			src: '/home/Service3.jpg',
+			description:
+				'* National Music Awards* Local and National Business Awards* National Film Awards* Concerts* Choral Music concert* Band concert* Opera concert',
+		},
+		{
+			name: 'Festivals',
+			src: '/home/Service4.jpg',
+			description:
+				'* Music* Film* Art* Community celebrations* City Festivals* Road Shows* Theme Events* Fire Work',
+		},
+		{
+			name: 'Wedding',
+			src: '/home/Service5.jpg',
+			description:
+				'We help guide their clients every step of the way when it comes to designing, planning, and executing their dream wedding.',
 		},
 	];
 
@@ -76,12 +94,13 @@ export default function ServiceComponent() {
 									src={item.src}
 									alt=''
 									// layout='responsive'
-									width='292'
-									height='383'
+									width='400'
+									height='400'
 									// objectFit='contain'
 								/>
 								<button href='#' className={styles.serviceButton}>
-									Service 1<p>lorem picsum it is das</p>
+									{item.name}
+									<p>{item.description}</p>
 								</button>
 							</div>
 						</div>

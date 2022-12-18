@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
 		<ThemeProvider theme={theme}>
 			<FullLayout>
 				<Head>
-					<title>Res</title>
+					<title>Zes</title>
 					<meta name='description' content='Zes Club Admin Panel' />
 					<link rel='icon' href='/favicon.ico' />
 				</Head>

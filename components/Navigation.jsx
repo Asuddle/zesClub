@@ -27,8 +27,9 @@ function Navigation() {
 	const router = useRouter();
 
 	useEffect(() => {
-		setActiveNav(router.asPath);
-	}, [router.asPath]);
+		// console.log('pkp', router);
+		setActiveNav(router.pathname);
+	}, [router.pathname]);
 
 	const handleRegister = () => {
 		router.push('/register');

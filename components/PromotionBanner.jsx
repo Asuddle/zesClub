@@ -1,6 +1,11 @@
 import styles from '../styles/Home.module.scss';
+import { useRouter } from 'next/router';
 
 export default function PromotionBanner() {
+	const router = useRouter();
+	const handleClick = () => {
+		router.push('/register');
+	};
 	return (
 		<div className={styles.readyBannerWrapper}>
 			<div
@@ -16,7 +21,9 @@ export default function PromotionBanner() {
 					nonummy nibh.
 				</p>
 				<br />
-				<button className='book-now-btn'>BOOK NOW!</button>
+				<button className='book-now-btn' onClick={handleClick}>
+					BOOK NOW!
+				</button>
 			</div>
 		</div>
 	);

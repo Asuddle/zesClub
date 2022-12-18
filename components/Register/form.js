@@ -44,10 +44,40 @@ export const formField1 = [
 	{ type: 'text', name: 'lastName', label: 'Last Name' },
 	{ type: 'text', name: 'country', label: 'Country' },
 	{
-		type: 'text',
+		type: 'select',
 		name: 'city',
 		label: 'Emirates City',
 		align: 'right',
+		options: [
+			{
+				value: 'Abu Dhabi',
+				label: 'Abu Dhabi',
+			},
+			{
+				value: 'Dubai',
+				label: 'Dubai',
+			},
+			{
+				value: 'Sharjah',
+				label: 'Sharjah',
+			},
+			{
+				value: 'Ajman',
+				label: 'Ajman',
+			},
+			{
+				value: 'Umm Al Quwain',
+				label: 'Umm Al Quwain',
+			},
+			{
+				value: 'Ras Al Khaimah',
+				label: 'Ras Al Khaimah',
+			},
+			{
+				value: 'Fujairah',
+				label: 'Fujairah',
+			},
+		],
 	},
 	{
 		type: 'text',
@@ -55,23 +85,9 @@ export const formField1 = [
 		label: 'Nationality',
 	},
 	{
-		type: 'select',
+		type: 'text',
 		name: 'profession',
 		label: 'Profession/Member Type',
-		options: [
-			{
-				value: 'Businessman',
-				label: 'Businessman',
-			},
-			{
-				value: 'IT Expert',
-				label: 'IT Expert',
-			},
-			{
-				value: 'Others',
-				label: 'Others',
-			},
-		],
 	},
 	{
 		type: 'text',
@@ -122,23 +138,9 @@ export const spouseformField1 = [
 		label: 'Nationality',
 	},
 	{
-		type: 'select',
+		type: 'text',
 		name: 'spouse_profession',
 		label: 'Profession/Member Type',
-		options: [
-			{
-				value: 'Businessman',
-				label: 'Businessman',
-			},
-			{
-				value: 'IT Expert',
-				label: 'IT Expert',
-			},
-			{
-				value: 'Others',
-				label: 'Others',
-			},
-		],
 	},
 	{
 		type: 'text',
@@ -149,20 +151,18 @@ export const spouseformField1 = [
 ];
 
 export const formField2 = [
-	{ type: 'text', name: 'mobile', label: 'Mobile Number', name: 'mobile' },
+	{ type: 'text', name: 'mobile', label: 'Mobile Number' },
 	{
 		type: 'text',
 		name: 'email',
 		options: { type: 'email' },
 		label: 'Email Address',
-		name: 'email',
 	},
 	{
 		type: 'text',
 		name: 'password',
 		options: { type: 'password' },
 		label: 'Password',
-		name: 'password',
 	},
 ];
 
@@ -174,33 +174,18 @@ export const formField3 = [
 	},
 	{
 		type: 'inline-text',
-		label: 'Industry Sector (If yes)',
+		label: 'Industry Sector (Business Type)',
 		name: 'industrySector',
 	},
 ];
 
 export const formField4 = [
 	{
-		type: 'select',
-		options: [
-			{
-				value: 'abc',
-				label: 'abc',
-			},
-			{
-				value: 'def',
-				label: 'def',
-			},
-			{
-				value: 'ghi',
-				label: 'ghi',
-			},
-		],
+		type: 'text',
 		name: 'website',
-		label: 'Website (if any)',
-		name: 'website',
+		label: 'Website (Website)',
 	},
-	{ type: 'text', name: 'hobbies', label: 'Hobbies', name: 'hobbies' },
+	{ type: 'text', name: 'hobbies', label: 'Hobbies' },
 	{
 		type: 'select',
 		options: [
@@ -219,28 +204,24 @@ export const formField4 = [
 		],
 		name: 'interest',
 		label: 'Interest',
-		name: 'interest',
 	},
-	{ type: 'text', name: 'height', label: 'Height', name: 'height' },
+	{ type: 'text', name: 'height', label: 'Height' },
 	{
 		type: 'text',
 		name: 'age',
 		label: 'Age',
 		options: { type: 'number' },
-		name: 'age',
 	},
 	{
 		type: 'text',
 		name: 'weight',
 		options: { type: 'number' },
 		label: 'Weight',
-		name: 'weight',
 	},
 	{
 		type: 'textarea',
 		name: 'makesHappy',
 		label: 'What makes you feel happy?',
-		name: 'feelHappy',
 	},
 ];
 
@@ -321,8 +302,7 @@ export default function RegisterForm({ defaultValue = {} }) {
 			...{
 				title: data.title.value,
 				interest: data.interest.value,
-				website: data.website.value,
-				profession: data.profession.value,
+				city: data.city.value,
 				haveOwnBusiness: 0,
 				profilePhoto: fileInput,
 			},
@@ -362,7 +342,7 @@ export default function RegisterForm({ defaultValue = {} }) {
 								className={zesClub == 1 ? styles.tabLeftActive : styles.tabLeft}
 								onClick={() => handleTab(1)}
 							>
-								ZeS Beauty Club
+								ZeS Beauty Club (Ladies Only)
 							</Col>
 							<Col
 								md={6}
@@ -371,7 +351,7 @@ export default function RegisterForm({ defaultValue = {} }) {
 								}
 								onClick={() => handleTab(2)}
 							>
-								ZeS Club
+								ZeS Club (Couples Only)
 							</Col>
 							{formField1.map((item) => (
 								<FieldCreator

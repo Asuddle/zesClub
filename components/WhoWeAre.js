@@ -2,8 +2,13 @@ import { Col, Row } from 'reactstrap';
 
 import Image from 'next/image';
 import styles from '../styles/About.module.scss';
+import { useRouter } from 'next/router';
 
 function WhoWeAre() {
+	const router = useRouter();
+	const handleJoin = () => {
+		router.push('/register');
+	};
 	return (
 		<section
 			className={styles.whoWeAre}
@@ -21,26 +26,31 @@ function WhoWeAre() {
 							</p>
 							<br />
 							<p className={styles.description}>
-								The Zes Beauty organic cosmetics collection is certified to
-								satisfy stringent organic standards and does not include any
-								chemicals or preservatives. Using these products, you may be
-								able to achieve skin that is more radiant and young. When
-								developing our cosmetics, we take into consideration your
-								individual preferences regarding skin type and other factors. We
-								provide a wide variety of products for purchase, including
-								facial massage creams, bath bombs, face oils, lip scrubs, lip
-								balms, and lip scrubs. Nevertheless, with Zes Beauty, the beauty
-								salon travels to the customer.
+								ZeS has been started with the intention of establishing a
+								community service organization that would make people's everyday
+								lives easier. We at ZeS want to improve not only your day-to-day
+								life but also your professional and personal lives, as well as
+								your health, fitness, and physical attractiveness, in order to
+								make you happier and less stressed out in general. This includes
+								all aspects of your life, including your health, fitness, and
+								physical appearance.
 							</p>
 							<p className={styles.description}>
-								A salon that focuses on making clients feel pampered by
-								providing services such as massage, facials, body cleanses, hair
-								styling, henna tattoos, acrylic nails, and eyelash extensions,
-								among other beauty enhancements.
+								We are working hard to make your life easier so that you may
+								kick back, relax, and enjoy yourself both with the people you
+								care about and on your own time; we are certain that our efforts
+								will be well worth it. The lofty purpose that we have set for
+								ourselves is to offer you with the skills that you need to be
+								tranquil and joyful no matter what life throws at you, and to
+								enable you to become a gift to others around you by making some
+								simple but substantial alterations to your routine and attitude
+								on life.
 							</p>
 							<br />
 							<br />
-							<button className={styles.aboutZesButton}>Join Now</button>
+							<button onClick={handleJoin} className={styles.aboutZesButton}>
+								Join Now
+							</button>
 							<br />
 						</div>
 					</Col>
@@ -50,9 +60,9 @@ function WhoWeAre() {
 							<Image
 								className={styles.image1}
 								width={460}
-								height={500}
+								height={400}
 								alt='image-1'
-								src='/about/aboutimg1.jpg'
+								src='/about/aboutimg0.jpeg'
 							/>
 							<div className={styles.smallImageWrapper}>
 								<Image

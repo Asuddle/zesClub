@@ -3,8 +3,13 @@ import { Col, Row } from 'reactstrap';
 // import ParticleAnimation from 'react-particle-animation';
 // import Particles from 'react-tsparticles';
 import styles from '../styles/Home.module.scss';
+import { useRouter } from 'next/router';
 
 function ReadyBanner() {
+	const router = useRouter();
+	const handleRoute = () => {
+		router.push('/register');
+	};
 	return (
 		<>
 			<div className={styles.readyBannerWrapper}>
@@ -31,7 +36,7 @@ function ReadyBanner() {
 								<br />
 							</Col>
 							<Col md={4} sm={12} style={{ marginTop: '32px' }}>
-								<button>CLICK NOW!</button>
+								<button onClick={handleRoute}>CLICK NOW!</button>
 							</Col>
 						</Row>
 					</div>

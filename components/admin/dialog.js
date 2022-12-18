@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FeatherIcon from 'feather-icons-react';
 
-export default function ModalComponent({ open, toggle }) {
+export default function ModalComponent({ open, toggle, handleDelete }) {
 	return (
 		<div>
 			<Dialog
@@ -29,7 +29,7 @@ export default function ModalComponent({ open, toggle }) {
 					className='text-center'
 					style={{ justifyContent: 'center' }}
 				>
-					<Button color='error' variant='contained' onClick={toggle}>
+					<Button color='error' variant='contained' onClick={handleDelete}>
 						Delete
 					</Button>
 					<Button onClick={toggle} variant='outlined' color='primary'>

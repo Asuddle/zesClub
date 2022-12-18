@@ -5,8 +5,13 @@ import Image from 'next/image';
 import { ProjectImageComponent } from './Image';
 import TabsComponent from './tabs';
 import styles from '../styles/Home.module.scss';
+import { useRouter } from 'next/router';
 
 export default function ProjectsComponent() {
+	const router = useRouter();
+	const handleGallery = () => {
+		router.push('/gallery');
+	};
 	const galleryImages = [
 		{
 			title: 'Project Title',
@@ -64,7 +69,9 @@ export default function ProjectsComponent() {
 					</Col>
 				))}
 			</Row>
-			<button className={styles.viewAllGalleryBtn}>View All Gallery</button>
+			<button className={styles.viewAllGalleryBtn} onClick={handleGallery}>
+				View All Gallery
+			</button>
 		</div>
 	);
 }

@@ -155,6 +155,13 @@ export default async function handler(req, res) {
 			}
 
 			break;
+		case 'DELETE':
+			try {
+				let sql = "DELETE FROM user WHERE address = 'Mountain 21'";
+			} catch (error) {
+				res.status(400).json({ success: false, error: error });
+			}
+			break;
 		default:
 			res.status(400).json({ success: false });
 			break;

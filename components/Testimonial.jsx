@@ -17,14 +17,13 @@ function TestimonialComponent() {
 		slidesToShow: 1,
 		slidesToScroll: 1,
 	};
-	const height = 500;
-	const width = 1280;
+
 	return (
 		<div className={styles.container}>
 			<HeadingComponent
 				heading='Testimonial'
-				subHeading='We have'
-				subBoldHeading='Best Clients'
+				subHeading='What Our'
+				subBoldHeading='Client Says'
 			/>
 			<div className={styles.testimonialWrapper}>
 				<Slider {...settings}>

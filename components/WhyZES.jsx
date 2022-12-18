@@ -1,5 +1,6 @@
 import WhyZesIcons from './whyZesIcons';
 import styles from '../styles/Home.module.scss';
+import { useRouter } from 'next/router';
 
 const imageArr = [
 	{ name: 'Friendly Team' },
@@ -11,6 +12,10 @@ const imageArr = [
 ];
 
 function WhyZES() {
+	const router = useRouter();
+	const handleClick = () => {
+		router.push('/about');
+	};
 	return (
 		<section
 			className={styles.whyZesWrapper}
@@ -37,7 +42,9 @@ function WhyZES() {
 							</p>
 							<br />
 
-							<button className={styles.aboutZesButton}>ABOUT ZeS</button>
+							<button onClick={handleClick} className={styles.aboutZesButton}>
+								ABOUT ZeS
+							</button>
 							<br />
 						</div>
 					</div>

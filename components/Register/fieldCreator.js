@@ -11,6 +11,7 @@ export default function FieldCreator({
 	errors,
 	setValue,
 	setFileInput,
+	formGroupStyle = styles.formGroup,
 }) {
 	if (item.type === 'text') {
 		return (
@@ -19,10 +20,10 @@ export default function FieldCreator({
 					name={item.name}
 					control={control}
 					render={({ field }) => (
-						<FormGroup className={styles.formGroup}>
+						<FormGroup className={formGroupStyle}>
 							<Label className={styles.inputLabel}>{item.label}</Label>
 							<Input
-								// invalid
+								// invalidn
 								placeholder={item.label}
 								{...field}
 								className={styles.textField}
@@ -44,13 +45,14 @@ export default function FieldCreator({
 					name={item.name}
 					control={control}
 					render={({ field }) => (
-						<FormGroup className={styles.formGroup}>
+						<FormGroup className={formGroupStyle}>
 							<Label className={styles.inputLabel} for='exampleSelect'>
 								{item.label}
 							</Label>
 							<SelectField
 								options={item.options || []}
 								field={field}
+								label={item.label}
 								errors={errors}
 							/>
 						</FormGroup>
@@ -74,10 +76,9 @@ export default function FieldCreator({
 							render={({ field }) => (
 								<FormGroup style={{ padding: '0px' }}>
 									<Input
-										placeholder='Email'
+										placeholder={item.label}
 										{...field}
 										className={styles.textField}
-										id='email'
 										invalid={errors[item.name]}
 									/>
 									{errors[item.name] && (

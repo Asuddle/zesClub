@@ -1,12 +1,8 @@
 import { Col, Row } from 'reactstrap';
 import {
-	faFacebook,
 	faFacebookF,
 	faInstagram,
-	faLinkedinIn,
 	faSnapchat,
-	faSnapchatGhost,
-	faSquareSnapchat,
 	faTwitter,
 	faWhatsapp,
 	faYoutube,
@@ -17,50 +13,52 @@ import Image from 'next/image';
 import { ProjectImageComponent } from './Image';
 import { faCircleChevronRight } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Home.module.scss';
+import { useRouter } from 'next/router';
+
+const linkArr = [
+	{ name: 'Home', href: '/' },
+	{ name: 'About ZeS', href: '/about' },
+	{ name: 'Why ZeS', href: '/why-zes' },
+	{ name: 'Interests', href: '/interests' },
+	{ name: 'Registration', href: '/register' },
+	{ name: 'Contact Us', href: '/contact' },
+	{ name: 'FAQs', href: '/faq' },
+];
+const galleryImages = [
+	{
+		title: 'Project Title',
+		largeImage: '/home/Gallery1.jpg',
+		smallImage: '/home/Gallery1.jpg',
+	},
+	{
+		title: 'Project Title',
+		largeImage: '/home/Gallery2.jpg',
+		smallImage: '/home/Gallery2.jpg',
+	},
+	{
+		title: 'Project Title',
+		largeImage: '/home/Gallery3.jpg',
+		smallImage: '/home/Gallery3.jpg',
+	},
+	{
+		title: 'Project Title',
+		largeImage: '/home/Gallery4.jpg',
+		smallImage: '/home/Gallery4.jpg',
+	},
+	{
+		title: 'Project Title',
+		largeImage: '/service-4.jpg',
+		smallImage: '/service-4.jpg',
+	},
+	{
+		title: 'Project Title',
+		largeImage: '/service-5.jpg',
+		smallImage: '/service-5.jpg',
+	},
+];
 
 export default function Footer() {
-	const linkArr = [
-		{ name: 'Home' },
-		{ name: 'About ZeS' },
-		{ name: 'Why ZeS' },
-		{ name: 'Interests' },
-		{ name: 'Registration' },
-		{ name: 'Contact Us' },
-		{ name: 'Support' },
-	];
-	const galleryImages = [
-		{
-			title: 'Project Title',
-			largeImage: '/home/Gallery1.jpg',
-			smallImage: '/home/Gallery1.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/home/Gallery2.jpg',
-			smallImage: '/home/Gallery2.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/home/Gallery3.jpg',
-			smallImage: '/home/Gallery3.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/home/Gallery4.jpg',
-			smallImage: '/home/Gallery4.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/service-4.jpg',
-			smallImage: '/service-4.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/service-5.jpg',
-			smallImage: '/service-5.jpg',
-		},
-	];
-
+	const router = useRouter();
 	return (
 		<div>
 			<footer className={styles.footer}>
@@ -82,10 +80,11 @@ export default function Footer() {
 								<br />
 								<br />
 								<p className={styles.footerDescription}>
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Obcaecati, itaque animi sed sint laborum atque minima
-									similique quos assumenda repellat, quasi corporis ex
-									asperiores! Libero quibusdam incidunt mollitia a porro!
+									ZeS has been started with the intention of establishing a
+									community service organization that would make people's
+									everyday lives easier. We at ZeS want to improve not only your
+									day-to-day life but also your professional and personal lives,
+									as well as your health, fitness, and physical attractiveness.{' '}
 								</p>
 								<br />
 								<p className={styles.footerHeading}>Follow Us</p>
@@ -102,7 +101,11 @@ export default function Footer() {
 								<p className={styles.footerHeading}>Quick Links</p>
 								{linkArr.map((item) => (
 									<div key={item.name} className={styles.footerLink}>
-										<div className='btn btn-link mb-3' href=''>
+										<div
+											className='btn btn-link mb-3'
+											href=''
+											onClick={() => router.push(item.href)}
+										>
 											<FontAwesomeIcon icon={faCircleChevronRight} />
 											<span>{item.name}</span>{' '}
 										</div>

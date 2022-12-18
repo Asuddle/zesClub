@@ -7,7 +7,6 @@ export default async function handler(req, res) {
 	switch (method) {
 		case 'PUT':
 			try {
-				console.log(req);
 				let mysql = `UPDATE user SET isVerified = 1 WHERE id = ${req.query.userId}`;
 				await db.query(mysql, (err, result) => {
 					if (err) {

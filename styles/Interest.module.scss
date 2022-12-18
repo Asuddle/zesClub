@@ -59,7 +59,7 @@
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		z-index: 99999;
+		z-index: 1 !important;
 		color: $white-shade !important;
 		right: 26%;
 		top: 27%;
@@ -91,3 +91,47 @@
 		}
 	}
 }
+
+.becomeMemberModal {
+	width: 400px !important;
+	text-align: center;
+	:first-child {
+		padding: 30px;
+		padding-bottom: 10px !important;
+		background: $orange-shade !important;
+		.becomeMemberButton {
+			width: 100% !important;
+			padding: 22px !important;
+			color: $orange-shade !important;
+			background: $white-shade !important;
+			@include module-semibold-heading;
+			font-size: 15px !important ;
+			border-color: $white-shade;
+		}
+		.continueButton {
+			width: 100% !important;
+			padding: 22px !important;
+			border: 1px solid $white-shade !important;
+			color: $white-shade !important;
+			background: $orange-shade !important;
+			@include module-semibold-heading;
+			font-size: 15px !important ;
+		}
+		.orText {
+			color: $white-shade;
+			font-size: 17px !important;
+			font-weight: 600;
+			margin-top: 16px !important;
+		}
+		.alreadyLink {
+			margin-top: 40px !important;
+			@include module-semibold-heading;
+			font-size: 14px !important;
+			span {
+				padding: 0px !important;
+				color: $white-shade !important;
+			}
+		}
+	}
+}
+// @include caption-heading;

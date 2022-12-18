@@ -11,49 +11,69 @@ export default function VisionMissionComponent() {
 			data-aos='fade-right'
 			data-aos-delay='500'
 		>
-			<ContainerComponent>
+			<div className='container'>
 				<Row>
-					<Col sm={12} md={12} lg={7} className={styles.imageWrap}>
-						<div className={styles.horizontalWrapper}></div>
-
+					<Col sm={12} md={12} lg={12} xl={7} className={styles.imageWrap}>
 						<Image
 							src='/about/Section-02.jpg'
 							layout='responsive'
-							width={750}
+							width={700}
 							alt='people'
-							height={400}
+							height={450}
 						/>
+						<div className={styles.horizontalWrapper}></div>
 						<div className={styles.imageText}>
 							We have ability to organize events to inspire and attract
 						</div>
 					</Col>
 					<Col
 						md={12}
-						lg={5}
+						lg={12}
+						xl={5}
 						className={styles.dataWrapper}
 						style={{ paddingLeft: '5%' }}
 					>
 						<div className={styles.headingWrapper}>
-							<p className={styles.heading}>VISION & MISSION</p>
 							<p className={styles.subHeading}>
-								ZeS <span>Events Management</span>
+								ZeS <span>Beauty Club</span>
 							</p>
+							<p className={styles.aboutHeading}>For Ladies Only</p>
 						</div>
+
 						<p className={styles.description} style={{ paddingRight: '5%' }}>
-							Events of all kinds may find a suitable home at the Zes Beauty
-							Club, which is equipped with several recreational and social
-							amenities. Festivals, camps, and concerts are all good examples.
-							Events Management is dedicated to providing first-rate service to
-							anybody interested in renting a nightclub. We&#39;re thrilled to
-							show you around our beautiful Zes club, and we&#39;ll do all in
-							our power to make planning and scheduling your event as simple and
-							stress-free as possible.
+							The ZeS Beauty Club was established with the intention of making
+							women feel as if they have a place in the world and are capable of
+							doing whatever they put their minds to. ZeS Beauty Club is looking
+							for stunning and powerful women who can maintain their beautiful
+							looks and have their wits about them. If this sounds like you,
+							please apply. Where,
+							<ul>
+								<li>The aspect of ZEN known as "calmness and equilibrium."</li>
+								<li>
+									The beauty that radiates from each and every woman is her
+									innate ELEGANCE.
+								</li>
+								<li>
+									We move, modify, and adapt without any breaks or interruptions
+									because SEAMLESSNESS permeates every aspect of our existence
+									as women
+								</li>
+							</ul>
+							When a member of the ZeS Beauty Club, a woman does not have to
+							worry about being punished for expressing her views or pursuing
+							her passions since the club provides an environment free from
+							hostility. The proverb "Your network is your net worth" is
+							something that each and every person has been exposed to at some
+							point in their lives. The ZeS Beauty Club was created with the
+							intention of fostering meaningful connections among its members
+							and harnessing the strength that comes from members cooperating
+							with one another. When we work together, our combined strength is
+							greater than the sum of each of our individual strengths. “We're
+							not just girls; we're members of ZeS….”
 						</p>
-						<br />
-						<button>Enquire Now</button>
 					</Col>
 				</Row>
-			</ContainerComponent>
+			</div>
 		</section>
 	);
 }

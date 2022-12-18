@@ -5,6 +5,7 @@ import GalleryCard from './Gallery/GalleryCard';
 import HeadingComponent from './Heading';
 import Image from 'next/image';
 import styles from '../styles/Home.module.scss';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const galleryArr = [
@@ -28,6 +29,10 @@ const galleryArr = [
 	},
 ];
 export default function UpcomingEvents() {
+	const router = useRouter();
+	const handleEvents = () => {
+		router.push('/what-next');
+	};
 	return (
 		<div
 			className='space-ptb bg-dark-half-md'
@@ -47,13 +52,10 @@ export default function UpcomingEvents() {
 						</Col>
 					))}
 				</Row>
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
 				<div class='text-center'>
-					<button className={styles.viewAllGalleryBtn}>View All Event</button>
+					<button className={styles.viewAllGalleryBtn} onClick={handleEvents}>
+						View All Event
+					</button>
 				</div>
 				{/* <button className={styles.aboutZesButton}>View All Events</button> */}
 			</div>

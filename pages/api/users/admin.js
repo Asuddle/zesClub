@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 			break;
 		case 'DELETE':
 			try {
-				let sql = `DELETE FROM user WHERE id=${req.query.userId};`;
+				let sql = `DELETE FROM user WHERE id='${req.query.userId}';`;
 				await db.query(sql, (err, result) => {
 					if (err) {
 						res.send(err);

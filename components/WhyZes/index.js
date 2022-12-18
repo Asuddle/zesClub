@@ -18,24 +18,24 @@ export default function LifeWithWithoutZes() {
 							</p>
 							<br />
 							<p className={styles.description}>
-								The Zes Beauty Club was established so that women may have
-								confidence in their skills and experience life to the fullest to
-								the extent possible. A lady must be gorgeous, have
-								self-assurance, and be able to manipulate her looks with her
-								thoughts in order to become a member of the Zes Beauty Club.
+								The Zes Club was founded to give women the self-assurance they
+								need to pursue their passions and make the most of their life.
+								Women who want to join the Zes Club must first meet strict
+								criteria, including physical attractiveness, confidence, and the
+								capacity to alter their outward appearance by the power of their
+								own minds.
 							</p>
 							<p className={styles.description}>
-								Because they know that their fellow club members would always
-								have their backs, the women who are members of the Zes Beauty
-								Club are able to feel secure enough to express themselves and
-								follow their hobbies without fear of judgment from other club
-								members. This amazing club intends to put the old saying,
-								&#34;Your network is your net worth&#34; into practise by
-								pushing its members to establish tighter relationships with one
-								another. We&#39;ve all heard the saying, and it&#39;s one that
-								we can all attest to having some validity. We have more strength
-								than any other group when we work together. In addition to this,
-								we think of ourselves as belonging to the Zes gender.
+								Women who are members of the Zes Club get a sense of confidence
+								that frees them to be themselves and follow their interests
+								without fear of ridicule from their peers. This is because the
+								ladies know they can count on the support of their club sisters
+								in times of need. This amazing organization promotes
+								member-to-member connection in an effort to put the adage
+								&quot;Your network is your net worth&quot; into action. We can
+								all recognize the proverb and agree that it has some truth.
+								Together, we are stronger than any one organization. And we also
+								think of ourselves as being of the Zes.
 							</p>
 							<br />
 							<br />
@@ -51,24 +51,15 @@ export default function LifeWithWithoutZes() {
 							</p>
 							<br />
 							<p className={styles.description}>
-								Those people who are immune to the Zes Beauty Club that we are
-								all about are still living, but their lives are incomplete since
-								they have not yet tasted the genuine sweetness that life has to
-								offer. A life without Zes Beauty Club is comparable to a flower
-								without a fragrance, a bird without wings, an ocean without
-								water, and a night sky without stars. If you are unable to let
-								the experience of all the beauty that is all around you to fill
-								your spirit with pleasure, then life will become a dry and heavy
-								existence for you to endure.
+								People who have developed immunity to the Zes Club we advocate
+								will continue to exist, but they will never know the full
+								splendor of life. The lack of Zes Club in a person&#39;s life is
+								analogous to a flower bereft of fragrance, a bird bereft of the
+								ability to fly, an ocean bereft of water, and a night sky bereft
+								of stars. If you don&#39;t allow the experience of all the
+								beauty that is all around you to fill your spirit with
+								happiness, life will become a dry and onerous existence
 							</p>
-							{/* <p className={styles.description}>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-								diam nonum my nibh euismod tincidunt ut laoreet dolore magna
-								aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-								nostrud exerci tation ullamcorper susci pit lobortis nisl ut
-								aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor
-								in hendrerit in vulputate velit esse molestie consequat.
-							</p> */}
 							<br />
 							<br />
 						</div>

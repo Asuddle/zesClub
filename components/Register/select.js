@@ -47,7 +47,12 @@ const defaultOptions = [
 	},
 ];
 
-export const SelectField = ({ options = defaultOptions, field, errors }) => {
+export const SelectField = ({
+	options = defaultOptions,
+	field,
+	errors,
+	label,
+}) => {
 	return (
 		<>
 			<Select
@@ -57,7 +62,7 @@ export const SelectField = ({ options = defaultOptions, field, errors }) => {
 				components={{
 					IndicatorSeparator: () => null,
 				}}
-				placeholder={<div className={styles.placeholder}>Select category</div>}
+				placeholder={<div className={styles.placeholder}>{label}</div>}
 				options={options}
 			/>
 			<div>

@@ -1,9 +1,15 @@
 import { Col, Row } from 'reactstrap';
 
+import BecomeMemberModal from '../Interests/modal';
 import Image from 'next/image';
 import styles from '../../styles/WhatNext.module.scss';
+import { useState } from 'react';
 
 export default function EventCard({ item, idx }) {
+	const [open, setOpen] = useState(false);
+	const handleClick = () => {
+		setOpen(!open);
+	};
 	return (
 		<Col
 			key={item}
@@ -46,9 +52,12 @@ export default function EventCard({ item, idx }) {
 							float: 'left',
 						}}
 					>
-						<button className={styles.bookNow}>BOOK NOW</button>
+						<button onClick={handleClick} className={styles.bookNow}>
+							BOOK NOW
+						</button>
 						<p className={styles.moreDetail}>More Details</p>
 					</div>
+					<BecomeMemberModal open={open} handleClose={handleClick} />
 				</Col>
 			</Row>
 			<br />

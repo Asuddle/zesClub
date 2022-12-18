@@ -1,8 +1,10 @@
 import { Col, Row } from 'reactstrap';
 
+import BecomeMemberModal from './modal';
 import ContainerComponent from '../container';
 import Image from 'next/image';
 import styles from '../../styles/Interest.module.scss';
+import { useState } from 'react';
 
 const burgerArr = [
 	{ name: 'Double Burger', price: '$8.50' },
@@ -13,6 +15,10 @@ const burgerArr = [
 	{ name: 'King Burger', price: '$11.00' },
 ];
 export default function KFCPage() {
+	const [open, setOpen] = useState(false);
+	const handleChange = () => {
+		setOpen(!open);
+	};
 	return (
 		<ContainerComponent container='mediumContainer'>
 			<div className={styles.restaurantPage}>
@@ -25,7 +31,9 @@ export default function KFCPage() {
 							<div className={styles.dataWrapper}>
 								<p className={styles.burgerName}>{item.name}</p>
 								<p className={styles.price}>{item.price}</p>
-								<button className={styles.scanButton}>Scan Now</button>
+								<button className={styles.scanButton} onClick={handleChange}>
+									Scan Now
+								</button>
 							</div>
 							<Image
 								key={item}
@@ -41,6 +49,7 @@ export default function KFCPage() {
 				<br />
 				<br />
 			</div>
+			<BecomeMemberModal open={open} handleClose={handleChange} />
 		</ContainerComponent>
 	);
 }
