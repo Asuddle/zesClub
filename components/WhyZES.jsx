@@ -3,12 +3,35 @@ import styles from '../styles/Home.module.scss';
 import { useRouter } from 'next/router';
 
 const imageArr = [
-	{ name: 'Friendly Team' },
-	{ name: 'Perfect Decoration' },
-	{ name: 'Unique Scenario' },
-	{ name: 'Rememberable Time' },
-	{ name: 'Effective Support' },
-	{ name: 'Brilliant Ideas' },
+	{
+		name: 'Friendly Team',
+		description: 'Our staff is both knowledgeable and welcoming.',
+	},
+	{
+		name: 'Perfect Decoration',
+		description:
+			'We are able to give astounding, vibrant, and lovely embellishments.',
+	},
+	{
+		name: 'Unique Scenario',
+		description:
+			'Alternative ways of doing business with the goal of expanding women’s communities',
+	},
+	{
+		name: 'Rememberable Time',
+		description:
+			'We have experienced days that will be remembered for their countless memories.',
+	},
+	{
+		name: 'Effective Support',
+		description:
+			'ZeS offers all services and assistance to our customers through online customer support.',
+	},
+	{
+		name: 'Brilliant Ideas',
+		description:
+			'A group of women who get together to share their creative insights with one another.',
+	},
 ];
 
 function WhyZES() {
@@ -33,12 +56,11 @@ function WhyZES() {
 							</p>
 							<br />
 							<p className={styles.description}>
-								corrupti dolore illum doloremque hic dignissimos explicabo?
-								Voluptates incidunt expedita hic. Lorem, ipsum dolor sit amet
-								consectetur adipisicing elit. Totam voluptatibus veniam impedit
-								officia obcaecati atque soluta eum magni? Dicta ab culpa
-								nesciunt at saepe pariatur dolorem cupiditate! Vitae, veritatis
-								possimus!
+								ZeS has been started with the intention of establishing a
+								community service organization that would make people's everyday
+								lives easier. We at ZeS want to improve not only your day-to-day
+								life but also your professional and personal lives, as well as
+								your health, fitness, and physical attractiveness.
 							</p>
 							<br />
 

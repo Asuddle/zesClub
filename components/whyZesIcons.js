@@ -16,7 +16,7 @@ export default function WhyZesIcons({ item, index }) {
 			<a href='#' className='category-title'>
 				{item.name}
 			</a>
-			<p className='category-caption'>lorem picsum ek dsa doijdasdijsad</p>
+			<p className='category-caption'>{item.description}</p>
 		</div>
 	);
 }

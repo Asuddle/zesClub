@@ -104,6 +104,7 @@ export default function UserTable() {
 			<TableComponent
 				handleRowClick={handleDetails}
 				col={col}
+				addButton
 				data={data}
 				title='Customer Management'
 			/>

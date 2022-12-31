@@ -17,9 +17,15 @@ export default function TableComponent({
 	data,
 	title = 'User Management',
 	handleRowClick = () => {},
+	addButton = false,
 }) {
 	return (
 		<BaseCard title={title}>
+			{addButton && (
+				<Button variant='contained' style={{ float: 'right' }} color='success'>
+					Add New +
+				</Button>
+			)}
 			<Table
 				aria-label='table'
 				sx={{

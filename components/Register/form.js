@@ -8,6 +8,7 @@ import CardWrapper from './CardWrapper';
 import ContainerComponent from '../container';
 import FieldCreator from './fieldCreator';
 import axios from 'axios';
+import { countryArr } from '../countryArr';
 import homeStyles from '../../styles/Home.module.scss';
 import styles from '../../styles/Register.module.scss';
 import { useForm } from 'react-hook-form';
@@ -42,7 +43,7 @@ export const formField1 = [
 		align: 'right',
 	},
 	{ type: 'text', name: 'lastName', label: 'Last Name' },
-	{ type: 'text', name: 'country', label: 'Country' },
+	{ type: 'select', options: countryArr, name: 'country', label: 'Country' },
 	{
 		type: 'select',
 		name: 'city',
@@ -125,7 +126,12 @@ export const spouseformField1 = [
 		align: 'right',
 	},
 	{ type: 'text', name: 'spouse_lastName', label: 'Last Name' },
-	{ type: 'text', name: 'spouse_country', label: 'Country' },
+	{
+		type: 'select',
+		options: countryArr,
+		name: 'spouse_country',
+		label: 'Country',
+	},
 	{
 		type: 'text',
 		name: 'spouse_city',
@@ -183,7 +189,7 @@ export const formField4 = [
 	{
 		type: 'text',
 		name: 'website',
-		label: 'Website (Website)',
+		label: 'Website',
 	},
 	{ type: 'text', name: 'hobbies', label: 'Hobbies' },
 	{
@@ -247,7 +253,6 @@ export default function RegisterForm({ defaultValue = {} }) {
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [confirm1, setConfirm1] = useState(false);
 	const [confirm2, setConfirm2] = useState(false);
-
 	// const [isSubmit,setIsSubmit]
 	const validationSchema = yup.object({
 		title: yup.mixed().required(),
@@ -262,13 +267,13 @@ export default function RegisterForm({ defaultValue = {} }) {
 				/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
 				'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character',
 			),
-		country: yup.string().required(),
-		city: yup.string().required(),
+		country: yup.mixed().required(),
+		city: yup.mixed().required(),
 		nationality: yup.string().required(),
-		profession: yup.mixed().required(),
+		// profession: yup.mixed().required(),
 		emiratesID: yup.string().required(),
 		mobile: yup.string().required(),
-		website: yup.mixed().required(),
+		// website: yup.mixed().required(),
 		hobbies: yup.string().required(),
 		interest: yup.mixed().required(),
 		expectations: yup.string().required(),
@@ -305,6 +310,7 @@ export default function RegisterForm({ defaultValue = {} }) {
 				city: data.city.value,
 				haveOwnBusiness: 0,
 				profilePhoto: fileInput,
+				country: data.country.value,
 			},
 		};
 		for (const key in result) {

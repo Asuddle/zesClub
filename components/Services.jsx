@@ -44,32 +44,64 @@ export default function ServiceComponent() {
 		{
 			name: 'Corporate Events',
 			src: '/home/Service1.jpg',
-			description:
-				'* Team Building Events* Conferences* Recruiting Events* Product Launches* Networking Events* Seminars* Trade Shows / Expos* Corporate Dinners* Shareholder / Corporate Board Meetings* Year-End Functions/parties* Workshops/courses* Charity events',
+			description: [
+				'Team Building Events',
+				'Conferences',
+				'Recruiting Events',
+				'Product Launches',
+				'Networking Events',
+				'Seminars',
+				'Trade Shows/Expos',
+				'Corporate Dinners',
+				'Shareholder / Corporate Board Meetings',
+				'Year-End Functions/parties',
+				'Workshops/courses',
+				'Charity events',
+			],
 		},
 		{
 			name: 'Personal events and parties',
 			src: '/home/Service2.jpg',
-			description:
-				'* Birthday Parties* Engagement Parties* Themed Celebrations* Hens &amp; Bucks Parties* Baby showers* Family Events* VIP Events* Community Events',
+			description: [
+				'Birthday Parties',
+				'Engagement Parties',
+				'Themed Celebrations* Hens &amp; Bucks Parties',
+				'Baby showers',
+				'Family Events',
+				'VIP Events',
+				'Community Events',
+			],
 		},
 		{
 			name: 'Celebrity Functions and Award Ceremonies',
 			src: '/home/Service3.jpg',
-			description:
-				'* National Music Awards* Local and National Business Awards* National Film Awards* Concerts* Choral Music concert* Band concert* Opera concert',
+			description: [
+				'National Music Awards',
+				'Local and National Business Awards',
+				'National Film Awards',
+				'Concerts',
+				'Choral Music concert',
+				'Band Concert',
+				'Opera Concert',
+			],
 		},
 		{
 			name: 'Festivals',
 			src: '/home/Service4.jpg',
-			description:
-				'* Music* Film* Art* Community celebrations* City Festivals* Road Shows* Theme Events* Fire Work',
+			description: [
+				'Music,Film,Art Community celebrations',
+				'City Festivals',
+				'Road Shows',
+				'Theme Events',
+				'Fire Work',
+			],
 		},
 		{
 			name: 'Wedding',
 			src: '/home/Service5.jpg',
-			description:
+			description: [
 				'We help guide their clients every step of the way when it comes to designing, planning, and executing their dream wedding.',
+			],
 		},
 	];
 
@@ -100,7 +132,11 @@ export default function ServiceComponent() {
 								/>
 								<button href='#' className={styles.serviceButton}>
 									{item.name}
-									<p>{item.description}</p>
+									<ul>
+										{item.description.map((item) => (
+											<li key={item}>{item}</li>
+										))}
+									</ul>
 								</button>
 							</div>
 						</div>

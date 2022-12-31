@@ -361,9 +361,12 @@
 			transition: all 0.3s;
 			text-decoration: none;
 			@include body-boldTitle;
-			p {
+			ul {
+				text-align: left !important;
+			}
+			li {
 				@include caption-mediumLink;
-				margin-top: 14px;
+				margin-top: 6px;
 			}
 			&:hover {
 				background-image: $background-shade-2;
