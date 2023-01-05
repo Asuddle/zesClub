@@ -39,11 +39,10 @@ export const config = {
 		bodyParser: false,
 	},
 };
-const saveFile = async (file) => {
-	console.log('Save File', file.profilePhoto.filepath, typeof file);
-	const data = fs.readFileSync(file.profilePhoto.filepath);
-	fs.writeFileSync(`./public/${file.profilePhoto.originalFilename}`, data);
-	await fs.unlinkSync(file.profilePhoto.filepath);
+export const saveFile = async (file, fileName = 'profilePhoto') => {
+	const data = fs.readFileSync(file[fileName].filepath);
+	fs.writeFileSync(`./public/${file[fileName].originalFilename}`, data);
+	await fs.unlinkSync(file[fileName].filepath);
 	return;
 };
 
@@ -120,7 +119,6 @@ export default async function handler(req, res) {
 									files.profilePhoto.originalFilename
 								}','${result.insertId}')`;
 							}
-							console.log(fields);
 							await db.query(sqlCustomer, (err, result) => {
 								if (err) {
 									res.send({ err });

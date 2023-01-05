@@ -1,13 +1,11 @@
-import { Button, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-
+import { Button } from '@mui/material';
 import Modal from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function UserTable() {
-	const [data, setData] = useState([]);
 	const [refresh, setRefresh] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const [id, setId] = useState(0);
@@ -18,14 +16,6 @@ export default function UserTable() {
 		setId(id);
 		setOpenDelete(!openDelete);
 	};
-	const handleRefresh = () => {
-		setRefresh(!refresh);
-	};
-	useEffect(() => {
-		axios.get('/api/auth').then((res) => {
-			setData(res.data.data);
-		});
-	}, [refresh]);
 
 	const verifyUser = (id) => {
 		axios
@@ -58,12 +48,13 @@ export default function UserTable() {
 	};
 
 	const col = [
-		{ label: 'Id', name: 'id' },
-		{ label: 'Name', name: 'firstName' },
-		{ label: 'Email', name: 'email' },
-		{ label: 'Phone', name: 'mobile' },
+		{ label: 'Id', name: 'id', width: '5%' },
+		{ label: 'Name', name: 'firstName', width: '20%' },
+		{ label: 'Email', name: 'email', width: '20%' },
+		{ label: 'Phone', name: 'mobile', width: '20%' },
 		{
 			label: 'Actions',
+			width: '20%',
 			render: (data) => (
 				<div>
 					{!data.isVerified && (
@@ -105,7 +96,7 @@ export default function UserTable() {
 				handleRowClick={handleDetails}
 				col={col}
 				addButton
-				data={data}
+				url='/api/auth'
 				title='Customer Management'
 			/>
 			<Modal

@@ -36,7 +36,6 @@ import { useRouter } from 'next/router';
 
 function AboutPage() {
 	const router = useRouter();
-	console.log();
 	useEffect(() => {
 		AOS.init();
 		if (router.query && router.query.section) {

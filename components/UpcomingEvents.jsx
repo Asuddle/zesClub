@@ -1,12 +1,13 @@
 import { Col, Row } from 'reactstrap';
+import { useEffect, useState } from 'react';
 
 import EventCard from './WhatNext/eventCard';
 import GalleryCard from './Gallery/GalleryCard';
 import HeadingComponent from './Heading';
 import Image from 'next/image';
+import axios from 'axios';
 import styles from '../styles/Home.module.scss';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 const galleryArr = [
 	{
@@ -29,10 +30,18 @@ const galleryArr = [
 	},
 ];
 export default function UpcomingEvents() {
+	const [data, setData] = useState([]);
 	const router = useRouter();
 	const handleEvents = () => {
 		router.push('/what-next');
 	};
+	useEffect(() => {
+		axios.get('/api/events').then((res) => {
+			let dt = res.data.data;
+			dt.length = 3;
+			setData(dt);
+		});
+	}, []);
 	return (
 		<div
 			className='space-ptb bg-dark-half-md'
@@ -46,7 +55,7 @@ export default function UpcomingEvents() {
 					subBoldHeading='Awesome Events'
 				/>
 				<Row className={styles.eventImage} data-aos='fade-up'>
-					{galleryArr.map((item, idx) => (
+					{data.map((item, idx) => (
 						<Col xs={12} sm={12} md={4} key={idx}>
 							<GalleryCard key={idx} item={item} idx={idx} />
 						</Col>

@@ -10,7 +10,7 @@ export default function GalleryCard({ idx, item }) {
 		<div className={styles.cardWrapper}>
 			<Image
 				className='img-fluid'
-				src={`/home/Gallery${idx + 1}.jpg`}
+				src={`/${item.image}`}
 				alt=''
 				layout='responsive'
 				width='100%'
@@ -25,13 +25,10 @@ export default function GalleryCard({ idx, item }) {
 				</p>
 				<p className={styles.eventName}>{item.name}</p>
 				{/* <p className={styles.eventDate}>{item.name}</p> */}
-				<p className={styles.eventCaption}>
-					lorem ipsum dsad asd asd as das das das d as das d dasd asdsa das das
-					d asd ad as d
-				</p>
+				<p className={styles.eventCaption}>{item.description}</p>
 				<div className={styles.eventInfo}>
 					<p className={styles.venue}>
-						<FontAwesomeIcon icon={faLocationDot} /> <span>Venue</span>
+						<FontAwesomeIcon icon={faLocationDot} /> <span>{item.venue}</span>
 					</p>
 					<p className={styles.calendar}>
 						<FontAwesomeIcon icon={faCalendar} />

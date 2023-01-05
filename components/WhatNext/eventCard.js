@@ -24,7 +24,7 @@ export default function EventCard({ item, idx }) {
 				<Col md={7} style={{ paddingTop: '8px' }}>
 					<Image
 						className='img-fluid'
-						src={`/service-${idx + 1}.jpg`}
+						src={`/${item.image}`}
 						width='100%'
 						height='100%'
 						layout='responsive'
@@ -33,16 +33,16 @@ export default function EventCard({ item, idx }) {
 				</Col>
 				<Col md={5}>
 					<div className={styles.dataWrapper}>
-						<p className={styles.eventName}>Event Name here</p>
-						<p className={styles.price}>AED 2000</p>
+						<p className={styles.eventName}>{item.name}</p>
+						<p className={styles.price}>AED {item.price}</p>
 						<p className={styles.venue}>
-							<span>Venue Here</span>
+							<span>{item.venue}</span>
 						</p>
 						<p className={styles.venue}>
-							<span>Ladies & Gents</span>
+							<span>{item.audience}</span>
 						</p>
 						<p className={styles.venue}>
-							<span>20 Oct 2022</span>
+							<span>{item.date}</span>
 						</p>
 					</div>
 					<div

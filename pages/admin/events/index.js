@@ -1,91 +1,98 @@
-import { Button, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-
+import { Button } from '@mui/material';
 import Modal from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function EventTable() {
-	const [data, setData] = useState([]);
-	const [refresh, setRefresh] = useState(false);
-	const [openDelete, setOpenDelete] = useState(false);
 	const router = useRouter();
-
-	const handleDeleteToggle = () => {
+	const [id, setId] = useState(0);
+	const [openDelete, setOpenDelete] = useState(false);
+	const [refresh, setRefresh] = useState(false);
+	const handleDeleteToggle = (event, id) => {
+		event.stopPropagation();
+		setId(id);
+		setOpenDelete(!openDelete);
+	};
+	const toggle = () => {
 		setOpenDelete(!openDelete);
 	};
 
-	const verifyUser = (id) => {
+	const handleDelete = () => {
 		axios
-			.put(`/api/users/verify?userId=${id}`)
+			.delete(`/api/events?id=${id}`)
 			.then((res) => {
-				console.log(res.data.data);
+				setId(0);
 				setRefresh(!refresh);
+				toggle();
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
-	const handleEdit = () => {
-		router.push('/admin/user/2');
-	};
+
 	const col = [
-		{ label: 'Id', name: 'id' },
-		{ label: 'Name', name: 'firstName' },
-		{ label: 'Email', name: 'email' },
-		{ label: 'Phone', name: 'mobile' },
+		{
+			label: 'Image',
+			name: 'name',
+			render: (data) => (
+				<div>
+					<img src={`/${data.image}`} width={150} />
+				</div>
+			),
+		},
+		{ label: 'Name', name: 'name' },
+		{ label: 'Price (AED)', name: 'price' },
+		// { label: 'Description', name: 'description' },
+		{ label: 'Date', name: 'date' },
 		{
 			label: 'Actions',
-			render: (data) =>
-				!data.isVerified ? (
-					<div>
-						<Button
-							variant='contained'
-							color='primary'
-							size='small'
-							onClick={() => verifyUser(data.user_id)}
-						>
-							Verify
-						</Button>
-						<Button
-							size='small'
-							variant='contained'
-							color='error'
-							onClick={handleDeleteToggle}
-						>
-							Delete
-						</Button>
-						<Button size='small' variant='contained' color='secondary'>
-							Edit
-						</Button>
-					</div>
-				) : (
-					<div>
-						<Button
-							size='small'
-							variant='contained'
-							color='error'
-							onClick={handleDeleteToggle}
-						>
-							Delete
-						</Button>
-						<Button
-							size='small'
-							variant='contained'
-							color='secondary'
-							onClick={handleEdit}
-						>
-							Edit
-						</Button>
-					</div>
-				),
+			width: '30%',
+			render: (data) => (
+				<div>
+					<Button
+						size='small'
+						variant='contained'
+						color='secondary'
+						onClick={(ev) => {
+							ev.stopPropagation();
+							router.push(`/admin/events/${data.id}/edit`);
+						}}
+					>
+						Edit
+					</Button>
+					{'    '}
+					<Button
+						size='small'
+						onClick={(ev) => {
+							ev.stopPropagation();
+							handleDeleteToggle(ev, data.id);
+						}}
+						variant='contained'
+						color='danger'
+					>
+						Delete
+					</Button>
+				</div>
+			),
 		},
 	];
+	const handleRow = (data) => {
+		router.push(`/admin/events/${data.id}/details`);
+	};
 	return (
 		<>
-			<TableComponent col={col} data={data} title='Event Management' />
-			<Modal open={openDelete} toggle={handleDeleteToggle} />
+			<TableComponent
+				url='/api/events'
+				addButton
+				col={col}
+				refresh={refresh}
+				handleRowClick={handleRow}
+				addNewCallback={() => router.push('/admin/events/add')}
+				title='Event Management'
+			/>
+			<Modal open={openDelete} handleDelete={handleDelete} toggle={toggle} />
 		</>
 	);
 }

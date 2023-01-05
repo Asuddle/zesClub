@@ -11,6 +11,7 @@ export default function FieldCreator({
 	errors,
 	setValue,
 	setFileInput,
+	fileInput,
 	formGroupStyle = styles.formGroup,
 }) {
 	if (item.type === 'text') {
@@ -152,7 +153,6 @@ export default function FieldCreator({
 		const handleFileChange = (e, field) => {
 			// setValue
 			field.onChange(e.target.value);
-			console.log('vall', e.target.value);
 			setFileInput(e.target.files[0]);
 			// setValue(item.name, e.target.value);
 		};
@@ -162,19 +162,31 @@ export default function FieldCreator({
 					<Label className={styles.inputLabel} for='exampleText'>
 						{item.label}
 					</Label>
+
 					<Controller
 						name={item.name}
 						control={control}
 						render={({ field }) => {
 							console.log(field);
 							return (
-								<Input
-									type='file'
-									{...field}
-									// value={''}
-									onChange={(e) => handleFileChange(e, field)}
-									invalid={errors[field.name]}
-								/>
+								<>
+									{fileInput && (
+										<img
+											width={300}
+											height={200}
+											style={{ marginBottom: '20px', marginLeft: '10px' }}
+											src={URL.createObjectURL(fileInput)}
+											alt='dsa'
+										/>
+									)}
+									<br />
+									<Input
+										type='file'
+										{...field}
+										onChange={(e) => handleFileChange(e, field)}
+										invalid={errors[field.name]}
+									/>
+								</>
 							);
 						}}
 					/>

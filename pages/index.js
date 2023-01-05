@@ -4,15 +4,12 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'aos/dist/aos.css';
 
 import AOS from 'aos';
-import { Button } from 'reactstrap';
 import ContactForm from '../components/contact';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from '../components/Footer';
 import GoogleMap from '../components/Map';
 import Head from 'next/head';
 import Header from '../components/Header';
 import HeadingComponent from '../components/Heading';
-import Image from 'next/image';
 import Navigation from '../components/Navigation';
 import ProjectsComponent from '../components/Projects';
 import PromotionBanner from '../components/PromotionBanner';

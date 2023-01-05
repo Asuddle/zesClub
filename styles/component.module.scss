@@ -2,6 +2,16 @@
 @import '../styles/color-rules.scss';
 @import '../styles/typography-rules.scss';
 
+.csvLink {
+	background-color: #286090 !important;
+	padding: 8px !important;
+	text-transform: none !important;
+	border-radius: 8px !important;
+	color: white !important; /* blue colors for links too */
+	text-decoration: inherit;
+	float: right;
+}
+
 .verticalTabUpperWrap {
 	// position: fixed !important;
 	background: $white-shade !important;

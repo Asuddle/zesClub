@@ -6,13 +6,23 @@ const Menuitems = [
 	},
 	{
 		title: 'Admin Users',
-		icon: 'disc',
+		icon: 'user',
 		href: '/admin/admin-user',
 	},
 	{
 		title: 'Customers',
-		icon: 'disc',
+		icon: 'users',
 		href: '/admin/user',
+	},
+	{
+		title: 'Event Management',
+		icon: 'camera',
+		href: '/admin/events',
+	},
+	{
+		title: 'Enquiry Management',
+		icon: 'phone',
+		href: '/admin/enquiry',
 	},
 	{
 		title: 'Page Management',
@@ -24,21 +34,13 @@ const Menuitems = [
 		icon: 'layout',
 		href: '/admin/promotions',
 	},
-	{
-		title: 'Event Management',
-		icon: 'info',
-		href: '/admin/events',
-	},
+
 	{
 		title: 'Booking Management',
 		icon: 'layout',
 		href: '/admin/forms',
 	},
-	{
-		title: 'Enquiry Management',
-		icon: 'disc',
-		href: '/admin/buttons',
-	},
+
 	// {
 	// 	title: 'Contact Us Page Management',
 	// 	icon: 'layout',
