@@ -20,6 +20,11 @@ const Menuitems = [
 		href: '/admin/events',
 	},
 	{
+		title: 'Booking Management',
+		icon: 'layout',
+		href: '/admin/bookings',
+	},
+	{
 		title: 'Enquiry Management',
 		icon: 'phone',
 		href: '/admin/enquiry',
@@ -33,12 +38,6 @@ const Menuitems = [
 		title: 'Promotions',
 		icon: 'layout',
 		href: '/admin/promotions',
-	},
-
-	{
-		title: 'Booking Management',
-		icon: 'layout',
-		href: '/admin/forms',
 	},
 
 	// {

@@ -1,6 +1,9 @@
+import { Autocomplete, CircularProgress, TextField } from '@mui/material';
 import { Col, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap';
 import { Controller, useForm } from 'react-hook-form';
 
+import AsyncSelect from 'react-select/async';
+import AutocompleteComponent from '../form/autocomplete';
 import { SelectField } from './select';
 import styles from '../../styles/Register.module.scss';
 
@@ -149,12 +152,30 @@ export default function FieldCreator({
 				</FormGroup>
 			</Col>
 		);
+	} else if (item.type == 'autocomplete') {
+		return (
+			<Col md={5}>
+				<FormGroup>
+					<Label className={styles.inputLabel} for='exampleText'>
+						{item.label}
+					</Label>
+					<Controller
+						name={item.name}
+						control={control}
+						render={({ field }) => (
+							<AutocompleteComponent url={item.url} field={field} />
+						)}
+					/>
+					{errors[item.name] && (
+						<p className='error-message'>{errors[item.name].message}</p>
+					)}
+				</FormGroup>
+			</Col>
+		);
 	} else if (item.type == 'file') {
 		const handleFileChange = (e, field) => {
-			// setValue
 			field.onChange(e.target.value);
 			setFileInput(e.target.files[0]);
-			// setValue(item.name, e.target.value);
 		};
 		return (
 			<Col md={5}>

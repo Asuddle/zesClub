@@ -64,7 +64,7 @@ export default async function handler(req, res) {
 			break;
 		case 'GET':
 			try {
-				let sql = `SELECT * FROM user INNER JOIN customers ON user.id=customers.user_id;`;
+				let sql = `SELECT * FROM user INNER JOIN customers ON user.id=customers.user_id where role='user';`;
 				await db.query(sql, (err, result) => {
 					if (err) {
 						res.send(err);

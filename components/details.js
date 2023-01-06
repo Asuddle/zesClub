@@ -16,6 +16,7 @@ export default function DetailComponent({
 	dataObj = {},
 	images = [],
 	title = 'Details',
+	heading = 'name',
 }) {
 	const router = useRouter();
 	const [data, setData] = useState({});
@@ -32,11 +33,10 @@ export default function DetailComponent({
 				console.log(err);
 			});
 	}, [id]);
-
 	return (
 		<div>
 			<Typography variant='h4'>{title}</Typography>
-			<BaseCard title={`${data.name}`}>
+			<BaseCard title={`${data[heading]}`}>
 				<Table sx={{ minWidth: 650 }} aria-label='simple table'>
 					<TableHead>
 						<TableRow>

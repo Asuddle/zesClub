@@ -1,37 +1,26 @@
-import { Button, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-
-import FeatherIcon from 'feather-icons-react';
+import { Button } from '@mui/material';
 import ModalComponent from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
-import axios from 'axios';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function UserTable() {
-	const [data, setData] = useState([]);
-	const [refresh, setRefresh] = useState(false);
 	const [openDelete, setOpenDelete] = useState(false);
 	const router = useRouter();
-	useEffect(() => {
-		axios
-			.get('/api/users/admin')
-			.then((res) => {
-				setData(res.data.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, [refresh]);
+
 	const handleDeleteToggle = () => {
 		setOpenDelete(!openDelete);
 	};
+
 	const handleEdit = (ev, id) => {
 		ev.stopPropagation();
 		router.push(`/admin/user/${id}/edit`);
 	};
+
 	const handleDetails = (data) => {
 		router.push(`/admin/user/${data.user_id}/details`);
 	};
+
 	const col = [
 		{ label: 'Id', name: 'id' },
 		{ label: 'Email', name: 'email' },
@@ -60,12 +49,13 @@ export default function UserTable() {
 			),
 		},
 	];
+
 	return (
 		<>
 			<TableComponent
 				handleRowClick={handleDetails}
 				col={col}
-				data={data}
+				url='/api/users/admin'
 				title='Admin Users'
 			/>
 			<ModalComponent open={openDelete} toggle={handleDeleteToggle} />

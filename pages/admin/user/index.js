@@ -96,7 +96,7 @@ export default function UserTable() {
 				handleRowClick={handleDetails}
 				col={col}
 				addButton
-				url='/api/auth'
+				url='/api/users'
 				title='Customer Management'
 			/>
 			<Modal

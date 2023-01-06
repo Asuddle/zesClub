@@ -1,9 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Button } from '@mui/material';
-import ModalComponent from '../../components/admin/dialog';
-import TableComponent from '../../components/admin/table';
+import ModalComponent from '../../../components/admin/dialog';
+import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const csvHeaders = [
@@ -19,6 +20,7 @@ export default function EnquiryTable() {
 	const [openDelete, setOpenDelete] = useState(false);
 	const [deleteId, setDeleteId] = useState(0);
 	const [refresh, setRefresh] = useState(false);
+	const router = useRouter();
 	const handleDeleteToggle = (ev, id = 0) => {
 		ev.stopPropagation();
 		setDeleteId(id);
@@ -72,6 +74,9 @@ export default function EnquiryTable() {
 			),
 		},
 	];
+	const handleRow = (data) => {
+		router.push(`/admin/enquiry/${data.id}/details`);
+	};
 
 	return (
 		<div>
@@ -79,6 +84,7 @@ export default function EnquiryTable() {
 				csvHeaders={csvHeaders}
 				refresh={refresh}
 				col={col}
+				handleRowClick={handleRow}
 				title='Enquiry Management'
 			/>
 			<ModalComponent

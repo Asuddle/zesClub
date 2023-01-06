@@ -38,12 +38,17 @@ export default async function handler(req, res) {
 			break;
 		case 'GET':
 			try {
-				let qr = req.query.q || '';
-				let sql = `SELECT * FROM events where name like '%${qr}%' or price like  '%${qr}%' or description like  '%${qr}%' or venue like  '%${qr}%' or audience like  '%${qr}%' ;`;
+				let sql = `SELECT bookings.user_id,bookings.event_id,events.name as event_name ,events.price,events.image,customers.firstName,user.email,customers.lastName ,bookings.is_paid  
+				FROM bookings 
+				INNER JOIN events ON bookings.event_id=events.id
+				INNER JOIN user ON bookings.user_id=user.id
+				INNER JOIN customers ON bookings.user_id=customers.user_id;`;
+
 				await db.query(sql, (err, result) => {
 					if (err) {
 						res.send(err);
 					}
+
 					res.status(200).send({ data: result, totalCount: result.length });
 				});
 			} catch (error) {

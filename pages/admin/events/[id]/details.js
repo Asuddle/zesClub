@@ -7,6 +7,7 @@ const data1 = [
 	{ name: 'audience', label: 'Audience' },
 	{ name: 'date', label: 'Date' },
 	{ name: 'venue', label: 'Venue' },
+	{ name: 'createdDate', label: 'Created At' },
 ];
 
 export default function EventDetails() {
@@ -16,6 +17,7 @@ export default function EventDetails() {
 			dataObj={data1}
 			images={['image']}
 			title='Event Details'
+			heading='name'
 		/>
 	);
 }

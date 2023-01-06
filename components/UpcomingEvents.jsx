@@ -38,7 +38,7 @@ export default function UpcomingEvents() {
 	useEffect(() => {
 		axios.get('/api/events').then((res) => {
 			let dt = res.data.data;
-			dt.length = 3;
+			// dt.length = 3;
 			setData(dt);
 		});
 	}, []);
