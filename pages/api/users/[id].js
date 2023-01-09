@@ -1,7 +1,45 @@
 import formidable, { IncomingForm } from 'formidable';
 
 import db from '../../../util/mongodb';
+import { saveFile } from '../auth';
 
+const userValue = {
+	// email: 'email',
+	title: 'title',
+	firstName: 'firstName',
+	lastName: 'lastName',
+	middleName: 'middleName',
+	country: 'country',
+	city: 'city',
+	nationality: 'nationality',
+	profession: 'profession',
+	emiratesID: 'emiratesID',
+	mobile: 'mobile',
+	haveOwnBusiness: 'haveOwnBusiness',
+	industrySector: 'industrySector',
+	website: 'website',
+	hobbies: 'hobbies',
+	interest: 'interest',
+	age: 'age',
+	weight: 'weight',
+	makeHappy: 'makeHappy',
+	expectations: 'expectations',
+	height: 'height',
+	spouse_title: 'spouse_title',
+	spouse_firstName: 'spouse_firstName',
+	spouse_middleName: 'spouse_middleName',
+	spouse_lastName: 'spouse_lastName',
+	spouse_country: 'spouse_country',
+	spouse_city: 'spouse_city',
+	spouse_nationality: 'spouse_nationality',
+	spouse_profession: 'spouse_profession',
+	spouse_emiratesID: 'spouse_emiratesID',
+};
+export const config = {
+	api: {
+		bodyParser: false,
+	},
+};
 export default async function handler(req, res) {
 	const { method } = req;
 
@@ -25,89 +63,32 @@ export default async function handler(req, res) {
 			try {
 				const form = new formidable.IncomingForm();
 				form.parse(req, async function (err, fields, files) {
-					const {
-						email,
-						password,
-						role,
-						title,
-						firstName,
-						lastName,
-						middleName,
-						country,
-						city,
-						nationality,
-						profession,
-						emiratesID,
-						mobile,
-						haveOwnBusiness,
-						industrySector,
-						website,
-						hobbies,
-						interest,
-						age,
-						weight,
-						makeHappy,
-						expectations,
-					} = fields;
-					const hash = await bcrypt.hash(password, 10);
-					let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','user')`;
+					let cond = '';
+					for (const key in fields) {
+						if (userValue[key]) {
+							cond = cond + `${userValue[key]}='${fields[key] || ''}' ,`;
+						}
+					}
+					cond = cond.slice(0, -1);
+
+					if (Object.keys(files).length > 0) {
+						saveFile(files, 'photo');
+						cond = cond + `, photo='${files.photo.originalFilename}'`;
+					}
+
+					// res.send({ cond });
+					let sql = `UPDATE customers SET ${cond} WHERE user_id = ${req.query.id}`;
 					await db.query(sql, async (err, result) => {
 						if (err) {
-							res.send({ err });
+							res.send(err);
 						}
-						let sqlCustomer = ``;
-
-						try {
-							await saveFile(files);
-							if (
-								fields.spouse_title &&
-								fields.spouse_firstName &&
-								fields.spouse_lastName &&
-								fields.spouse_profession
-							) {
-								sqlCustomer = `INSERT INTO customers(title,firstName,lastName,middleName,country,city,nationality,profession,emiratesID,
-										spouse_title,spouse_firstName,spouse_lastName,spouse_middleName,spouse_country,spouse_city,spouse_nationality,spouse_profession,spouse_emiratesID
-										mobile,haveOwnBusiness,industrySector,website,hobbies,interest,age,weight,makeHappy,expectations,photo,user_id) VALUES
-									('${title}','${firstName}','${lastName}','${
-									middleName || ''
-								}','${country}','${city}','${nationality}','${profession}','${emiratesID}'
-									
-									'${fields.spouse_title}','${fields.spouse_firstName}','${
-									fields.spouse_lastName
-								}','${fields.spouse_middleName || ''}','${
-									fields.spouse_country
-								}','${fields.spouse_city}','${fields.spouse_nationality}','${
-									fields.spouse_profession
-								}','${
-									fields.spouse_emiratesId
-								}','${mobile}','${haveOwnBusiness}','${industrySector}','${website}','${hobbies}','${interest}','${age}','${weight}','${makeHappy}','${expectations}','/${
-									files.profilePhoto.originalFilename
-								}','${result.insertId}')`;
-							} else {
-								sqlCustomer = `INSERT INTO customers(title,firstName,lastName,middleName,country,city,nationality,profession,emiratesID,mobile,haveOwnBusiness,industrySector,website,hobbies,interest,age,weight,makeHappy,expectations,photo,user_id) VALUES
-									('${title}','${firstName}','${lastName}','${
-									middleName || ''
-								}','${country}','${city}','${nationality}','${profession}','${emiratesID}','${mobile}','${haveOwnBusiness}','${industrySector}','${website}','${hobbies}','${interest}','${age}','${weight}','${makeHappy}','${expectations}','/${
-									files.profilePhoto.originalFilename
-								}','${result.insertId}')`;
-							}
-							console.log(fields);
-							await db.query(sqlCustomer, (err, result) => {
-								if (err) {
-									res.send({ err });
-								}
-								sendMail(email);
-								res.status(201).send({ message: 'User Create Successfully' });
-							});
-						} catch (error) {
-							console.log('here', error);
-							res.status(400).json({ success: false, error: error });
-						}
+						res.status(200).send({ message: 'Entry Updated Successfully' });
 					});
 				});
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
+			break;
 		case 'DELETE':
 			try {
 				let sql = `DELETE FROM customers WHERE user_id = ${req.query.id}`;

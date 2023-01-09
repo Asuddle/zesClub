@@ -243,7 +243,8 @@ let countryArr = [
 	{ label: 'Yemen', code: 'YE' },
 	{ label: 'Zambia', code: 'ZM' },
 	{ label: 'Zimbabwe', code: 'ZW' },
-];
-countryArr.map((item) => ({ ...item, value: item.label }));
+].map((item) => ({ ...item, value: item.label }));
+
+// countryArr.map((item) => ({ ...item, value: item.label }));
 
 export { countryArr };

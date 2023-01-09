@@ -45,7 +45,38 @@ export const saveFile = async (file, fileName = 'profilePhoto') => {
 	await fs.unlinkSync(file[fileName].filepath);
 	return;
 };
-
+const userValue = {
+	// email: 'email',
+	title: 'title',
+	firstName: 'firstName',
+	lastName: 'lastName',
+	middleName: 'middleName',
+	country: 'country',
+	city: 'city',
+	nationality: 'nationality',
+	profession: 'profession',
+	emiratesID: 'emiratesID',
+	mobile: 'mobile',
+	haveOwnBusiness: 'haveOwnBusiness',
+	industrySector: 'industrySector',
+	website: 'website',
+	hobbies: 'hobbies',
+	interest: 'interest',
+	age: 'age',
+	weight: 'weight',
+	makeHappy: 'makeHappy',
+	expectations: 'expectations',
+	height: 'height',
+	spouse_title: 'spouse_title',
+	spouse_firstName: 'spouse_firstName',
+	spouse_middleName: 'spouse_middleName',
+	spouse_lastName: 'spouse_lastName',
+	spouse_country: 'spouse_country',
+	spouse_city: 'spouse_city',
+	spouse_nationality: 'spouse_nationality',
+	spouse_profession: 'spouse_profession',
+	spouse_emiratesID: 'spouse_emiratesID',
+};
 export default async function handler(req, res) {
 	const { method } = req;
 
@@ -57,7 +88,7 @@ export default async function handler(req, res) {
 					const {
 						email,
 						password,
-						role,
+						role = 'user',
 						title,
 						firstName,
 						lastName,
@@ -79,46 +110,29 @@ export default async function handler(req, res) {
 						expectations,
 					} = fields;
 					const hash = await bcrypt.hash(password, 10);
-					let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','user')`;
+					let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','${role}')`;
 					await db.query(sql, async (err, result) => {
 						if (err) {
 							res.send({ err });
 						}
-						let sqlCustomer = ``;
 						try {
-							await saveFile(files);
-							if (
-								fields.spouse_title &&
-								fields.spouse_firstName &&
-								fields.spouse_lastName &&
-								fields.spouse_profession
-							) {
-								sqlCustomer = `INSERT INTO customers(title,firstName,lastName,middleName,country,city,nationality,profession,emiratesID,
-									spouse_title,spouse_firstName,spouse_lastName,spouse_middleName,spouse_country,spouse_city,spouse_nationality,spouse_profession,spouse_emiratesID
-									mobile,haveOwnBusiness,industrySector,website,hobbies,interest,age,weight,makeHappy,expectations,photo,user_id) VALUES
-								('${title}','${firstName}','${lastName}','${
-									middleName || ''
-								}','${country}','${city}','${nationality}','${profession}','${emiratesID}'
-								
-								'${fields.spouse_title}','${fields.spouse_firstName}','${
-									fields.spouse_lastName
-								}','${fields.spouse_middleName || ''}','${
-									fields.spouse_country
-								}','${fields.spouse_city}','${fields.spouse_nationality}','${
-									fields.spouse_profession
-								}','${
-									fields.spouse_emiratesId
-								}','${mobile}','${haveOwnBusiness}','${industrySector}','${website}','${hobbies}','${interest}','${age}','${weight}','${makeHappy}','${expectations}','/${
-									files.profilePhoto.originalFilename
-								}','${result.insertId}')`;
-							} else {
-								sqlCustomer = `INSERT INTO customers(title,firstName,lastName,middleName,country,city,nationality,profession,emiratesID,mobile,haveOwnBusiness,industrySector,website,hobbies,interest,age,weight,makeHappy,expectations,photo,user_id) VALUES
-								('${title}','${firstName}','${lastName}','${
-									middleName || ''
-								}','${country}','${city}','${nationality}','${profession}','${emiratesID}','${mobile}','${haveOwnBusiness}','${industrySector}','${website}','${hobbies}','${interest}','${age}','${weight}','${makeHappy}','${expectations}','/${
-									files.profilePhoto.originalFilename
-								}','${result.insertId}')`;
+							await saveFile(files, 'photo');
+							let labelStr = '';
+							let valueStr = '';
+							// res.send({});
+							for (const key in userValue) {
+								if (fields[key]) {
+									labelStr = labelStr + userValue[key] + ', ';
+									valueStr = valueStr + `'${fields[key]}'` + ',';
+								}
 							}
+							labelStr = labelStr + 'photo' + ',';
+							valueStr = valueStr + `'${files.photo.originalFilename}'` + ',';
+							labelStr = labelStr + 'user_id';
+							valueStr = valueStr + `'${result.insertId}'`;
+
+							let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
+
 							await db.query(sqlCustomer, (err, result) => {
 								if (err) {
 									res.send({ err });

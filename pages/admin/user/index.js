@@ -96,7 +96,9 @@ export default function UserTable() {
 				handleRowClick={handleDetails}
 				col={col}
 				addButton
+				refresh={refresh}
 				url='/api/users'
+				addNewCallback={() => router.push('/admin/user/add')}
 				title='Customer Management'
 			/>
 			<Modal

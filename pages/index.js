@@ -19,16 +19,18 @@ import SubHeader from '../components/SubHeader';
 import TestimonialComponent from '../components/Testimonial';
 import UpcomingEvents from '../components/UpcomingEvents';
 import WhyZES from '../components/WhyZES';
+import axios from 'axios';
 import styles from '../styles/Home.module.scss';
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Home() {
+	const [data, setData] = useState([]);
+
 	useEffect(() => {
 		AOS.init();
-		// fetchTodos();
 	}, []);
 	// AOS.init({ duration: 1000 });
-
 	return (
 		<div>
 			<Head>
@@ -43,9 +45,9 @@ export default function Home() {
 
 			<WhyZES />
 			<ReadyBanner />
-			<ServiceComponent />
+			<ServiceComponent data={data} />
 			<ProjectsComponent />
-			{/*  */}
+
 			<PromotionBanner />
 			<TestimonialComponent />
 			<HeadingComponent

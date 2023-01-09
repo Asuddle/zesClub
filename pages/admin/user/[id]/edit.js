@@ -13,15 +13,78 @@ export default function EditCustomer() {
 			.get(`/api/users/${id}`)
 			.then((res) => {
 				let tempData = res.data.data[0];
+				tempData.country = { value: tempData.country, label: tempData.country };
+				tempData.title = { value: tempData.title, label: tempData.title };
+				tempData.city = { value: tempData.city, label: tempData.city };
+				tempData.interest = {
+					value: tempData.interest,
+					label: tempData.interest,
+				};
+				if (tempData.spouse_country) {
+					tempData.spouse_country = {
+						value: tempData.spouse_country,
+						label: tempData.spouse_country,
+					};
+					tempData.spouse_title = {
+						value: tempData.spouse_title,
+						label: tempData.spouse_title,
+					};
+					tempData.spouse_city = {
+						value: tempData.spouse_city,
+						label: tempData.spouse_city,
+					};
+					tempData.interest = {
+						value: tempData.spouse_interest,
+						label: tempData.spouse_interest,
+					};
+				}
+
 				setData(tempData);
 			})
 			.catch((err) => {
-				console.log(err);
+				console.error(err);
 			});
 	}, [id]);
 
+	const onCustomSubmit = (data, file) => {
+		const formData = new FormData();
+		let result = {
+			...data,
+			...{
+				title: data.title.value,
+				interest: data.interest.value,
+				city: data.city.value,
+				haveOwnBusiness: 0,
+				photo: file,
+				country: data.country.value,
+				spouse_title: data.spouse_title?.value || '',
+				spouse_city: data.spouse_city?.value || '',
+				spouse_country: data.spouse_country?.value || '',
+			},
+		};
+		const config = {
+			headers: { 'content-type': 'multipart/form-data' },
+		};
+		for (const key in result) {
+			formData.append(key, result[key]);
+		}
+		axios
+			.put(`/api/users/${id}`, result, config)
+			.then((res) => {
+				router.push('/admin/user');
+				// setData(res.dat	a.data[0]);
+			})
+			.catch((err) => {
+				// console.error(err);
+			});
+	};
+
 	return Object.keys(data).length > 0 ? (
-		<RegisterForm defaultValue={data} />
+		<RegisterForm
+			defaultValue={data}
+			onCustomSubmit={onCustomSubmit}
+			tabValue={typeof data.spouse_firstName == 'string' ? 2 : 1}
+		/>
 	) : (
 		<></>
 	);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import BaseCard from '../../../../components/baseCard/BaseCard';
+import DetailComponent from '../../../../components/details';
 import Image from 'next/image';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,9 +14,6 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 export default function UserDetails() {
-	const router = useRouter();
-	const [data, setData] = useState({});
-	const { id } = router.query;
 	const data1 = [
 		{ name: 'title', label: 'Title' },
 		{ name: 'photo', label: 'Profile Photo' },
@@ -34,64 +32,29 @@ export default function UserDetails() {
 		{ name: 'height', label: 'Height' },
 		{ name: 'age', label: 'Age' },
 		{ name: 'weight', label: 'Weight' },
-	];
-
-	const data4 = [
 		{ name: 'expectations', label: 'Expectations' },
-		{ name: 'makesHappy', label: 'What makes you happy?' },
+		{ name: 'makeHappy', label: 'What makes you happy?' },
+		{ name: 'spouse_title', label: 'Spouse Title' },
+		{ name: 'spouse_firstName', label: 'Spouse FirstName' },
+		{ name: 'spouse_middleName', label: 'Spouse MiddleName' },
+		{ name: 'spouse_lastName', label: 'Spouse LastName' },
+		{ name: 'spouse_mobile', label: 'Spouse Mobile Number' },
+		{ name: 'spouse_country', label: 'Spouse Country' },
+		{ name: 'spouse_city', label: 'Spouse City' },
+		{ name: 'spouse_nationality', label: 'Spouse Nationality' },
+		{ name: 'spouse_profession', label: 'Spouse Profession' },
+		{ name: 'spouse_emiratesID', label: 'Spouse EmiratesId' },
 	];
 
-	useEffect(() => {
-		axios
-			.get(`/api/users/${id}`)
-			.then((res) => {
-				let tempData = res.data.data[0];
-				setData(tempData);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, [id]);
 	return (
 		<div>
-			<Typography variant='h4'>Details</Typography>
-			<BaseCard title={`${data.firstName} ${data.middleName} ${data.lastName}`}>
-				<Table sx={{ minWidth: 650 }} aria-label='simple table'>
-					<TableHead>
-						<TableRow>
-							<TableCell>
-								<strong>Label</strong>
-							</TableCell>
-							<TableCell>
-								<strong>Value</strong>
-							</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{data1.map(
-							(item) =>
-								data[item.name] && (
-									<TableRow hover key={item.name}>
-										<TableCell>{item.label}</TableCell>
-										<TableCell>
-											{item.name === 'photo' ? (
-												<Image
-													src={`${data[item.name]}`}
-													width='100px'
-													height='100px'
-													alt='client'
-													layout='responsive'
-												/>
-											) : (
-												<strong>{data[item.name]}</strong>
-											)}
-										</TableCell>
-									</TableRow>
-								),
-						)}
-					</TableBody>
-				</Table>
-			</BaseCard>
+			<DetailComponent
+				url='/api/users'
+				dataObj={data1}
+				images={['photo']}
+				title='Admin User Details'
+				heading='firstName'
+			/>
 		</div>
 	);
 }

@@ -1,4 +1,3 @@
-import { FormFeedback } from 'reactstrap';
 import Select from 'react-select';
 import styles from '../../styles/Register.module.scss';
 
@@ -18,6 +17,7 @@ const customStyles = {
 		marginRight: '6px',
 	}),
 };
+
 const errorStyles = {
 	control: (provided, state) => ({
 		...provided,
@@ -53,11 +53,14 @@ export const SelectField = ({
 	errors,
 	label,
 }) => {
+	// console.log(options.find((item) => item.value === field.value));
 	return (
 		<>
 			<Select
 				styles={errors[field.name] ? errorStyles : customStyles}
 				className={styles.select}
+				// defaultValue={options.find((item) => item.value === field.value)}
+				// defaultInputValue={field.value}
 				{...field}
 				components={{
 					IndicatorSeparator: () => null,
@@ -66,7 +69,6 @@ export const SelectField = ({
 				options={options}
 			/>
 			<div>
-				{' '}
 				{errors[field.name] && (
 					<p className='error-message'>{errors[field.name].message}</p>
 				)}

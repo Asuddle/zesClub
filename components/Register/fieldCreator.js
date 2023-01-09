@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import AsyncSelect from 'react-select/async';
 import AutocompleteComponent from '../form/autocomplete';
 import { SelectField } from './select';
+import WysiwygComponent from '../form/wysiwyg';
 import styles from '../../styles/Register.module.scss';
 
 export default function FieldCreator({
@@ -188,7 +189,7 @@ export default function FieldCreator({
 						name={item.name}
 						control={control}
 						render={({ field }) => {
-							console.log(field);
+							// console.log(field);
 							return (
 								<>
 									{fileInput && (
@@ -206,9 +207,31 @@ export default function FieldCreator({
 										{...field}
 										onChange={(e) => handleFileChange(e, field)}
 										invalid={errors[field.name]}
+										value={fileInput ? field.value : ''}
 									/>
 								</>
 							);
+						}}
+					/>
+					{errors[item.name] && (
+						<p className='error-message'>{errors[item.name].message}</p>
+					)}
+				</FormGroup>
+			</Col>
+		);
+	} else if (item.type == 'wysiwyg') {
+		return (
+			<Col md={col}>
+				<FormGroup>
+					<Label className={styles.inputLabel} for='exampleText'>
+						{item.label}
+					</Label>
+
+					<Controller
+						name={item.name}
+						control={control}
+						render={({ field }) => {
+							return <WysiwygComponent field={field} />;
 						}}
 					/>
 					{errors[item.name] && (

@@ -133,10 +133,39 @@ export const spouseformField1 = [
 		label: 'Country',
 	},
 	{
-		type: 'text',
+		type: 'select',
 		name: 'spouse_city',
 		label: 'Emirates City',
-		align: 'right',
+		options: [
+			{
+				value: 'Abu Dhabi',
+				label: 'Abu Dhabi',
+			},
+			{
+				value: 'Dubai',
+				label: 'Dubai',
+			},
+			{
+				value: 'Sharjah',
+				label: 'Sharjah',
+			},
+			{
+				value: 'Ajman',
+				label: 'Ajman',
+			},
+			{
+				value: 'Umm Al Quwain',
+				label: 'Umm Al Quwain',
+			},
+			{
+				value: 'Ras Al Khaimah',
+				label: 'Ras Al Khaimah',
+			},
+			{
+				value: 'Fujairah',
+				label: 'Fujairah',
+			},
+		],
 	},
 	{
 		type: 'text',
@@ -150,7 +179,7 @@ export const spouseformField1 = [
 	},
 	{
 		type: 'text',
-		name: 'spouse_emiratesId',
+		name: 'spouse_emiratesID',
 		label: 'Emirates ID',
 		align: 'right',
 	},
@@ -226,7 +255,7 @@ export const formField4 = [
 	},
 	{
 		type: 'textarea',
-		name: 'makesHappy',
+		name: 'makeHappy',
 		label: 'What makes you feel happy?',
 	},
 ];
@@ -247,14 +276,18 @@ export const formField5 = [
 	},
 ];
 
-export default function RegisterForm({ defaultValue = {} }) {
-	const [zesClub, setZesClub] = useState(1);
+export default function RegisterForm({
+	defaultValue = {},
+	onCustomSubmit = false,
+	tabValue = 1,
+}) {
+	const [zesClub, setZesClub] = useState(tabValue);
 	const [fileInput, setFileInput] = useState('');
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [confirm1, setConfirm1] = useState(false);
 	const [confirm2, setConfirm2] = useState(false);
 	// const [isSubmit,setIsSubmit]
-	const validationSchema = yup.object({
+	let validationObj = {
 		title: yup.mixed().required(),
 		firstName: yup.string().required(),
 		lastName: yup.string().required(),
@@ -277,7 +310,24 @@ export default function RegisterForm({ defaultValue = {} }) {
 		hobbies: yup.string().required(),
 		interest: yup.mixed().required(),
 		expectations: yup.string().required(),
-	});
+	};
+	if (zesClub === 2) {
+		validationObj = {
+			...validationObj,
+			...{
+				spouse_title: yup.mixed().required(),
+				spouse_firstName: yup.string().required(),
+				spouse_lastName: yup.string().required(),
+				spouse_country: yup.mixed().required(),
+				spouse_city: yup.mixed().required(),
+				spouse_emiratesID: yup.string().required(),
+				spouse_nationality: yup.string().required(),
+				// spouse_
+			},
+		};
+	}
+
+	const validationSchema = yup.object(validationObj);
 	// console.log('defaultVal', defaultValue);
 	const {
 		control,
@@ -292,41 +342,40 @@ export default function RegisterForm({ defaultValue = {} }) {
 	const handleTab = (val) => {
 		setZesClub(val);
 	};
-	const convertToBase64 = (file) => {
-		const reader = new FileReader();
-		reader.onloadend = () => {
-			console.log(reader.result.toString());
-		};
-		reader.readAsDataURL(file);
-	};
-	const onSubmit = (data) => {
-		const formData = new FormData();
 
-		let result = {
-			...data,
-			...{
-				title: data.title.value,
-				interest: data.interest.value,
-				city: data.city.value,
-				haveOwnBusiness: 0,
-				profilePhoto: fileInput,
-				country: data.country.value,
-			},
-		};
-		for (const key in result) {
-			formData.append(key, result[key]);
+	const onSubmit = (data) => {
+		if (onCustomSubmit) {
+			onCustomSubmit(data, fileInput);
+		} else {
+			const formData = new FormData();
+
+			let result = {
+				...data,
+				...{
+					title: data.title.value,
+					interest: data.interest.value,
+					city: data.city.value,
+					haveOwnBusiness: 0,
+					photo: fileInput,
+					country: data.country.value,
+				},
+			};
+			for (const key in result) {
+				formData.append(key, result[key]);
+			}
+			const config = {
+				headers: { 'content-type': 'multipart/form-data' },
+			};
+			axios
+				.post('/api/auth', formData, config)
+				.then((res) => {
+					setIsSuccess(true);
+					successCallback();
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		}
-		const config = {
-			headers: { 'content-type': 'multipart/form-data' },
-		};
-		axios
-			.post('/api/auth', formData, config)
-			.then((res) => {
-				setIsSuccess(true);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
 	};
 	return (
 		<ContainerComponent>

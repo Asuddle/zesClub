@@ -1,5 +1,36 @@
 import db from '../../../util/mongodb';
-
+const userValue = {
+	// email: 'email',
+	title: 'title',
+	firstName: 'firstName',
+	lastName: 'lastName',
+	middleName: 'middleName',
+	country: 'country',
+	city: 'city',
+	nationality: 'nationality',
+	profession: 'profession',
+	emiratesID: 'emiratesID',
+	mobile: 'mobile',
+	haveOwnBusiness: 'haveOwnBusiness',
+	industrySector: 'industrySector',
+	website: 'website',
+	hobbies: 'hobbies',
+	interest: 'interest',
+	age: 'age',
+	weight: 'weight',
+	makeHappy: 'makeHappy',
+	expectations: 'expectations',
+	height: 'height',
+	spouse_title: 'spouse_title',
+	spouse_firstName: 'spouse_firstName',
+	spouse_middleName: 'spouse_middleName',
+	spouse_lastName: 'spouse_lastName',
+	spouse_country: 'spouse_country',
+	spouse_city: 'spouse_city',
+	spouse_nationality: 'spouse_nationality',
+	spouse_profession: 'spouse_profession',
+	spouse_emiratesID: 'spouse_emiratesID',
+};
 export default async function handler(req, res) {
 	const { method } = req;
 
@@ -39,13 +70,18 @@ export default async function handler(req, res) {
 						res.send({ err });
 					}
 					try {
-						let sqlCustomer = `INSERT INTO customers(title,firstName,lastName,middleName,country,city,nationality,profession,emiratesID,mobile,haveOwnBusiness,industrySector,website,hobbies,interest,age,weight,makeHappy,expectations,photo,user_id) VALUES 
-								('${title}','${firstName}','${lastName}','${
-							middleName || ''
-						}','${country}','${city}','${nationality}','${profession}','${emiratesID}','${mobile}','${haveOwnBusiness}','${industrySector}','${website}','${hobbies}','${interest}','${age}','${weight}','${makeHappy}','${expectations}','${photo}','${
-							result.insertId
-						}')`;
+						let labelStr = '';
+						let valueStr = '';
+						for (const key in userValue) {
+							if (req.body[key]) {
+								labelStr = labelStr + userValue[key] + ', ';
+								valueStr = valueStr + `'${req.body[key]}'` + ',';
+							}
+						}
+						labelStr = labelStr + 'user_id';
+						valueStr = valueStr + result.insertId;
 
+						let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
 						await db.query(sqlCustomer, (err, result) => {
 							if (err) {
 								res.send({ err });
@@ -64,7 +100,10 @@ export default async function handler(req, res) {
 			break;
 		case 'GET':
 			try {
-				let sql = `SELECT * FROM user INNER JOIN customers ON user.id=customers.user_id where role='user';`;
+				let qr = req.query.q || '';
+				let sql = `SELECT * FROM user INNER JOIN customers ON user.id=customers.user_id where role='user' and (email like '%${qr}%' or
+				firstName like  '%${qr}%' or
+			      lastName like  '%${qr}%' or lastName like  '%${qr}%' or country  like  '%${qr}%' or city like  '%${qr}%');`;
 				await db.query(sql, (err, result) => {
 					if (err) {
 						res.send(err);

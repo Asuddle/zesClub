@@ -81,6 +81,9 @@
 		margin: 0px;
 		margin-top: 20px !important;
 	}
+	.userImage {
+		border-radius: 50% !important;
+	}
 	.userID {
 		@include body-medium-para;
 		color: $moderate-grey-shade;

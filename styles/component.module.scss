@@ -37,10 +37,23 @@
 				background: $black-shade !important;
 			}
 		}
+		.selectedNavLink {
+			color: $white-shade !important;
+			@include body-Regular16;
+			padding: 18px !important;
+			background: $black-shade !important;
+		}
 	}
 	.verticalComponentWrapper {
 		padding: 20px !important;
 		margin-left: 300px !important;
 		min-height: 100vh !important;
+	}
+}
+.wysiwyg {
+	height: 400px;
+	border: 1px solid #ced4da;
+	.wrapperClass {
+		padding: 16px;
 	}
 }

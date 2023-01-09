@@ -1,14 +1,22 @@
 import { Button, Card, Col, Nav, NavItem, NavLink, Row } from 'reactstrap';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
+import axios from 'axios';
 import styles from '../../styles/user.module.scss';
-import { useState } from 'react';
 
 export default function UserEventComponent() {
 	const [activeTab, setActiveTab] = useState('1');
+	const [data, setData] = useState([]);
 	const handleNav = (val) => {
 		setActiveTab(val);
 	};
+	useEffect(() => {
+		axios.get('/api/events').then((res) => {
+			console.log(res.data.data);
+			setData(res.data.data);
+		});
+	}, []);
 	return (
 		<div className={styles.userEventWrapper}>
 			<h1 className={styles.heading}>Dashboard</h1>
@@ -44,12 +52,12 @@ export default function UserEventComponent() {
 					</NavItem>
 				</Nav>
 			</div>
-			{[1, 2, 3, 4].map((item) => (
-				<Card className={styles.eventCard}>
+			{data.map((item) => (
+				<Card className={styles.eventCard} key={item.name}>
 					<Row>
 						<Col md={3}>
 							<Image
-								src='/components/service1.jpg'
+								src={`/${item.image}`}
 								// layout='responsive'
 								width={200}
 								height={150}
@@ -57,25 +65,21 @@ export default function UserEventComponent() {
 							<div className={styles.imageDivider}></div>
 						</Col>
 						<Col md={9} className={styles.eventData}>
-							<h6 className={styles.eventName}>Event Name here</h6>
-							<p className={styles.price}>AED 2000</p>
-							<p className={styles.description}>
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-								diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-								aliquam erat volutpat.
-							</p>
+							<h6 className={styles.eventName}>{item.name}</h6>
+							<p className={styles.price}>AED {item.price}</p>
+							<p className={styles.description}>{item.description}</p>
 							<br />
 							<Row>
-								<Col md={2}>
-									<p className={styles.eventDetail}>Venue Here</p>
+								<Col md={3}>
+									<p className={styles.eventDetail}>{item.venue}</p>
+								</Col>
+								<Col md={3}>
+									<p className={styles.eventDetail}>{item.audience}</p>
 								</Col>
 								<Col md={2}>
-									<p className={styles.eventDetail}>Ladies & Gents</p>
+									<p className={styles.eventDetail}>{item.date}</p>
 								</Col>
-								<Col md={2}>
-									<p className={styles.eventDetail}>20 Oct 2022</p>
-								</Col>
-								<Col md={6} className='text-right'>
+								<Col md={4} className='text-right'>
 									<Button className={styles.bookNowButton}>Book Now</Button>
 								</Col>
 							</Row>

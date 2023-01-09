@@ -1,10 +1,12 @@
 import * as yup from 'yup';
 
 import { Col, Row } from 'reactstrap';
+import { useEffect, useState } from 'react';
 
 import FieldCreator from '../Register/fieldCreator';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
+import axios from 'axios';
 import { countryArr } from '../countryArr';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../styles/user.module.scss';
@@ -138,6 +140,7 @@ export const formField1 = [
 	},
 ];
 export default function UserProfileComponent({ defaultValue = {} }) {
+	const [data, setData] = useState({});
 	const onSubmit = () => {};
 
 	const validationSchema = yup.object({
@@ -164,15 +167,35 @@ export default function UserProfileComponent({ defaultValue = {} }) {
 		interest: yup.mixed().required(),
 		expectations: yup.string().required(),
 	});
+
 	const {
 		control,
 		handleSubmit,
 		setValue,
 		formState: { errors },
+		reset,
 	} = useForm({
-		defaultValues: defaultValue,
+		defaultValues: data,
 		resolver: yupResolver(validationSchema),
 	});
+	useEffect(() => {
+		let data = JSON.parse(localStorage.getItem('userData'));
+		console.log(data.id);
+		axios.get(`/api/users/${data.id}`).then((res) => {
+			setData(res.data.data[0]);
+			const tempData = res.data.data[0];
+			tempData.country = { value: tempData.country, label: tempData.country };
+			tempData.title = { value: tempData.title, label: tempData.title };
+			tempData.city = { value: tempData.city, label: tempData.city };
+			tempData.interest = {
+				value: tempData.interest,
+				label: tempData.interest,
+			};
+			reset(tempData);
+		});
+	}, []);
+	// console.log(data);
+	// const [title,firstName,middleName,lastName:'']
 	return (
 		<div className={styles.userProfileWrapper}>
 			<h1 className={styles.heading}>Profile</h1>
@@ -180,11 +203,18 @@ export default function UserProfileComponent({ defaultValue = {} }) {
 			<br />
 			<Row>
 				<Col md={2}>
-					<Image src='/user.png' width={130} height={130} />
+					<Image
+						className={styles.userImage}
+						src={`/${data.photo}`}
+						width={130}
+						height={130}
+					/>
 				</Col>
 				<Col md={6}>
-					<p className={styles.userName}>John Doe Jane Doe</p>
-					<p className={styles.userID}>USER - ID NUMBER</p>
+					<p className={styles.userName}>
+						{data.firstName} {data.middleName} {data.lastName}
+					</p>
+					<p className={styles.userID}>{data.user_id}</p>
 					<p className={styles.verifiedAccount}>Verified account</p>
 				</Col>
 				<Col md={4}>
@@ -193,7 +223,7 @@ export default function UserProfileComponent({ defaultValue = {} }) {
 							<p className={styles.verifiedMobileLabel}>
 								Verified mobile number
 							</p>
-							<p className={styles.phone}>+971509506546</p>
+							<p className={styles.phone}>{data.mobile}</p>
 						</div>
 						<FontAwesomeIcon size='2x' color='#fda700' icon={faPencil} />
 					</div>

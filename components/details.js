@@ -27,6 +27,7 @@ export default function DetailComponent({
 			.get(`${url}/${id}`)
 			.then((res) => {
 				let tempData = res.data.data[0];
+				console.log(tempData);
 				setData(tempData);
 			})
 			.catch((err) => {
@@ -57,11 +58,11 @@ export default function DetailComponent({
 										<TableCell>
 											{images.includes(item.name) ? (
 												<Image
-													src={`/${data[item.name]}`}
-													width='300px'
-													height='300px'
+													src={`/${data[item.name]}`.replace('//', '/')}
+													width='200'
+													height='200'
 													alt='client'
-													// layout='responsive'
+													// layout='responsive' hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh r23456788877
 												/>
 											) : (
 												<strong>{data[item.name]}</strong>

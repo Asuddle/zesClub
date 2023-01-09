@@ -15,17 +15,22 @@ const Menuitems = [
 		href: '/admin/user',
 	},
 	{
-		title: 'Event Management',
+		title: 'Events',
 		icon: 'camera',
 		href: '/admin/events',
 	},
 	{
-		title: 'Booking Management',
+		title: 'Booking',
 		icon: 'layout',
 		href: '/admin/bookings',
 	},
 	{
-		title: 'Enquiry Management',
+		title: 'Gallery',
+		icon: 'image',
+		href: '/admin/gallery',
+	},
+	{
+		title: 'Enquiry',
 		icon: 'phone',
 		href: '/admin/enquiry',
 	},
@@ -35,8 +40,18 @@ const Menuitems = [
 		href: '/admin/page-management',
 	},
 	{
+		title: 'Testimonial',
+		icon: 'airplay',
+		href: '/admin/testimonials',
+	},
+	{
+		title: 'Service',
+		icon: 'activity',
+		href: '/admin/services',
+	},
+	{
 		title: 'Promotions',
-		icon: 'layout',
+		icon: 'bookmark',
 		href: '/admin/promotions',
 	},
 
@@ -47,22 +62,22 @@ const Menuitems = [
 	// },
 	{
 		title: 'Office Location',
-		icon: 'info',
+		icon: 'map-pin',
 		href: '/admin/location',
 	},
 	{
 		title: 'System Settings',
-		icon: 'star',
+		icon: 'settings',
 		href: '/admin/rating',
 	},
 	{
 		title: 'Change Password',
-		icon: 'image',
+		icon: 'lock',
 		href: '/admin/image',
 	},
 	{
 		title: 'Log out',
-		icon: 'user',
+		icon: 'log-out',
 		href: '/',
 	},
 ];

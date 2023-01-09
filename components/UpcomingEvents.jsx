@@ -1,13 +1,13 @@
 import { Col, Row } from 'reactstrap';
 import { useEffect, useState } from 'react';
 
-import EventCard from './WhatNext/eventCard';
 import GalleryCard from './Gallery/GalleryCard';
 import HeadingComponent from './Heading';
-import Image from 'next/image';
 import axios from 'axios';
 import styles from '../styles/Home.module.scss';
 import { useRouter } from 'next/router';
+import zEventCard from './WhatNext/eventCard';
+import zImage from 'next/image';
 
 const galleryArr = [
 	{
@@ -38,7 +38,7 @@ export default function UpcomingEvents() {
 	useEffect(() => {
 		axios.get('/api/events').then((res) => {
 			let dt = res.data.data;
-			// dt.length = 3;
+			dt.length = 3;
 			setData(dt);
 		});
 	}, []);

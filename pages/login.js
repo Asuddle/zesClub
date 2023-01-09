@@ -10,16 +10,19 @@ import {
 } from 'reactstrap';
 import { Controller, useForm } from 'react-hook-form';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { signIn, signOut } from 'next-auth/react';
+import { useContext, useState } from 'react';
 
+import { AuthContext } from '../src/context/auth-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Head from 'next/head';
 import axios from 'axios';
 import styles from '../styles/login.module.scss';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function LoginPage() {
+	const authContext = useContext(AuthContext);
 	const router = useRouter();
 	const [errorMess, setErrorMess] = useState('');
 	const handleRegister = () => {
@@ -32,6 +35,7 @@ export default function LoginPage() {
 			.required('Password is a required field')
 			.min(8, 'Password should be at least 8 characters'),
 	});
+	console.log(authContext);
 	const onSubmit = (data) => {
 		axios
 			.post('/api/auth/login', data)
@@ -39,11 +43,17 @@ export default function LoginPage() {
 				if (res.data.err) {
 					setErrorMess(res.data.err);
 				} else {
+					console.log(authContext, res.data);
+					authContext.setAuthState({
+						token: res.data.token,
+						role: res.data.role,
+					});
 					setErrorMess('');
+					localStorage.setItem('userData', JSON.stringify(res.data));
 					if (res.data.role === 'admin') {
 						router.push('/admin');
 					} else {
-						router.push('/');
+						router.push('/user/profile');
 					}
 				}
 			})
