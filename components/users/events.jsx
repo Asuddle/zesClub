@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import styles from '../../styles/user.module.scss';
+import { useRouter } from 'next/router';
 
 export default function UserEventComponent() {
+	const router = useRouter();
 	const [activeTab, setActiveTab] = useState('1');
 	const [data, setData] = useState([]);
 	const handleNav = (val) => {
@@ -17,6 +19,9 @@ export default function UserEventComponent() {
 			setData(res.data.data);
 		});
 	}, []);
+	const handleBook = (id) => {
+		router.push(`/user/events/${id}`);
+	};
 	return (
 		<div className={styles.userEventWrapper}>
 			<h1 className={styles.heading}>Dashboard</h1>
@@ -79,7 +84,13 @@ export default function UserEventComponent() {
 								<Col md={2}>
 									<p className={styles.eventDetail}>{item.date}</p>
 								</Col>
-								<Col md={4} className='text-right'>
+								<Col
+									md={4}
+									className='text-right'
+									onClick={() => {
+										handleBook(item.id);
+									}}
+								>
 									<Button className={styles.bookNowButton}>Book Now</Button>
 								</Col>
 							</Row>

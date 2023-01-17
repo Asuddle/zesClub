@@ -4,15 +4,31 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import * as yup from 'yup';
 
 import { Button, FormGroup, Input, Label, Row } from 'reactstrap';
+import { Controller, useForm } from 'react-hook-form';
 
-import { Editor } from 'react-draft-wysiwyg';
-import FieldCreator from '../../Register/fieldCreator';
 import { Typography } from '@mui/material';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export default function HomePageForm() {
+export const onPageSubmit = (data) => {
+	console.log('data', data);
+	const formData = new FormData();
+	for (const key in data) {
+		formData.append(key, data[key]);
+	}
+	const config = {
+		headers: { 'content-type': 'multipart/form-data' },
+	};
+	axios
+		.put('/api/pages', formData, config)
+		.then((res) => {
+			console.log(res.data);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+export default function HomePageForm({ defaultValues = {} }) {
 	const validationSchema = yup.object({});
 	const {
 		control,
@@ -20,26 +36,29 @@ export default function HomePageForm() {
 		setValue,
 		formState: { errors },
 	} = useForm({
-		defaultValues: {},
+		defaultValues,
 		resolver: yupResolver(validationSchema),
 	});
-	const onSubmit = (data) => {
-		console.log('data', data);
-	};
 
 	return (
 		<div>
 			<Typography variant='h4'>Event Management</Typography>
 			<br />
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(onPageSubmit)}>
 				<Row className='row g-3'>
 					<FormGroup style={{ width: '100%' }}>
 						<Label for='exampleText'>Home (Event Management)</Label>
-						<Input
-							type='textarea'
-							name='text'
-							id='exampleText'
-							style={{ width: '550px', height: '220px' }}
+						<Controller
+							name={'home_event_management'}
+							control={control}
+							render={({ field }) => (
+								<Input
+									type='textarea'
+									{...field}
+									id='exampleText'
+									style={{ width: '550px', height: '220px' }}
+								/>
+							)}
 						/>
 					</FormGroup>
 				</Row>

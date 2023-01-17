@@ -116,3 +116,30 @@
 		}
 	}
 }
+.price {
+	@include caption-boldPara;
+	color: $orange-shade !important;
+	text-transform: uppercase;
+	margin: 7px 0px !important;
+}
+
+.buyTicketButton {
+	background-image: linear-gradient(136deg, #d4175c 0%, #fda700 100%);
+	padding: 10px 14px !important;
+	border: 1px solid white;
+	color: white !important;
+	@include body-Regular16;
+	// height: 30px !important;
+}
+
+.cancelEventButton {
+	border: 1px solid $dark-grey-shade;
+	padding: 9px 13px !important;
+	margin-left: 32px !important;
+	background-color: $white-shade;
+	color: $dark-grey-shade !important;
+	@include body-Regular16;
+	&:hover {
+		background-color: $white-shade;
+	}
+}

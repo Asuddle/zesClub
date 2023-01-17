@@ -4,15 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import * as yup from 'yup';
 
 import { Button, FormGroup, Input, Label, Row } from 'reactstrap';
+import { Controller, useForm } from 'react-hook-form';
 
-import { Editor } from 'react-draft-wysiwyg';
-import FieldCreator from '../../Register/fieldCreator';
 import { Typography } from '@mui/material';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
+import { onPageSubmit } from './Homepage';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export default function WhyZesForm() {
+export default function WhyZesForm({ defaultValues = {} }) {
 	const validationSchema = yup.object({});
 	const {
 		control,
@@ -20,70 +19,86 @@ export default function WhyZesForm() {
 		setValue,
 		formState: { errors },
 	} = useForm({
-		defaultValues: {},
+		defaultValues,
 		resolver: yupResolver(validationSchema),
 	});
-	const onSubmit = (data) => {
-		console.log('data', data);
+
+	const handleReset = () => {
+		// setValue();
 	};
 
 	return (
 		<div>
 			<Typography variant='h4'>Why Zes Page</Typography>
 			<br />
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form onSubmit={handleSubmit(onPageSubmit)}>
 				<Row className='row g-3'>
 					<FormGroup style={{ width: '100%' }}>
-						<Label for='exampleText'>Why Zes (Who we are)</Label>
-						<Input
-							type='textarea'
-							name='text'
-							id='exampleText'
-							style={{ width: '550px', height: '220px' }}
+						<Label for='exampleText'>Why Zes (Life with Zes)</Label>
+						<Controller
+							name={'whyzes_lifewithzes'}
+							control={control}
+							render={({ field }) => (
+								<Input
+									type='textarea'
+									{...field}
+									id='exampleText'
+									style={{ width: '550px', height: '220px' }}
+								/>
+							)}
 						/>
 					</FormGroup>
 				</Row>
 				<Row className='row g-3'>
 					<FormGroup style={{ width: '100%' }}>
-						<Label for='exampleText'>Why Zes (Zes Beauty)</Label>
-						<Input
-							type='textarea'
-							name='text'
-							id='exampleText'
-							style={{ width: '550px', height: '220px' }}
+						<Label for='exampleText'>Why Zes (Life without Zes)</Label>
+						<Controller
+							name={'whyzes_lifewithoutzes'}
+							control={control}
+							render={({ field }) => (
+								<Input
+									type='textarea'
+									{...field}
+									id='exampleText'
+									style={{ width: '550px', height: '220px' }}
+								/>
+							)}
 						/>
 					</FormGroup>
 				</Row>
 				<Row className='row g-3'>
 					<FormGroup style={{ width: '100%' }}>
-						<Label for='exampleText'>Why Zes (Zes Club)</Label>
-						<Input
-							type='textarea'
-							name='text'
-							id='exampleText'
-							style={{ width: '550px', height: '220px' }}
+						<Label for='exampleText'>
+							Why Zes (Event Management Solutions)
+						</Label>
+						<Controller
+							name={'whyzes_event_management_solutions'}
+							control={control}
+							render={({ field }) => (
+								<Input
+									type='textarea'
+									{...field}
+									id='exampleText'
+									style={{ width: '550px', height: '220px' }}
+								/>
+							)}
 						/>
 					</FormGroup>
 				</Row>
 				<Row className='row g-3'>
 					<FormGroup style={{ width: '100%' }}>
-						<Label for='exampleText'>Why Zes (Zes Events)</Label>
-						<Input
-							type='textarea'
-							name='text'
-							id='exampleText'
-							style={{ width: '550px', height: '220px' }}
-						/>
-					</FormGroup>
-				</Row>
-				<Row className='row g-3'>
-					<FormGroup style={{ width: '100%' }}>
-						<Label for='exampleText'>Why Zes (Zes Founder)</Label>
-						<Input
-							type='textarea'
-							name='text'
-							id='exampleText'
-							style={{ width: '550px', height: '220px' }}
+						<Label for='exampleText'>Why Zes (Client Satisfaction)</Label>
+						<Controller
+							name={'whyzes_clientsatisfaction'}
+							control={control}
+							render={({ field }) => (
+								<Input
+									type='textarea'
+									{...field}
+									id='exampleText'
+									style={{ width: '550px', height: '220px' }}
+								/>
+							)}
 						/>
 					</FormGroup>
 				</Row>
@@ -95,6 +110,7 @@ export default function WhyZesForm() {
 					color='secondary'
 					variant='contained'
 					style={{ float: 'right', marginRight: '8px' }}
+					onClick={handleReset}
 				>
 					Reset
 				</Button>

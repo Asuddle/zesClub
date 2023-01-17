@@ -129,12 +129,14 @@ $semibold: 600;
 	font-size: 26px !important;
 	text-transform: uppercase !important;
 }
+
 @mixin body-medium {
 	font-family: $font-name !important;
 	font-style: normal !important;
 	font-weight: $medium !important;
 	font-size: 18px !important;
 }
+
 @mixin body-mediumButton {
 	font-family: $font-name !important;
 	font-style: normal !important;

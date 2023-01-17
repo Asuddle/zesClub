@@ -5,6 +5,8 @@ import HomePage from '../../../components/admin/page-management/Homepage';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import WhyZesForm from '../../../components/admin/page-management/WhyZes';
+import axios from 'axios';
+import { useEffect } from 'react';
 import { useState } from 'react';
 
 export default function PageManagement() {
@@ -24,6 +26,19 @@ export default function PageManagement() {
 	}
 
 	const [value, setValue] = useState(0);
+	const [data, setData] = useState({});
+
+	useEffect(() => {
+		axios
+			.get('/api/pages')
+			.then((res) => {
+				console.log(res.data.data[0]);
+				setData(res.data.data[0]);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -49,13 +64,13 @@ export default function PageManagement() {
 					<Tab label='Why Zes' />
 				</Tabs>
 				<TabPanel value={value} index={0}>
-					<HomePage />
+					<HomePage defaultValues={data} />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					<AboutUs />
+					<AboutUs defaultValues={data} />
 				</TabPanel>
 				<TabPanel value={value} index={2}>
-					<WhyZesForm />
+					<WhyZesForm defaultValues={data} />
 				</TabPanel>
 			</Box>
 		</BaseCard>
