@@ -180,7 +180,6 @@ export default function UserProfileComponent({ defaultValue = {} }) {
 	});
 	useEffect(() => {
 		let data = JSON.parse(localStorage.getItem('userData'));
-		console.log(data.id);
 		axios.get(`/api/users/${data.id}`).then((res) => {
 			setData(res.data.data[0]);
 			const tempData = res.data.data[0];

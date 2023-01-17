@@ -1,19 +1,15 @@
 import AboutUs from '../../../components/admin/page-management/AboutUs';
 import BaseCard from '../../../components/baseCard/BaseCard';
 import Box from '@mui/material/Box';
-import Contact from '../../../components/admin/page-management/Contact';
-import Gallery from '../../../components/admin/page-management/Gallery';
 import HomePage from '../../../components/admin/page-management/Homepage';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
-import WhyZES from '../../../components/admin/page-management/WhyZes';
+import WhyZesForm from '../../../components/admin/page-management/WhyZes';
 import { useState } from 'react';
 
 export default function PageManagement() {
 	function TabPanel(props) {
 		const { children, value, index, ...other } = props;
-
 		return (
 			<div
 				role='tabpanel'
@@ -22,14 +18,11 @@ export default function PageManagement() {
 				aria-labelledby={`vertical-tab-${index}`}
 				{...other}
 			>
-				{value === index && (
-					<Box sx={{ p: 2 }}>
-						<Typography>{children}</Typography>
-					</Box>
-				)}
+				{value === index && <Box sx={{ p: 2 }}>{children}</Box>}
 			</div>
 		);
 	}
+
 	const [value, setValue] = useState(0);
 
 	const handleChange = (event, newValue) => {
@@ -53,32 +46,16 @@ export default function PageManagement() {
 				>
 					<Tab label='Home Page' />
 					<Tab label='About Us' />
-					<Tab label='Promotion' />
-					<Tab label='Gallery' />
-					<Tab label='What Next' />
-					<Tab label='Enquiry Form' />
-					<Tab label='Contact Us' />
+					<Tab label='Why Zes' />
 				</Tabs>
 				<TabPanel value={value} index={0}>
 					<HomePage />
 				</TabPanel>
 				<TabPanel value={value} index={1}>
-					<AboutUs />s
+					<AboutUs />
 				</TabPanel>
 				<TabPanel value={value} index={2}>
-					Item Three
-				</TabPanel>
-				<TabPanel value={value} index={3}>
-					<Gallery />
-				</TabPanel>
-				<TabPanel value={value} index={4}>
-					<WhyZES />
-				</TabPanel>
-				<TabPanel value={value} index={5}>
-					Item Six
-				</TabPanel>
-				<TabPanel value={value} index={6}>
-					<Contact />
+					<WhyZesForm />
 				</TabPanel>
 			</Box>
 		</BaseCard>

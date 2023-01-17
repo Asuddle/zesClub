@@ -54,11 +54,13 @@ export default function TableComponent({
 			<TextField
 				fullWidth
 				size='small'
+				// variant='contained'
 				// value={searchText}
 				onChange={handleSearchChange}
-				style={{ width: '400px' }}
+				style={{ width: '400px', marginTop: '32px' }}
 				placeholder='Search'
 			/>
+
 			{csvHeaders.length > 0 && (
 				<CSVLink
 					filename={title}

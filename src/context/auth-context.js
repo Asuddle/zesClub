@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
 			});
 		}
 	}, []);
+
 	const setUserAuthInfo = (data) => {
 		const token = localStorage.setItem('token', data.token);
 		const role = localStorage.setItem('role', data.role);
@@ -27,7 +28,6 @@ const AuthProvider = ({ children }) => {
 			role: data.role,
 		});
 	};
-	console.log(authState);
 	// checks if the user is authenticated or not
 	const isUserAuthenticated = () => {
 		if (!authState.token) {

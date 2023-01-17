@@ -10,7 +10,6 @@ import {
 } from 'reactstrap';
 import { Controller, useForm } from 'react-hook-form';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
-import { signIn, signOut } from 'next-auth/react';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../src/context/auth-context';

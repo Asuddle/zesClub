@@ -15,6 +15,7 @@ import Menuitems from './MenuItems';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { handleLogout } from '../../components/Navigation';
 import { useRouter } from 'next/router';
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
@@ -43,7 +44,11 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
 						<List component='li' disablePadding key={item.title}>
 							<NextLink href={item.href}>
 								<ListItem
-									onClick={() => handleClick(index)}
+									onClick={() =>
+										item.title == 'Log out'
+											? handleLogout()
+											: handleClick(index)
+									}
 									button
 									selected={location === item.href}
 									sx={{

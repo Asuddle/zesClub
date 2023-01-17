@@ -128,7 +128,7 @@ export default function FieldCreator({
 		);
 	} else if (item.type == 'textarea') {
 		return (
-			<Col md={5}>
+			<Col md={8}>
 				<FormGroup>
 					<Label className={styles.inputLabel} for='exampleText'>
 						{item.label}

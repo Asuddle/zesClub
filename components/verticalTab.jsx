@@ -2,6 +2,7 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 
 import Image from 'next/image';
 import { ReactComponent as ProfileIcon } from '../public/profile-icon.svg';
+import { handleLogout } from './Navigation';
 import styles from '../styles/component.module.scss';
 import { useRouter } from 'next/router';
 
@@ -44,7 +45,7 @@ export default function VerticalTab({ children }) {
 					</NavLink>
 				</NavItem>
 				<NavItem>
-					<NavLink className={styles.navLink} href='#'>
+					<NavLink className={styles.navLink} onClick={handleLogout}>
 						Logout
 					</NavLink>
 				</NavItem>

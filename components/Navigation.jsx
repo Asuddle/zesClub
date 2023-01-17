@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { faCircleUser, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
+import { AuthContext } from '../src/context/auth-context';
 import BurgerMenu from './burgerMenu';
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import Link from 'next/link';
 import { slide as Menu } from 'react-burger-menu';
-import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Home.module.scss';
 import { useRouter } from 'next/router';
 
@@ -22,7 +23,14 @@ const navArr = [
 		href: '/contact',
 	},
 ];
+export const handleLogout = () => {
+	localStorage.removeItem('token');
+	localStorage.removeItem('userData');
+	localStorage.removeItem('role');
+	window.location = window.location.origin;
+};
 function Navigation() {
+	const authContext = useContext(AuthContext);
 	const [activeNav, setActiveNav] = useState('/');
 	const router = useRouter();
 
@@ -37,6 +45,8 @@ function Navigation() {
 	const handleLogin = () => {
 		router.push('/login');
 	};
+
+	const { authState } = authContext;
 	return (
 		<>
 			<div className={styles.navContainer}>
@@ -50,7 +60,6 @@ function Navigation() {
 							width={100}
 							height={100}
 						/>
-
 						<div
 							className='collapse navbar-collapse'
 							// id='navbarSupportedContent'
@@ -67,21 +76,34 @@ function Navigation() {
 										<Link href={item.href}>{item.name}</Link>
 									</li>
 								))}
-								<li>
-									<Button
-										onClick={handleRegister}
-										className={
-											activeNav == '/register'
-												? styles.activeBecomeMember
-												: styles.becomeMember
-										}
-									>
-										Become Member
-									</Button>
-								</li>
-								<li className='nav-item' onClick={handleLogin}>
-									<FontAwesomeIcon icon={faCircleUser} />
-								</li>
+								{authState.role !== 'user' ? (
+									<>
+										<li>
+											<Button
+												onClick={handleRegister}
+												className={
+													activeNav == '/register'
+														? styles.activeBecomeMember
+														: styles.becomeMember
+												}
+											>
+												Become Member
+											</Button>
+										</li>
+										<li className='nav-item' onClick={handleLogin}>
+											<FontAwesomeIcon icon={faCircleUser} />
+										</li>
+									</>
+								) : (
+									<>
+										<li className='nav-item' style={{ color: '#fda700' }}>
+											Hi, User
+										</li>
+										<li className='nav-item' onClick={handleLogout}>
+											<FontAwesomeIcon icon={faSignOut} />
+										</li>
+									</>
+								)}
 							</ul>
 						</div>
 					</nav>

@@ -42,9 +42,23 @@ export default function GalleryTable() {
 		{ label: 'Price', name: 'price' },
 		{ label: 'Venue', name: 'venue' },
 		{ label: 'Date', name: 'createdDate' },
+		{
+			label: 'Actions',
+			render: (data) => (
+				<Button
+					variant='contained'
+					color='success'
+					onClick={() => {
+						router.push(`/admin/gallery/${data.id}/add`);
+					}}
+				>
+					Gallery
+				</Button>
+			),
+		},
 	];
 	const handleRow = (data) => {
-		router.push(`/admin/events/${data.id}/details`);
+		// router.push(`/admin/events/${data.id}/details`);
 	};
 	return (
 		<>
@@ -52,7 +66,7 @@ export default function GalleryTable() {
 				url='/api/events'
 				col={col}
 				refresh={refresh}
-				handleRowClick={handleRow}
+				// handleRowClick={handleRow}
 				title='Gallery'
 			/>
 			<Modal open={openDelete} handleDelete={handleDelete} toggle={toggle} />
