@@ -27,10 +27,32 @@ export default function FounderMessage() {
 							/>
 							<div className={styles.socialMedia}>
 								<div style={{ textAlign: 'center', padding: '17px 0px' }}>
-									<FontAwesomeIcon icon={faFacebookF} />
-									<FontAwesomeIcon icon={faInstagram} />
-									<FontAwesomeIcon icon={faTwitter} />
-									<FontAwesomeIcon icon={faLinkedinIn} />
+									<FontAwesomeIcon
+										icon={faFacebookF}
+										onClick={() =>
+											window.open('https://www.facebook.com/zuyyana.zaidi')
+										}
+									/>
+									<FontAwesomeIcon
+										icon={faInstagram}
+										onClick={() =>
+											window.open('https://instagram.com/zuyyanazaidi')
+										}
+									/>
+									<FontAwesomeIcon
+										icon={faTwitter}
+										onClick={() =>
+											window.open(
+												'https://twitter.com/Zuyyana_Zaidi?t=6sBMgDlO1j4UsmFW1ZAr6g&s=09',
+											)
+										}
+									/>
+									<FontAwesomeIcon
+										icon={faLinkedinIn}
+										onClick={() =>
+											window.open('https://www.linkedin.com/in/zuyyanazaidi')
+										}
+									/>
 								</div>
 							</div>
 						</Col>

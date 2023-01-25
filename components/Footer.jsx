@@ -2,6 +2,7 @@ import { Col, Row } from 'reactstrap';
 import {
 	faFacebookF,
 	faInstagram,
+	faLinkedin,
 	faSnapchat,
 	faTwitter,
 	faWhatsapp,
@@ -88,12 +89,46 @@ export default function Footer() {
 								</p>
 								<br />
 								<p className={styles.footerHeading}>Follow Us</p>
-								<FontAwesomeIcon icon={faTwitter} />
-								<FontAwesomeIcon icon={faFacebookF} />
+								<FontAwesomeIcon
+									icon={faTwitter}
+									onClick={() => {
+										window.open(
+											'https://twitter.com/ZeS_Club?t=pPOLZSnzlLfoRMwUfQbRvw&s=09',
+										);
+									}}
+								/>
+
+								<FontAwesomeIcon
+									onClick={() => {
+										window.open(
+											'https://www.facebook.com/groups/zesbeautyclub',
+										);
+									}}
+									icon={faFacebookF}
+								/>
 								<FontAwesomeIcon icon={faWhatsapp} />
-								<FontAwesomeIcon icon={faSnapchat} />
-								<FontAwesomeIcon icon={faYoutube} />
-								<FontAwesomeIcon icon={faInstagram} />
+								<FontAwesomeIcon
+									icon={faLinkedin}
+									onClick={() => {
+										window.open('https://www.linkedin.com/in/zuyyanazaidi');
+									}}
+								/>
+								<FontAwesomeIcon
+									icon={faYoutube}
+									onClick={() => {
+										window.open(
+											'https://www.youtube.com/channel/UCVjP6Z61_FTdugAxwa96Qdg',
+										);
+									}}
+								/>
+								<FontAwesomeIcon
+									icon={faInstagram}
+									onClick={() => {
+										window.open(
+											'https://www.instagram.com/zesbeautyclub?r=nametag',
+										);
+									}}
+								/>
 								<br />
 								<br />
 							</Col>

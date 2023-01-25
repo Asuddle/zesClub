@@ -72,8 +72,17 @@ export default async function handler(req, res) {
 					cond = cond.slice(0, -1);
 
 					if (Object.keys(files).length > 0) {
-						saveFile(files, 'photo');
-						cond = cond + `, photo='${files.photo.originalFilename}'`;
+						if (files.photo) {
+							let photoFile = await saveFile(files, 'photo', fields.email);
+							cond = cond + `, photo='${photoFile}'`;
+						} else if (files.emiratesIdFile) {
+							let emiratesIdFile = await saveFile(
+								files,
+								'emiratesIdFile',
+								fields.email,
+							);
+							cond = cond + `, emiratesIdFile='${emiratesIdFile}'`;
+						}
 					}
 
 					// res.send({ cond });

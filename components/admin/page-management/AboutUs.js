@@ -118,13 +118,13 @@ export default function AboutUsForm({ defaultValues = {} }) {
 					Save
 				</Button>
 
-				<Button
+				{/* <Button
 					color='secondary'
 					variant='contained'
 					style={{ float: 'right', marginRight: '8px' }}
 				>
 					Reset
-				</Button>
+				</Button> */}
 			</form>
 		</div>
 	);

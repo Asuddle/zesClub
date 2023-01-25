@@ -15,7 +15,7 @@
 		p {
 			position: absolute;
 			color: $white-shade;
-			z-index: 9999999999999;
+			z-index: 1;
 			left: 9%;
 			@include caption-heading;
 			font-weight: bold;

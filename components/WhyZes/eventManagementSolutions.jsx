@@ -57,8 +57,6 @@ export default function EventManagementSolutions() {
 			<br />
 			<br />
 			<br />
-			<br />
-			<br />
 		</section>
 	);
 }

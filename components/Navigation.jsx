@@ -96,9 +96,20 @@ function Navigation() {
 									</>
 								) : (
 									<>
-										<li className='nav-item' style={{ color: '#fda700' }}>
-											Hi, User
+										{/* <Link className='nav-item' href='/user/profile'>
+											Hi , User
+										</Link> */}
+										<li>
+											<Button
+												onClick={() => router.push('/user/profile')}
+												className={styles.becomeMember}
+											>
+												Hi , User
+											</Button>
 										</li>
+										{/* <li className='nav-item' style={{ color: '#fda700' }}>
+											Hi, User
+										</li> */}
 										<li className='nav-item' onClick={handleLogout}>
 											<FontAwesomeIcon icon={faSignOut} />
 										</li>

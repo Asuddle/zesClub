@@ -1,5 +1,15 @@
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
-import { Col, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap';
+import {
+	Col,
+	FormFeedback,
+	FormGroup,
+	FormText,
+	Input,
+	InputGroup,
+	InputGroupText,
+	Label,
+	Row,
+} from 'reactstrap';
 import { Controller, useForm } from 'react-hook-form';
 
 import AsyncSelect from 'react-select/async';
@@ -27,17 +37,35 @@ export default function FieldCreator({
 					render={({ field }) => (
 						<FormGroup className={formGroupStyle}>
 							<Label className={styles.inputLabel}>{item.label}</Label>
-							<Input
-								// invalidn
-								placeholder={item.label}
-								{...field}
-								className={styles.textField}
-								invalid={errors[item.name]}
-								{...(item.options || {})}
-							/>
+							{item.pretext ? (
+								<InputGroup>
+									{item.pretext && (
+										<InputGroupText>{item.pretext}</InputGroupText>
+									)}
+									<Input
+										// invalidn
+										placeholder={item.label}
+										{...field}
+										className={styles.textField}
+										invalid={errors[item.name]}
+										{...(item.options || {})}
+									/>
+								</InputGroup>
+							) : (
+								<Input
+									// invalidn
+									placeholder={item.label}
+									{...field}
+									className={styles.textField}
+									invalid={errors[item.name]}
+									{...(item.options || {})}
+								/>
+							)}
+							{item.subtitle && <FormText>{item.subtitle}</FormText>}
 							{errors[item.name] && (
 								<FormFeedback>{errors[item.name].message}</FormFeedback>
 							)}
+							{/* <FormFeedback>Format (####)</FormFeedback> */}
 						</FormGroup>
 					)}
 				/>
@@ -179,7 +207,7 @@ export default function FieldCreator({
 			setFileInput(e.target.files[0]);
 		};
 		return (
-			<Col md={5}>
+			<Col md={4}>
 				<FormGroup>
 					<Label className={styles.inputLabel} for='exampleText'>
 						{item.label}

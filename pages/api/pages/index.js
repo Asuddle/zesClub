@@ -35,7 +35,8 @@ export default async function handler(req, res) {
 					}
 					let str = '';
 					for (const key in fields) {
-						str = str + `${key} = "${fields[key]}", `;
+						let commaHandledValue = fields[key].replaceAll("'", "''");
+						str = str + `${key} = '${commaHandledValue}', `;
 					}
 					str = str.replace(/,\s*$/, '');
 

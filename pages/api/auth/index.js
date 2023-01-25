@@ -3,8 +3,6 @@ import formidable, { IncomingForm } from 'formidable';
 import bcrypt from 'bcryptjs';
 import db from '../../../util/mongodb';
 import fs from 'fs';
-import multer from 'multer';
-import nextConnect from 'next-connect';
 import nodemailer from 'nodemailer';
 
 function sendMail(email) {
@@ -39,12 +37,20 @@ export const config = {
 		bodyParser: false,
 	},
 };
-export const saveFile = async (file, fileName = 'profilePhoto') => {
+export const saveFile = async (
+	file,
+	fileName = 'profilePhoto',
+	attachment = '',
+) => {
 	const data = fs.readFileSync(file[fileName].filepath);
-	fs.writeFileSync(`./public/${file[fileName].originalFilename}`, data);
+	fs.writeFileSync(
+		`./public/${attachment}${file[fileName].originalFilename}`,
+		data,
+	);
 	await fs.unlinkSync(file[fileName].filepath);
-	return;
+	return `${attachment}${file[fileName].originalFilename}`;
 };
+
 const userValue = {
 	// email: 'email',
 	title: 'title',
@@ -85,30 +91,7 @@ export default async function handler(req, res) {
 			try {
 				const form = new formidable.IncomingForm();
 				form.parse(req, async function (err, fields, files) {
-					const {
-						email,
-						password,
-						role = 'user',
-						title,
-						firstName,
-						lastName,
-						middleName,
-						country,
-						city,
-						nationality,
-						profession,
-						emiratesID,
-						mobile,
-						haveOwnBusiness,
-						industrySector,
-						website,
-						hobbies,
-						interest,
-						age,
-						weight,
-						makeHappy,
-						expectations,
-					} = fields;
+					const { email, password, role = 'user' } = fields;
 					const hash = await bcrypt.hash(password, 10);
 					let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','${role}')`;
 					await db.query(sql, async (err, result) => {
@@ -116,7 +99,18 @@ export default async function handler(req, res) {
 							res.send({ err });
 						}
 						try {
-							await saveFile(files, 'photo');
+							let photoFile = await saveFile(files, 'photo', fields.email);
+							// let passportFileName = await saveFile(
+							// 	files,
+							// 	'passportFile',
+							// 	fields.email,
+							// );
+							let emiratesIDFileName = await saveFile(
+								files,
+								'emiratesIdFile',
+								fields.email,
+							);
+
 							let labelStr = '';
 							let valueStr = '';
 							// res.send({});
@@ -127,7 +121,11 @@ export default async function handler(req, res) {
 								}
 							}
 							labelStr = labelStr + 'photo' + ',';
-							valueStr = valueStr + `'${files.photo.originalFilename}'` + ',';
+							valueStr = valueStr + `'${photoFile}'` + ',';
+
+							labelStr = labelStr + 'emiratesIdFile' + ',';
+							valueStr = valueStr + `'${emiratesIDFileName}'` + ',';
+
 							labelStr = labelStr + 'user_id';
 							valueStr = valueStr + `'${result.insertId}'`;
 

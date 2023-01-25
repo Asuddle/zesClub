@@ -3,7 +3,10 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'aos/dist/aos.css';
 
+import { Dialog, DialogActions, DialogTitle } from '@mui/material';
+
 import AOS from 'aos';
+import { Button } from 'reactstrap';
 import ContactForm from '../components/contact';
 import FoodCategory from '../components/Interests/food';
 import Footer from '../components/Footer';
@@ -20,8 +23,13 @@ import { useState } from 'react';
 export default function Interests() {
 	const [category, setCategory] = useState('');
 	const [foodRes, setFoodRes] = useState('');
+	const [comingSoon, setComingSoon] = useState(false);
+	const handleComingSoon = () => {
+		setComingSoon(!comingSoon);
+	};
 	const handleFood = () => {
-		setCategory('food');
+		handleComingSoon();
+		// setCategory('food');
 	};
 	const handleFoodRes = () => {
 		setFoodRes('kfc');
@@ -52,7 +60,7 @@ export default function Interests() {
 				</>
 			)}
 
-			{category === 'food' && foodRes == '' && (
+			{/* {category === 'food' && foodRes == '' && (
 				<>
 					<HeadingComponent
 						heading='Enjoy Promotions'
@@ -75,7 +83,7 @@ export default function Interests() {
 					<br />
 					<br />
 				</div>
-			)}
+			)} */}
 
 			<GoogleMap />
 			<HeadingComponent
@@ -85,6 +93,31 @@ export default function Interests() {
 			/>
 			<ContactForm />
 			<Footer />
+			<Dialog
+				open={comingSoon}
+				onClose={handleComingSoon}
+				// fullWidth
+				style={{ padding: '36px' }}
+				aria-labelledby='alert-dialog-title'
+				aria-describedby='alert-dialog-description'
+			>
+				<div style={{ textAlign: 'center', paddingTop: '24px' }}>
+					{/* <FeatherIcon icon='x-circle' size='150px' stroke='#E45A68' /> */}
+				</div>
+				<DialogTitle id='alert-dialog-title'>
+					<strong style={{ zIndex: '999' }}>
+						Wonderful brands and offers coming soon!
+					</strong>
+				</DialogTitle>
+				<DialogActions
+					className='text-center'
+					style={{ justifyContent: 'center', paddingBottom: '24px' }}
+				>
+					<Button onClick={handleComingSoon} variant='outlined' color='primary'>
+						Cancel
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</div>
 	);
 }

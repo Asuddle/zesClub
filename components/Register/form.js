@@ -11,6 +11,7 @@ import axios from 'axios';
 import { countryArr } from '../countryArr';
 import homeStyles from '../../styles/Home.module.scss';
 import styles from '../../styles/Register.module.scss';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -81,9 +82,10 @@ export const formField1 = [
 		],
 	},
 	{
-		type: 'text',
+		type: 'select',
 		name: 'nationality',
 		label: 'Nationality',
+		options: countryArr,
 	},
 	{
 		type: 'text',
@@ -93,7 +95,8 @@ export const formField1 = [
 	{
 		type: 'text',
 		name: 'emiratesID',
-		label: 'Emirates ID',
+		subtitle: 'Must be in format 784-1234-1234567-1',
+		label: 'Emirates ID #',
 		align: 'right',
 	},
 ];
@@ -168,7 +171,8 @@ export const spouseformField1 = [
 		],
 	},
 	{
-		type: 'text',
+		type: 'select',
+		options: countryArr,
 		name: 'spouse_nationality',
 		label: 'Nationality',
 	},
@@ -180,13 +184,14 @@ export const spouseformField1 = [
 	{
 		type: 'text',
 		name: 'spouse_emiratesID',
-		label: 'Emirates ID',
+		label: 'Emirates ID #',
+		subtitle: 'Must be in format 784-1234-1234567-1',
 		align: 'right',
 	},
 ];
 
 export const formField2 = [
-	{ type: 'text', name: 'mobile', label: 'Mobile Number' },
+	{ type: 'text', name: 'mobile', pretext: '+971', label: 'Mobile Number' },
 	{
 		type: 'text',
 		name: 'email',
@@ -225,16 +230,48 @@ export const formField4 = [
 		type: 'select',
 		options: [
 			{
-				value: 'Gardening',
-				label: 'gardening',
+				value: 'Business and Industry',
+				label: 'Business and Industry',
 			},
 			{
-				value: 'Sports',
-				label: 'Sports',
+				value: 'Entertainment and leisure',
+				label: 'Entertainment and leisure',
 			},
 			{
-				value: 'Gaming',
-				label: 'Gaming',
+				value: 'Family and Relationships',
+				label: 'Family and Relationships',
+			},
+			{
+				value: 'Fitness and Wellness',
+				label: 'Fitness and Wellness',
+			},
+			{
+				value: 'Food and Drink',
+				label: 'Food and Drink',
+			},
+			{
+				value: 'Hobbies and Activities',
+				label: 'Hobbies and Activities',
+			},
+			{
+				value: 'Shopping and Fashion',
+				label: 'Shopping and Fashion',
+			},
+			{
+				value: 'Sports and Outdoors',
+				label: 'Sports and Outdoors',
+			},
+			{
+				value: 'Technology and Gadgets',
+				label: 'Technology and Gadgets',
+			},
+			{
+				value: 'Beauty and Body Care',
+				label: 'Beauty and Body Care',
+			},
+			{
+				value: 'Others',
+				label: 'Others',
 			},
 		],
 		name: 'interest',
@@ -268,6 +305,16 @@ export const formField5 = [
 		label: 'Profile Photo',
 		name: 'profilePhoto',
 	},
+	{
+		type: 'file',
+		name: 'emiratesIdFile',
+		label: 'Emirates Id',
+	},
+	// {
+	// 	type: 'file',
+	// 	name: 'passportFile',
+	// 	label: 'Passport Photo',
+	// },
 	// { type: 'text', label: 'Weight', name: 'weight' },
 	{
 		type: 'textarea',
@@ -283,6 +330,8 @@ export default function RegisterForm({
 }) {
 	const [zesClub, setZesClub] = useState(tabValue);
 	const [fileInput, setFileInput] = useState('');
+	const [passportInput, setPassportInput] = useState('');
+	const [emiratesIdInput, setEmirateIdInput] = useState('');
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [confirm1, setConfirm1] = useState(false);
 	const [confirm2, setConfirm2] = useState(false);
@@ -302,10 +351,24 @@ export default function RegisterForm({
 			),
 		country: yup.mixed().required(),
 		city: yup.mixed().required(),
-		nationality: yup.string().required(),
+		nationality: yup.mixed().required(),
 		// profession: yup.mixed().required(),
-		emiratesID: yup.string().required(),
-		mobile: yup.string().required(),
+		// ^784-?[0-9]{4}-?[0-9]{7}-?[0-9]{1}$
+		emiratesID: yup
+			.string()
+			.required()
+			.matches(
+				/^784-?[0-9]{4}-?[0-9]{7}-?[0-9]{1}$/,
+				'Must be in emirates id format',
+			),
+		// passportFile: yup.string().required(),
+		emiratesIdFile: yup.string().required(),
+		mobile: yup
+			.string()
+			.required()
+			.matches(/^[0-9]*$/, 'Must be a valid Phone Number'),
+		//
+		// profile: yup.string().required(),
 		// website: yup.mixed().required(),
 		hobbies: yup.string().required(),
 		interest: yup.mixed().required(),
@@ -320,15 +383,21 @@ export default function RegisterForm({
 				spouse_lastName: yup.string().required(),
 				spouse_country: yup.mixed().required(),
 				spouse_city: yup.mixed().required(),
-				spouse_emiratesID: yup.string().required(),
-				spouse_nationality: yup.string().required(),
+				spouse_emiratesID: yup
+					.string()
+					.required()
+					.matches(
+						/^784-?[0-9]{4}-?[0-9]{7}-?[0-9]{1}$/,
+						'Must be in emirates id format',
+					),
+				spouse_nationality: yup.mixed().required(),
 				// spouse_
 			},
 		};
 	}
 
 	const validationSchema = yup.object(validationObj);
-	// console.log('defaultVal', defaultValue);
+	// console.log('defaultVal', formField5);
 	const {
 		control,
 		handleSubmit,
@@ -338,14 +407,13 @@ export default function RegisterForm({
 		defaultValues: defaultValue,
 		resolver: yupResolver(validationSchema),
 	});
-
+	console.log(errors);
 	const handleTab = (val) => {
 		setZesClub(val);
 	};
-
 	const onSubmit = (data) => {
 		if (onCustomSubmit) {
-			onCustomSubmit(data, fileInput);
+			onCustomSubmit(data, fileInput, passportInput, emiratesIdInput);
 		} else {
 			const formData = new FormData();
 
@@ -357,20 +425,39 @@ export default function RegisterForm({
 					city: data.city.value,
 					haveOwnBusiness: 0,
 					photo: fileInput,
+					// passportFile: passportInput,
+					emiratesIdFile: emiratesIdInput,
 					country: data.country.value,
+					nationality: data.nationality.value,
 				},
 			};
+
+			if (zesClub === 2) {
+				result['spouse_nationality'] = data.spouse_nationality.value;
+				result['spouse_country'] = data.spouse_country.value;
+				result['spouse_title'] = data.spouse_title.value;
+				result['spouse_city'] = data.spouse_city.value;
+			}
+
 			for (const key in result) {
 				formData.append(key, result[key]);
 			}
+
 			const config = {
 				headers: { 'content-type': 'multipart/form-data' },
 			};
+
+			// console.log('formData', formData);
 			axios
 				.post('/api/auth', formData, config)
 				.then((res) => {
-					setIsSuccess(true);
-					successCallback();
+					console.log(res.status === 201);
+					if (res.status === 201) {
+						setIsSuccess(true);
+						// successCallback();
+					} else {
+						toast.error('Something went wrong', { theme: 'colored' });
+					}
 				})
 				.catch((err) => {
 					console.log(err);
@@ -497,7 +584,14 @@ export default function RegisterForm({
 									item={item}
 									errors={errors}
 									setValue={setValue}
-									setFileInput={setFileInput}
+									setFileInput={
+										item.name === 'emiratesIdFile'
+											? setEmirateIdInput
+											: setFileInput
+									}
+									fileInput={
+										item.name === 'emiratesIdFile' ? emiratesIdInput : fileInput
+									}
 								/>
 							))}
 						</Row>

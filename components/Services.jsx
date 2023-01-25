@@ -92,8 +92,8 @@ export default function ServiceComponent() {
 		dots: true,
 		infinite: true,
 		speed: 500,
-		slidesToShow: data.length >= 3 ? 3 : data.length,
-		slidesToScroll: 15,
+		slidesToShow: 3,
+		slidesToScroll: 2,
 		arrows: false,
 		autoplay: true,
 		responsive: [

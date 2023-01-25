@@ -8,10 +8,10 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { Typography } from '@mui/material';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 export const onPageSubmit = (data) => {
-	console.log('data', data);
 	const formData = new FormData();
 	for (const key in data) {
 		formData.append(key, data[key]);
@@ -23,9 +23,11 @@ export const onPageSubmit = (data) => {
 		.put('/api/pages', formData, config)
 		.then((res) => {
 			console.log(res.data);
+			toast.success('Saved Successfully!', { theme: 'colored' });
 		})
 		.catch((err) => {
 			console.log(err);
+			toast.error('Something went wrong!', { theme: 'colored' });
 		});
 };
 export default function HomePageForm({ defaultValues = {} }) {
@@ -67,13 +69,13 @@ export default function HomePageForm({ defaultValues = {} }) {
 					Save
 				</Button>
 
-				<Button
+				{/* <Button
 					color='secondary'
 					variant='contained'
 					style={{ float: 'right', marginRight: '8px' }}
 				>
 					Reset
-				</Button>
+				</Button> */}
 			</form>
 		</div>
 	);

@@ -62,15 +62,46 @@ function Header({
 						className={styles.socialIcons}
 						style={{ marginTop: isSmall ? '150px' : '200px' }}
 					>
-						<FontAwesomeIcon icon={faFacebookF} />
+						<FontAwesomeIcon
+							icon={faFacebookF}
+							onClick={() => {
+								window.open('https://www.facebook.com/groups/zesbeautyclub');
+							}}
+						/>
 						<br />
-						<FontAwesomeIcon icon={faInstagram} />
+						<FontAwesomeIcon
+							icon={faInstagram}
+							onClick={() => {
+								window.open(
+									'https://www.instagram.com/zesbeautyclub?r=nametag',
+								);
+							}}
+						/>
 						<br />
-						<FontAwesomeIcon icon={faLinkedinIn} />
+						<FontAwesomeIcon
+							icon={faLinkedinIn}
+							onClick={() => {
+								window.open('https://www.linkedin.com/in/zuyyanazaidi');
+							}}
+						/>
 						<br />
-						<FontAwesomeIcon icon={faYoutube} />
+						<FontAwesomeIcon
+							icon={faYoutube}
+							onClick={() => {
+								window.open(
+									'https://www.youtube.com/channel/UCVjP6Z61_FTdugAxwa96Qdg',
+								);
+							}}
+						/>
 						<br />
-						<FontAwesomeIcon icon={faTwitter} />
+						<FontAwesomeIcon
+							icon={faTwitter}
+							onClick={() => {
+								window.open(
+									'https://twitter.com/ZeS_Club?t=pPOLZSnzlLfoRMwUfQbRvw&s=09',
+								);
+							}}
+						/>
 						<div className={styles.verticalDivider}></div>
 						<Button
 							onClick={handleRegister}

@@ -3,9 +3,9 @@
 @import '../styles/typography-rules.scss';
 
 .whoWeAre {
-	padding: 160px 0px;
-	padding-top: 170px !important;
-	// padding-bottom: 106px !important;
+	padding: 140px 0px;
+	// padding-top: 170px !important;
+	padding-bottom: 80px !important;
 	.upperDivider {
 		border-top: 4px solid $orange-shade;
 		width: 107px;
@@ -97,6 +97,9 @@
 		}
 	}
 }
+.aboutZesClub {
+	padding: 80px 0px;
+}
 .headingWrapper {
 	padding-right: 20%;
 	margin-bottom: 32px !important;
@@ -129,8 +132,8 @@
 
 .visionMissionWrapper {
 	min-height: 400px;
-	padding: 100px 0px;
-	padding-bottom: 160px;
+	padding: 80px 0px;
+	// padding-bottom: 160px;
 	background: $light-grey-shade;
 	.imageWrap {
 		position: relative;
@@ -186,7 +189,7 @@
 }
 
 .ceoMessageWrapper {
-	padding: 150px 0px;
+	padding: 110px 0px;
 	.ceoMessage {
 		height: 550px !important;
 		.dataPortion {
@@ -243,7 +246,7 @@
 }
 
 .founderMessageWrapper {
-	padding: 120px 0px;
+	padding: 80px 0px;
 	// background: $light-grey-shade !important;
 	.founderHeading {
 		@include caption-boldHeading;

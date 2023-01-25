@@ -1,6 +1,8 @@
 import '../styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { AuthContext, AuthProvider } from '../src/context/auth-context';
+import { ToastContainer, toast } from 'react-toastify';
 import { useContext, useEffect, useState } from 'react';
 
 import FullLayout from '../layout/FullLayout';
@@ -35,6 +37,7 @@ function MyApp({ Component, pageProps }) {
 			) : (
 				<Component {...pageProps} />
 			)}
+			<ToastContainer />
 		</AuthProvider>
 	);
 }

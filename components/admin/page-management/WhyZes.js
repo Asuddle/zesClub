@@ -106,14 +106,14 @@ export default function WhyZesForm({ defaultValues = {} }) {
 					Save
 				</Button>
 
-				<Button
+				{/* <Button
 					color='secondary'
 					variant='contained'
 					style={{ float: 'right', marginRight: '8px' }}
 					onClick={handleReset}
 				>
 					Reset
-				</Button>
+				</Button> */}
 			</form>
 		</div>
 	);

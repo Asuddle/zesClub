@@ -3,6 +3,7 @@ export default function LifeWithWithoutZes() {
 	return (
 		<section
 			className={styles.whoWeAre}
+			style={{ padding: '80px 0px' }}
 			data-aos='fade-right'
 			data-aos-delay='500'
 		>
@@ -37,8 +38,6 @@ export default function LifeWithWithoutZes() {
 								Together, we are stronger than any one organization. And we also
 								think of ourselves as being of the Zes.
 							</p>
-							<br />
-							<br />
 						</div>
 					</div>
 					<div className='col-sm-12 col-md-12 col-lg-6'>

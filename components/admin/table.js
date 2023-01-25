@@ -5,7 +5,9 @@ import {
 	Table,
 	TableBody,
 	TableCell,
+	TableFooter,
 	TableHead,
+	TablePagination,
 	TableRow,
 	TextField,
 	Typography,
@@ -28,16 +30,69 @@ export default function TableComponent({
 	addNewCallback = () => {},
 }) {
 	const [data, setData] = useState([]);
+	const [order, setOrder] = useState('asc');
+	const [orderBy, setOrderBy] = useState('calories');
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(5);
+
 	const [searchText, setSearchText] = useState('');
 	const handleSearchChange = (e) => {
 		setSearchText(e.target.value);
 	};
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
+
+	const handleRequestSort = (event, property) => {
+		const isAsc = orderBy === property && order === 'asc';
+		setOrder(isAsc ? 'desc' : 'asc');
+		setOrderBy(property);
+	};
+	// Descending
+	function descendingComparator(a, b, orderBy) {
+		if (b[orderBy] < a[orderBy]) {
+			return -1;
+		}
+		if (b[orderBy] > a[orderBy]) {
+			return 1;
+		}
+		return 0;
+	}
+
+	// Comparator
+	function getComparator(order, orderBy) {
+		return order === 'desc'
+			? (a, b) => descendingComparator(a, b, orderBy)
+			: (a, b) => -descendingComparator(a, b, orderBy);
+	}
+
+	// Stable Sort
+	function stableSort(array, comparator) {
+		const stabilizedThis = array.map((el, index) => [el, index]);
+		stabilizedThis.sort((a, b) => {
+			const order = comparator(a[0], b[0]);
+			if (order !== 0) {
+				return order;
+			}
+			return a[1] - b[1];
+		});
+		return stabilizedThis.map((el) => el[0]);
+	}
+
 	useEffect(() => {
 		setData([]);
 		axios.get(`${url}?q=${searchText}`).then((res) => {
 			setData(res.data.data);
 		});
 	}, [searchText, refresh]);
+	console.log(
+		'Dataaa Slice  ',
+		data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+	);
 	return (
 		<BaseCard title={title}>
 			{addButton && (
@@ -87,6 +142,7 @@ export default function TableComponent({
 								key={item.label}
 								width={item.width || '20%'}
 								align={item.align || 'left'}
+								// sortDirection={orderBy === item.label ? order : false}
 							>
 								<Typography color='textSecondary' variant='h6'>
 									{item.label}
@@ -96,53 +152,38 @@ export default function TableComponent({
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{data.map((item) => {
-						const arr = [];
-						col.forEach((cl) => {
-							arr.push(
-								<TableCell
-									key={item.id}
-									width={cl.width || '20%'}
-									align={cl.align || 'left'}
-								>
-									{cl?.render ? cl.render(item) : item[cl.name] || '-'}
-								</TableCell>,
-							);
-						});
-
-						return (
+					{data
+						.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+						.map((item) => (
 							<TableRow
 								hover
 								tabIndex={-1}
 								key={item.name}
 								onClick={() => handleRowClick(item)}
 							>
-								{arr}
+								{col.map((cl) => (
+									<TableCell
+										key={cl.name}
+										width={cl.width || '20%'}
+										align={cl.align || 'left'}
+									>
+										{cl?.render ? cl.render(item) : item[cl.name] || '-'}
+									</TableCell>
+								))}
 							</TableRow>
-						);
-					})}
+						))}
 				</TableBody>
-				{/* <TableFooter>
-					<TableRow>
-						<TablePagination
-							rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-							colSpan={3}
-							count={data.length}
-							rowsPerPage={rowsPerPage}
-							page={page}
-							SelectProps={{
-								inputProps: {
-									'aria-label': 'rows per page',
-								},
-								native: true,
-							}}
-							onPageChange={handleChangePage}
-							onRowsPerPageChange={handleChangeRowsPerPage}
-							ActionsComponent={TablePaginationActions}
-						/>
-					</TableRow>
-				</TableFooter> */}
 			</Table>
+
+			<TablePagination
+				rowsPerPageOptions={[5, 10, 25]}
+				component='div'
+				count={data.length}
+				rowsPerPage={rowsPerPage}
+				page={page}
+				onPageChange={handleChangePage}
+				onRowsPerPageChange={handleChangeRowsPerPage}
+			/>
 		</BaseCard>
 	);
 }

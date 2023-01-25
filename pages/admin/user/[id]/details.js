@@ -16,12 +16,14 @@ import { useRouter } from 'next/router';
 export default function UserDetails() {
 	const data1 = [
 		{ name: 'title', label: 'Title' },
-		{ name: 'photo', label: 'Profile Photo' },
 		{ name: 'firstName', label: 'First Name' },
 		{ name: 'middleName', label: 'Middle Name' },
 		{ name: 'lastName', label: 'Last Name' },
 		{ name: 'mobile', label: 'Mobile Number' },
 		{ name: 'email', label: 'Email' },
+		{ name: 'photo', label: 'Profile Photo' },
+		// { name: 'passportFile', label: 'Passport' },
+		{ name: 'emiratesIdFile', label: 'Emirates ID / Passport Photo ' },
 		{ name: 'country', label: 'Country' },
 		{ name: 'city', label: 'Emirates City' },
 		{ name: 'nationality', label: 'Nationality' },
@@ -29,6 +31,7 @@ export default function UserDetails() {
 		{ name: 'emiratesID', label: 'EmiratesId' },
 		{ name: 'website', label: 'Website' },
 		{ name: 'hobbies', label: 'Hobbies' },
+		{ name: 'interest', label: 'Interest' },
 		{ name: 'height', label: 'Height' },
 		{ name: 'age', label: 'Age' },
 		{ name: 'weight', label: 'Weight' },
@@ -51,7 +54,7 @@ export default function UserDetails() {
 			<DetailComponent
 				url='/api/users'
 				dataObj={data1}
-				images={['photo']}
+				images={['photo', 'emiratesIdFile']}
 				title='Admin User Details'
 				heading='firstName'
 			/>
