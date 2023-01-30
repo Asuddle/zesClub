@@ -31,6 +31,9 @@ export default function ZesEvents() {
 								alt='people'
 								height={401}
 							/>
+							<div className={styles.imageText}>
+								We have ability to organize events to inspire and attract
+							</div>
 						</Col>
 						<Col md={12} lg={12} xl={5} className={styles.dataWrapper}>
 							<div

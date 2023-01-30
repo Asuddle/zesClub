@@ -111,6 +111,10 @@ a {
 	position: relative;
 	cursor: pointer;
 }
+.DraftEditor-editorContainer {
+	height: 253px !important;
+}
+
 @media screen and (max-width: 750px) {
 	.category-grid-style-01 .category-item {
 		width: 50% !important;

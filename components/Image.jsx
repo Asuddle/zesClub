@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styles from '../styles/Home.module.scss';
 export const ProjectImageComponent = ({ title, largeImage, smallImage }) => {
+	console.log(`/${smallImage}`);
 	return (
 		<div className={styles.projectItem}>
 			<div className={styles.hoverBg}>

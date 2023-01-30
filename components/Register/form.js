@@ -303,12 +303,11 @@ export const formField5 = [
 		type: 'file',
 		name: 'profile',
 		label: 'Profile Photo',
-		name: 'profilePhoto',
 	},
 	{
 		type: 'file',
 		name: 'emiratesIdFile',
-		label: 'Emirates Id',
+		label: 'Emirates Id / Passport Photo',
 	},
 	// {
 	// 	type: 'file',
@@ -424,11 +423,15 @@ export default function RegisterForm({
 					interest: data.interest.value,
 					city: data.city.value,
 					haveOwnBusiness: 0,
-					photo: fileInput,
+					photo: fileInput || '',
+					website: data.website || '',
+					haveBusiness: data.haveBusiness || '',
 					// passportFile: passportInput,
 					emiratesIdFile: emiratesIdInput,
 					country: data.country.value,
+					profilePhoto: data.profilePhoto || '',
 					nationality: data.nationality.value,
+					makeHappy: data.makeHappy || '',
 				},
 			};
 

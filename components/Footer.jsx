@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import { ProjectImageComponent } from './Image';
+import ProjectsComponent from './Projects';
 import { faCircleChevronRight } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Home.module.scss';
 import { useRouter } from 'next/router';
@@ -106,7 +107,14 @@ export default function Footer() {
 									}}
 									icon={faFacebookF}
 								/>
-								<FontAwesomeIcon icon={faWhatsapp} />
+								<FontAwesomeIcon
+									icon={faWhatsapp}
+									onClick={() =>
+										window.open(
+											'https://api.whatsapp.com/send?phone=+971501210874&text=Hi%20There!',
+										)
+									}
+								/>
 								<FontAwesomeIcon
 									icon={faLinkedin}
 									onClick={() => {
@@ -150,7 +158,8 @@ export default function Footer() {
 							<Col xs={12} lg={4} md={12}>
 								<p className={styles.footerHeading}>ZeS Gallery</p>
 								<Row noGutters>
-									{galleryImages.map((item) => (
+									<ProjectsComponent hideMenu={true} />
+									{/* {galleryImages.map((item) => (
 										<Col xs={6} sm={4} md={4} lg={4} key={item.largeImage}>
 											<ProjectImageComponent
 												key={item.largeImage}
@@ -159,7 +168,7 @@ export default function Footer() {
 												smallImage={item.smallImage}
 											/>
 										</Col>
-									))}
+									))} */}
 								</Row>
 							</Col>
 						</Row>

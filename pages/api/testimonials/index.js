@@ -1,4 +1,4 @@
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 import formidable from 'formidable';
 import fs from 'fs';
 import { saveFile } from '../auth';
@@ -20,15 +20,15 @@ export default async function handler(req, res) {
 					}
 					const { name, designation, description } = fields;
 					let sql = `INSERT INTO testimonials(name, designation,description) VALUES('${name}','${designation}','${description}')`;
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
-						res.status(201).json({
+					try {
+						let result = await executeQuery({ query: sql });
+						res.status(201).send({
 							success: true,
-							message: 'Testimonial Created Successfully',
+							message: 'Testimonial added successfully',
 						});
-					});
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 			} catch (error) {
 				console.log(error);
@@ -39,12 +39,15 @@ export default async function handler(req, res) {
 			try {
 				let qr = req.query.q || '';
 				let sql = `SELECT * FROM testimonials where name like '%${qr}%' or description like  '%${qr}%' or designation like  '%${qr}%' ;`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				try {
+					let result = await executeQuery({ query: sql });
+					res.status(200).send({
+						success: true,
+						data: result,
+					});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -52,12 +55,15 @@ export default async function handler(req, res) {
 		case 'DELETE':
 			try {
 				let sql = `DELETE FROM testimonials WHERE id=${req.query.id};`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ message: 'Service Deleted Successfully' });
-				});
+				try {
+					let result = await executeQuery({ query: sql });
+					res.status(200).send({
+						success: true,
+						message: 'Events deleted successfully',
+					});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -73,15 +79,15 @@ export default async function handler(req, res) {
 
 					let sql = `UPDATE testimonials SET name = '${name}', description = '${description}', designation = '${designation}' WHERE id =${req.query.id}`;
 
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
-						res.status(200).json({
+					try {
+						let result = await executeQuery({ query: sql });
+						res.status(200).send({
 							success: true,
-							message: 'Testimonial Updated Successfully',
+							message: 'Testimonial updated successfully',
 						});
-					});
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 			} catch (error) {
 				console.log(error);

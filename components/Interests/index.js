@@ -4,24 +4,74 @@ import ContainerComponent from '../container';
 import Image from 'next/image';
 import styles from '../../styles/Interest.module.scss';
 
+const interestArr = [
+	{
+		value: 'Business and Industry',
+		label: 'Business and Industry',
+	},
+	{
+		value: 'Entertainment and leisure',
+		label: 'Entertainment and leisure',
+	},
+	{
+		value: 'Family and Relationships',
+		label: 'Family and Relationships',
+	},
+	{
+		value: 'Fitness and Wellness',
+		label: 'Fitness and Wellness',
+	},
+	{
+		value: 'Food and Drink',
+		label: 'Food and Drink',
+	},
+	{
+		value: 'Hobbies and Activities',
+		label: 'Hobbies and Activities',
+	},
+	{
+		value: 'Shopping and Fashion',
+		label: 'Shopping and Fashion',
+	},
+	{
+		value: 'Sports and Outdoors',
+		label: 'Sports and Outdoors',
+	},
+	{
+		value: 'Technology and Gadgets',
+		label: 'Technology and Gadgets',
+	},
+	{
+		value: 'Beauty and Body Care',
+		label: 'Beauty and Body Care',
+	},
+	{
+		value: 'Miscellaneous',
+		label: 'Miscellaneous',
+	},
+];
+
 export default function InterestsCategories({ handleFood }) {
 	return (
 		<ContainerComponent>
 			<div className={styles.interestCategoriesWrapper}>
 				<Row>
-					<Col md={4} className='text-center'>
-						<div className={styles.overlay} onClick={handleFood}>
-							<p>Food</p>
-							<Image
-								src='/PG1/Food.png'
-								width='221px'
-								height='221px'
-								alt='accessories'
-							/>
-							<div></div>
-						</div>
-					</Col>
-					<Col md={4} className='text-center'>
+					{interestArr.map((item, idx) => (
+						<Col key={item.label} md={4} className='text-center mb-5'>
+							<div className={styles.overlay} onClick={handleFood}>
+								<p>{item.label}</p>
+								<Image
+									src={`/interests/img${idx + 1}.png`}
+									width='221px'
+									height='221px'
+									alt={item.label}
+								/>
+								<div></div>
+							</div>
+						</Col>
+					))}
+				</Row>
+				{/* <Col md={4} className='text-center'>
 						<div className={styles.overlay} onClick={handleFood}>
 							<p>Sports</p>
 							<Image
@@ -76,7 +126,7 @@ export default function InterestsCategories({ handleFood }) {
 						</div>
 					</Col>
 					<Col md={2}></Col>
-				</Row>
+				</Row> */}
 				<br />
 				<br />
 				<br />

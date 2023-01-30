@@ -30,8 +30,8 @@ function ReadyBanner() {
 								</p>
 
 								<p className={styles.captionPara}>
-									Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-									diam nonummy nibh.
+									By signing in, you can avail Amazing Offers from renown brands
+									exclusively for ZeS Beauty Club members.
 								</p>
 								<br />
 							</Col>

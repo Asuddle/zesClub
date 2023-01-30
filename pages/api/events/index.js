@@ -1,4 +1,4 @@
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 import formidable from 'formidable';
 import fs from 'fs';
 import { saveFile } from '../auth';
@@ -22,14 +22,15 @@ export default async function handler(req, res) {
 					const { name, description, price, audience, date, venue } = fields;
 					await saveFile(files, 'image');
 					let sql = `INSERT INTO events(name, description, price, audience, date, venue, image) VALUES('${name}','${description}','${price}','${audience}','${date}','${venue}','${files.image.originalFilename}')`;
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
-						res
-							.status(201)
-							.json({ success: true, message: 'Event Created Successfully' });
-					});
+					try {
+						let result = await executeQuery({ query: sql });
+						res.status(201).send({
+							success: true,
+							message: 'Events added successfully',
+						});
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 			} catch (error) {
 				console.log(error);
@@ -40,12 +41,15 @@ export default async function handler(req, res) {
 			try {
 				let qr = req.query.q || '';
 				let sql = `SELECT * FROM events where name like '%${qr}%' or price like  '%${qr}%' or description like  '%${qr}%' or venue like  '%${qr}%' or audience like  '%${qr}%' ;`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				try {
+					let result = await executeQuery({ query: sql });
+					res.status(200).send({
+						success: true,
+						data: result,
+					});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -83,14 +87,15 @@ export default async function handler(req, res) {
 					}
 
 					console.log(isFiles);
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
-						res
-							.status(200)
-							.json({ success: true, message: 'Event Updated Successfully' });
-					});
+					try {
+						let result = await executeQuery({ query: sql });
+						res.status(200).send({
+							success: true,
+							message: 'Event updated successfully',
+						});
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 			} catch (error) {
 				console.log(error);

@@ -1,73 +1,61 @@
 import { Col, Container, Row } from 'reactstrap';
+import { useEffect, useState } from 'react';
 
 import HeadingComponent from './Heading';
 import Image from 'next/image';
 import { ProjectImageComponent } from './Image';
 import TabsComponent from './tabs';
+import axios from 'axios';
 import styles from '../styles/Home.module.scss';
 import { useRouter } from 'next/router';
 
-export default function ProjectsComponent() {
+export default function ProjectsComponent({ hideMenu = false }) {
 	const router = useRouter();
+	const [data, setData] = useState([]);
 	const handleGallery = () => {
 		router.push('/gallery');
 	};
-	const galleryImages = [
-		{
-			title: 'Project Title',
-			largeImage: '/home/Gallery1.jpg',
-			smallImage: '/home/Gallery1.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/home/Gallery2.jpg',
-			smallImage: '/home/Gallery2.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/home/Gallery3.jpg',
-			smallImage: '/home/Gallery3.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/home/Gallery4.jpg',
-			smallImage: '/home/Gallery4.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/service-4.jpg',
-			smallImage: '/service-4.jpg',
-		},
-		{
-			title: 'Project Title',
-			largeImage: '/service-5.jpg',
-			smallImage: '/service-5.jpg',
-		},
-	];
+	useEffect(() => {
+		axios
+			.get('/api/events')
+			.then((res) => {
+				console.log(res.data.data);
+				const slicedArray = res.data.data.slice(0, 5);
+				setData(slicedArray);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 
 	return (
 		<div className={styles.projectWrapper} data-aos='flip-left'>
-			<div className={styles.container}>
-				<HeadingComponent
-					heading='Gallery'
-					subHeading='Beautiful &'
-					subBoldHeading='Unforgetable Times'
-				/>
-			</div>
-			<TabsComponent />
-			<br />
-			<br />
-			<Row noGutters>
-				{galleryImages.map((item) => (
-					<Col sm={12} md={6} lg={4} key={item.largeImage}>
-						<ProjectImageComponent
-							key={item.largeImage}
-							title={item.title}
-							largeImage={item.largeImage}
-							smallImage={item.smallImage}
+			{!hideMenu && (
+				<>
+					<div className={styles.container}>
+						<HeadingComponent
+							heading='Gallery'
+							subHeading='Beautiful &'
+							subBoldHeading='Unforgetable Times'
 						/>
-					</Col>
-				))}
+					</div>
+					<TabsComponent />
+					<br />
+					<br />
+				</>
+			)}
+			<Row noGutters>
+				{data.length > 0 &&
+					data.map((item) => (
+						<Col sm={12} md={6} lg={4} key={item.image}>
+							<ProjectImageComponent
+								key={item.image}
+								title={item.name}
+								largeImage={item.image}
+								smallImage={`/${item.image}`}
+							/>
+						</Col>
+					))}
 			</Row>
 			<button className={styles.viewAllGalleryBtn} onClick={handleGallery}>
 				View All Gallery

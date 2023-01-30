@@ -1,7 +1,7 @@
 import formidable, { IncomingForm } from 'formidable';
 
 import bcrypt from 'bcryptjs';
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 import fs from 'fs';
 import nodemailer from 'nodemailer';
 
@@ -99,17 +99,23 @@ export default async function handler(req, res) {
 							res.send({ err });
 						}
 						try {
-							let photoFile = await saveFile(files, 'photo', fields.email);
+							let photoFile = '';
+							if (files.photo) {
+								photoFile = await saveFile(files, 'photo', fields.email);
+							}
 							// let passportFileName = await saveFile(
 							// 	files,
 							// 	'passportFile',
 							// 	fields.email,
 							// );
-							let emiratesIDFileName = await saveFile(
-								files,
-								'emiratesIdFile',
-								fields.email,
-							);
+							let emiratesIDFileName = '';
+							if (files.emiratesIdFile) {
+								emiratesIDFileName = await saveFile(
+									files,
+									'emiratesIdFile',
+									fields.email,
+								);
+							}
 
 							let labelStr = '';
 							let valueStr = '';
@@ -130,14 +136,25 @@ export default async function handler(req, res) {
 							valueStr = valueStr + `'${result.insertId}'`;
 
 							let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
-
-							await db.query(sqlCustomer, (err, result) => {
-								if (err) {
-									res.send({ err });
-								}
+							console.log('dsadsa', sqlCustomer);
+							try {
+								let result = await executeQuery({ query: sql });
+								res.status(201).send({
+									success: true,
+									message: 'Service added successfully',
+								});
 								sendMail(email);
-								res.status(201).send({ message: 'User Create Successfully' });
-							});
+							} catch (error) {
+								res.status(400).json({ success: false, error: error });
+							}
+							// await db.query(sqlCustomer, (err, result) => {
+							// 	if (err) {
+							// 		console.log(err);
+							// 		res.send({ err });
+							// 	}
+							// 	console.log('result', result);
+							// 	res.status(201).send({ message: 'User Create Successfully' });
+							// });
 						} catch (error) {
 							console.log('here', error);
 							res.status(400).json({ success: false, error: error });
@@ -153,13 +170,16 @@ export default async function handler(req, res) {
 			break;
 		case 'GET':
 			try {
-				let sql = `SELECT * FROM user INNER JOIN customers ON user.id=customers.user_id where role='user';`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				let sql = `SELECT * FROM user	 where role='user';`;
+				try {
+					let result = await executeQuery({ query: sql });
+					res.status(200).send({
+						success: true,
+						data: result,
+					});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -167,7 +187,11 @@ export default async function handler(req, res) {
 			break;
 		case 'DELETE':
 			try {
-				let sql = "DELETE FROM user WHERE address = 'Mountain 21'";
+				let result = await executeQuery({ query: sql });
+				res.status(200).send({
+					success: true,
+					message: 'Customer deleted successfully',
+				});
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}

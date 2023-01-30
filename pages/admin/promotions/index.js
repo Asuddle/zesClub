@@ -7,84 +7,88 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 export default function PromotionTable() {
-	const [data, setData] = useState([]);
 	const [refresh, setRefresh] = useState(false);
+	const [id, setId] = useState(0);
+
 	const [openDelete, setOpenDelete] = useState(false);
 	const router = useRouter();
 
-	const handleDeleteToggle = () => {
+	const handleDeleteToggle = (ev, id) => {
+		ev.stopPropagation();
+		setId(id);
 		setOpenDelete(!openDelete);
 	};
-
-	const verifyUser = (id) => {
+	const toggleDelete = () => {
+		setOpenDelete(!openDelete);
+	};
+	const handleDelete = () => {
 		axios
-			.put(`/api/users/verify?userId=${id}`)
+			.delete(`/api/promotions?id=${id}`)
 			.then((res) => {
+				toggleDelete();
+				// console.log(res.data);
 				setRefresh(!refresh);
+				setId(0);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
-	const handleEdit = () => {
-		router.push('/admin/user/2');
-	};
+
 	const col = [
 		{ label: 'Id', name: 'id' },
-		{ label: 'Name', name: 'firstName' },
-		{ label: 'Email', name: 'email' },
-		{ label: 'Phone', name: 'mobile' },
+		{ label: 'Name', name: 'name' },
+		{
+			label: 'Image',
+			name: 'image',
+			render: (data) => (
+				<div>
+					<img src={`/${data.image}`} width={150} />
+				</div>
+			),
+		},
 		{
 			label: 'Actions',
-			render: (data) =>
-				!data.isVerified ? (
-					<div>
-						<Button
-							variant='contained'
-							color='primary'
-							size='small'
-							onClick={() => verifyUser(data.user_id)}
-						>
-							Verify
-						</Button>
-						<Button
-							size='small'
-							variant='contained'
-							color='error'
-							onClick={handleDeleteToggle}
-						>
-							Delete
-						</Button>
-						<Button size='small' variant='contained' color='secondary'>
-							Edit
-						</Button>
-					</div>
-				) : (
-					<div>
-						<Button
-							size='small'
-							variant='contained'
-							color='error'
-							onClick={handleDeleteToggle}
-						>
-							Delete
-						</Button>
-						<Button
-							size='small'
-							variant='contained'
-							color='secondary'
-							onClick={handleEdit}
-						>
-							Edit
-						</Button>
-					</div>
-				),
+			render: (data) => (
+				<div>
+					<Button
+						size='small'
+						variant='contained'
+						color='error'
+						onClick={(ev) => handleDeleteToggle(ev, data.id)}
+					>
+						Delete
+					</Button>
+					<Button
+						size='small'
+						variant='contained'
+						color='secondary'
+						onClick={() => {
+							router.push(`/admin/promotions/${data.id}/edit`);
+						}}
+					>
+						Edit
+					</Button>
+				</div>
+			),
 		},
 	];
+
 	return (
 		<>
-			<TableComponent col={col} data={data} title='Promotions Management' />
-			<Modal open={openDelete} toggle={handleDeleteToggle} />
+			<TableComponent
+				col={col}
+				url='/api/promotions'
+				addButton
+				addNewCallback={() => router.push('/admin/promotions/add')}
+				title='Promotions Management'
+				refresh={refresh}
+			/>
+			<Modal
+				open={openDelete}
+				toggle={toggleDelete}
+				handleDelete={handleDelete}
+			/>
 		</>
 	);
 }

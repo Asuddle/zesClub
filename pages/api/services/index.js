@@ -1,4 +1,4 @@
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 import formidable from 'formidable';
 import fs from 'fs';
 import { saveFile } from '../auth';
@@ -20,17 +20,21 @@ export default async function handler(req, res) {
 						res.send({ err });
 					}
 					const { title, description, image } = fields;
-					await saveFile(files, 'image');
-					let sql = `INSERT INTO services(title, image,description) VALUES('${title}','${files.image.originalFilename}','${description}')`;
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
-						res.status(201).json({
+					let fileName = await saveFile(
+						files,
+						'image',
+						`service-${fields.title}`,
+					);
+					let sql = `INSERT INTO services(title, image,description) VALUES('${title}','${fileName}','${description}')`;
+					try {
+						let result = await executeQuery({ query: sql });
+						res.status(201).send({
 							success: true,
-							message: 'Services Created Successfully',
+							message: 'Service added successfully',
 						});
-					});
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 			} catch (error) {
 				console.log(error);
@@ -41,12 +45,15 @@ export default async function handler(req, res) {
 			try {
 				let qr = req.query.q || '';
 				let sql = `SELECT * FROM services where title like '%${qr}%' or description like  '%${qr}%' ;`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				try {
+					let result = await executeQuery({ query: sql });
+					res.status(201).send({
+						success: true,
+						data: result,
+					});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -54,12 +61,21 @@ export default async function handler(req, res) {
 		case 'DELETE':
 			try {
 				let sql = `DELETE FROM services WHERE id=${req.query.id};`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ message: 'Service Deleted Successfully' });
-				});
+				try {
+					let result = await executeQuery({ query: sql });
+					res.status(200).send({
+						success: true,
+						message: 'Service deleted successfully',
+					});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
+				// await db.query(sql, (err, result) => {
+				// 	if (err) {
+				// 		res.send(err);
+				// 	}
+				// 	res.status(200).send({ message: 'Service Deleted Successfully' });
+				// });
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -82,16 +98,23 @@ export default async function handler(req, res) {
 					if (isFiles) {
 						sql = `UPDATE services SET title = '${title}', description = '${description}',image='${files.image.originalFilename}' WHERE id =${req.query.id}`;
 					}
-
-					console.log(isFiles);
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
-						res
-							.status(200)
-							.json({ success: true, message: 'Service Updated Successfully' });
-					});
+					try {
+						let result = await executeQuery({ query: sql });
+						res.status(200).send({
+							success: true,
+							message: 'Service updated successfully',
+						});
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
+					// await db.query(sql, async (err, result) => {
+					// 	if (err) {
+					// 		res.send({ err });
+					// 	}
+					// 	res
+					// 		.status(200)
+					// 		.json({ success: true, message: 'Service Updated Successfully' });
+					// });
 				});
 			} catch (error) {
 				console.log(error);

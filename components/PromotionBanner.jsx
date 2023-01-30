@@ -17,13 +17,19 @@ export default function PromotionBanner() {
 				</p>
 				<br />
 				<p className={styles.captionPara}>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-					nonummy nibh.
+					We have specialized team to turn your event a memorable one for all.
+					We can help you from ideas to execution.
 				</p>
 				<br />
-				<button className='book-now-btn' onClick={handleClick}>
+				<a href='#contact-form' className='book-now-btn'>
 					BOOK NOW!
-				</button>
+				</a>
+
+				{/* <a className='book-now-btn'   href='#contact-form'  */}
+				{/* // onClick={handleClick} */}
+				{/* > */}
+				{/* BOOK NOW! */}
+				{/* <a /> */}
 			</div>
 		</div>
 	);

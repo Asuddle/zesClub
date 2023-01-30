@@ -16,11 +16,14 @@
 			position: absolute;
 			color: $white-shade;
 			z-index: 1;
-			left: 9%;
+			// left: 9%;
 			@include caption-heading;
 			font-weight: bold;
 			font-size: 22px !important;
 			bottom: 0%;
+			margin-left: 20px;
+			text-align: left;
+			margin-right: 6px;
 		}
 
 		&:hover {
@@ -34,14 +37,15 @@
 				width: 221px;
 				height: 221px;
 				background-color: $orange-shade;
-				opacity: 0.7;
+				opacity: 0.6;
 				border-radius: 24px;
 			}
 		}
 	}
 	img {
 		position: relative;
-		filter: brightness(0.45);
+		// filter: brightness(0.45);
+		border-radius: 24px;
 		cursor: pointer;
 	}
 }
@@ -133,5 +137,19 @@
 			}
 		}
 	}
+}
+.interestModal {
+	padding-top: 36px !important;
+	@include body-mediumButton;
+	// color: $orange-shade;
+}
+.interestModalButton {
+	background-image: linear-gradient(90deg, #d4175c 0%, #fda700 100%);
+	color: black;
+	border: none !important;
+	@include caption-boldHeading;
+	// &:hover {
+	// 	background: black;
+	// }
 }
 // @include caption-heading;

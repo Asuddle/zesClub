@@ -251,6 +251,20 @@
 				rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 		}
 	}
+	a {
+		padding: 16px 42px;
+		border-radius: 50px;
+		background: white;
+		border: none;
+		color: $orange-shade;
+		text-decoration: none;
+		@include caption-heading;
+		&:hover {
+			color: $orange-shade;
+			box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+				rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+		}
+	}
 }
 
 .code {

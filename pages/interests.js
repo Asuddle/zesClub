@@ -18,6 +18,7 @@ import Image from 'next/image';
 import InterestsCategories from '../components/Interests';
 import KFCPage from '../components/Interests/kfc';
 import Navigation from '../components/Navigation';
+import styles from '../styles/Interest.module.scss';
 import { useState } from 'react';
 
 export default function Interests() {
@@ -101,19 +102,19 @@ export default function Interests() {
 				aria-labelledby='alert-dialog-title'
 				aria-describedby='alert-dialog-description'
 			>
-				<div style={{ textAlign: 'center', paddingTop: '24px' }}>
-					{/* <FeatherIcon icon='x-circle' size='150px' stroke='#E45A68' /> */}
-				</div>
-				<DialogTitle id='alert-dialog-title'>
-					<strong style={{ zIndex: '999' }}>
-						Wonderful brands and offers coming soon!
-					</strong>
+				<DialogTitle className={styles.interestModal}>
+					{/* <strong style={{ zIndex: '999', color: '#fda700' }}> */}
+					Wonderful brands and offers coming soon!
+					{/* </strong> */}
 				</DialogTitle>
 				<DialogActions
 					className='text-center'
 					style={{ justifyContent: 'center', paddingBottom: '24px' }}
 				>
-					<Button onClick={handleComingSoon} variant='outlined' color='primary'>
+					<Button
+						className={styles.interestModalButton}
+						onClick={handleComingSoon}
+					>
 						Cancel
 					</Button>
 				</DialogActions>

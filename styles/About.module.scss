@@ -143,7 +143,7 @@
 			bottom: 37px;
 			border: 2px solid $orange-shade;
 			padding: 28px;
-			width: 75%;
+			// width: 75%;
 			margin-top: -2px !important;
 			// margin-left: 1%;
 		}
@@ -163,11 +163,12 @@
 			background: #ffffff;
 			width: 350px;
 			font-weight: bold;
-			margin-top: -28px;
+			margin-top: 7px;
 			z-index: 9999;
 			// bottom: 89px !important;
 			bottom: 58px;
 			box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+			right: 38px;
 		}
 	}
 	button {

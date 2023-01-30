@@ -54,6 +54,16 @@ const Menuitems = [
 		icon: 'bookmark',
 		href: '/admin/promotions',
 	},
+	{
+		title: 'Brands',
+		icon: 'bookmark',
+		href: '/admin/brands',
+	},
+	{
+		title: 'Deals',
+		icon: 'bookmark',
+		href: '/admin/deals',
+	},
 
 	// {
 	// 	title: 'Contact Us Page Management',

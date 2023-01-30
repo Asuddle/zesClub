@@ -122,7 +122,7 @@ export default function ContactForm() {
 					<br />
 				</div>
 			) : (
-				<Card className={styles.card}>
+				<Card className={styles.card} id='contact-form'>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<Row className='row g-3'>
 							{formField1.map((item) => (

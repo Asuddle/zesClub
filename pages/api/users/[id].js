@@ -1,6 +1,6 @@
 import formidable, { IncomingForm } from 'formidable';
 
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 import { saveFile } from '../auth';
 
 const userValue = {
@@ -49,11 +49,11 @@ export default async function handler(req, res) {
 		case 'GET':
 			try {
 				let sql = `SELECT * FROM user INNER JOIN customers ON user.id=customers.user_id where user_id=${req.query.id};`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ data: result });
+				let result = await executeQuery({ query: sql });
+
+				res.status(200).send({
+					success: true,
+					data: result,
 				});
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
@@ -106,10 +106,11 @@ export default async function handler(req, res) {
 						res.send(err);
 					}
 					let sql1 = `DELETE FROM user WHERE id = ${req.query.id}`;
-					await db.query(sql1, (err, result) => {
+					await executeQuery.query(sql1, (err, result) => {
 						if (err) {
 							res.send(err);
 						}
+						x;
 					});
 					res.status(200).send({ message: 'Entry Deleted Successfully' });
 				});

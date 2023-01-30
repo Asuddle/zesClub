@@ -37,31 +37,7 @@ export default async function handler(req, res) {
 	switch (method) {
 		case 'POST':
 			try {
-				const {
-					email,
-					password,
-					role,
-					title,
-					firstName,
-					lastName,
-					middleName,
-					country,
-					city,
-					nationality,
-					profession,
-					emiratesID,
-					mobile,
-					haveOwnBusiness,
-					industrySector,
-					website,
-					hobbies,
-					interest,
-					age,
-					weight,
-					makeHappy,
-					expectations,
-					photo,
-				} = req.body;
+				const { email, password, role } = req.body;
 				const hash = await bcrypt.hash(password, 10);
 				let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','${role}')`;
 

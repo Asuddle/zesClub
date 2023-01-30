@@ -1,6 +1,6 @@
 import { Col, Row } from 'reactstrap';
 
-import ContainerComponent from '../container';
+import ContainerComponent0 from '../container';
 import Image from 'next/image';
 import styles from '../../styles/About.module.scss';
 
@@ -22,9 +22,6 @@ export default function VisionMissionComponent() {
 							height={450}
 						/>
 						<div className={styles.horizontalWrapper}></div>
-						<div className={styles.imageText}>
-							We have ability to organize events to inspire and attract
-						</div>
 					</Col>
 					<Col
 						md={12}

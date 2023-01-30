@@ -57,6 +57,7 @@
 		"react-toastify": "^9.1.1",
 		"reactstrap": "9.1.5",
 		"sass": "1.55.0",
+		"serverless-mysql": "^1.5.4",
 		"slick-carousel": "1.8.1",
 		"yup": "0.32.11"
 	},
