@@ -45,6 +45,12 @@ export default function TestimonialTable() {
 		{ label: 'Name', name: 'name' },
 		{ label: 'Designation', name: 'designation' },
 		{
+			label: 'Image',
+			name: 'image',
+			render: (data) =>
+				data.image ? <img src={`/${data.image}`} width={150} /> : '',
+		},
+		{
 			label: 'Description',
 			name: 'description',
 		},

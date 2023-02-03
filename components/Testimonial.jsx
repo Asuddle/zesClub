@@ -1,3 +1,4 @@
+import { Col, Row } from 'reactstrap';
 import React, { Component, useEffect, useState } from 'react';
 
 import HeadingComponent from './Heading';
@@ -42,25 +43,35 @@ function TestimonialComponent() {
 				<Slider {...settings}>
 					{data.map((item, idx) => (
 						<div key={item} className={styles.testimonialImageWrapper}>
-							{/* <Image
-								src={`/components/Testimonial-BG.jpg`}
-								width='1080px'
-								height='450px'
-								// layout='fill'
-								// layout='responsive'
-								// objectFit='contain'
-								alt='pro'
-								className='img-responsive'
-							/> */}
-							<div className={styles.testimonialText}>
-								<p className={styles.description}>{item.description}</p>
+							<Row className={styles.testimonialText}>
+								<Col md={12} lg={4} style={{ textAlign: 'center' }}>
+									<img
+										src={item.image}
+										style={{
+											width: '265px',
+											height: '300px',
+											marginLeft: 'auto',
+											marginRight: 'auto',
+										}}
+										width={300}
+										height={300}
+									/>
+									<p className={styles.name}>{item.name}</p>
+									<p className={styles.ceoFounder}>{item.designation}</p>
+								</Col>
+								<Col md={12} lg={8}>
+									<p className={styles.description}>{item.description}</p>
+								</Col>
+								{/* <p className={styles.description}>{item.description}</p>
 								<p className={styles.name}>{item.name}</p>
-								<p className={styles.ceoFounder}>{item.designation}</p>
-								{/* <FontAwesomeIcon icon={faQuoteLeft} /> */}
-							</div>
+								<p className={styles.ceoFounder}>{item.designation}</p> */}
+							</Row>
 						</div>
 					))}
 				</Slider>
+				<br />
+				<br />
+				<br />
 				<br />
 				<br />
 			</div>

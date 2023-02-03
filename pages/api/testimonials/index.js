@@ -19,7 +19,22 @@ export default async function handler(req, res) {
 						res.send({ err });
 					}
 					const { name, designation, description } = fields;
-					let sql = `INSERT INTO testimonials(name, designation,description) VALUES('${name}','${designation}','${description}')`;
+					let isFiles = Object.keys(files).length > 0;
+					let sql = '';
+					if (isFiles) {
+						let imgFile = await saveFile(
+							files,
+							'image',
+							`testimonial-${fields.name}`,
+						);
+						sql = `INSERT INTO testimonials(name,image, designation,description) VALUES('${name}','${imgFile}','${
+							designation || ''
+						}','${description}')`;
+					} else {
+						sql = `INSERT INTO testimonials(name, designation,description) VALUES('${name}','${
+							designation || ''
+						}','${description}')`;
+					}
 					try {
 						let result = await executeQuery({ query: sql });
 						res.status(201).send({
@@ -76,8 +91,18 @@ export default async function handler(req, res) {
 						res.send({ err });
 					}
 					const { description, name, designation } = fields;
-
-					let sql = `UPDATE testimonials SET name = '${name}', description = '${description}', designation = '${designation}' WHERE id =${req.query.id}`;
+					let isFiles = Object.keys(files).length > 0;
+					let sql = '';
+					if (isFiles) {
+						let imageFiles = await saveFile(
+							files,
+							'image',
+							`testimonial-${fields.name}`,
+						);
+						sql = `UPDATE testimonials SET name = '${name}', description = '${description}', designation = '${designation}',image='${imageFiles}' WHERE id =${req.query.id}`;
+					} else {
+						sql = `UPDATE testimonials SET name = '${name}', description = '${description}', designation = '${designation}' WHERE id =${req.query.id}`;
+					}
 
 					try {
 						let result = await executeQuery({ query: sql });

@@ -114,18 +114,19 @@
 	text-align: center;
 	position: relative;
 	margin: 0px 12px !important;
-	height: 500px !important;
+	min-height: 500px !important;
 
 	.testimonialImageWrapper {
-		justify-content: center !important;
-		align-items: center !important;
+		// justify-content: center !important;
+		// align-items: center !important;
 		display: block !important;
-		height: 450px;
+		min-height: 505px;
 		text-align: center;
 		position: relative;
 		display: block;
-		background-image: url('/components/Testimonial-BG.jpg');
+		// background-image: url('/components/Testimonial-BG.jpg');
 		background-repeat: no-repeat;
+		background-color: #f5f5f5;
 		background-repeat: no-repeat;
 		background-position: 0 0;
 		background-size: cover;
@@ -159,12 +160,13 @@
 	}
 	.testimonialText {
 		color: white;
+		margin-left: 0px !important;
 		// position: absolute !important;
 		text-align: center;
-		max-width: 500px;
-		margin-left: auto;
-		margin-right: auto;
-		padding-top: 145px !important;
+		// max-width: 500px;
+		// margin-left: auto;
+		// margin-right: auto;
+		padding-top: 5% !important;
 
 		padding: 0px 20px;
 		// top: 30%;
@@ -195,11 +197,16 @@
 				font-size: 10px !important;
 				margin-bottom: 2px !important;
 			}
-			@include body-medium-para;
+			@include body-medium-2;
+			color: black;
+			text-align: left;
+			padding-bottom: 5%;
+			padding-right: 5%;
 		}
 		.name {
-			@include body-Bold16;
-			color: $orange-shade !important;
+			@include body-bold;
+			color: $black-shade !important;
+			font-size: 30px !important;
 			margin-top: 24px !important;
 			margin-bottom: 4px !important;
 			@media screen and (max-width: 900px) {
@@ -208,7 +215,8 @@
 			}
 		}
 		.ceoFounder {
-			@include body-Regular16;
+			@include body-bold;
+			color: $dark-grey-shade !important;
 		}
 	}
 }

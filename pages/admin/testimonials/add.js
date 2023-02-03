@@ -19,17 +19,24 @@ const formField5 = [
 		label: 'Name',
 		col: 6,
 	},
+
+	{
+		type: 'file',
+		name: 'image',
+		label: 'Image',
+		col: 6,
+	},
 	{
 		type: 'text',
 		name: 'designation',
 		label: 'Designation',
-		col: 6,
+		col: 10,
 	},
 	{
 		type: 'textarea',
 		name: 'description',
 		label: 'Description',
-		col: 8,
+		col: 12,
 	},
 ];
 
@@ -45,13 +52,16 @@ export default function AddTestimonial({
 		name: yup.string().required(),
 		designation: yup.string().required(),
 		description: yup.string().required(),
+		image: yup.string().required(),
 	};
 	const validationSchema = yup.object(validationObj);
 	const onSubmit = (data) => {
 		const formData = new FormData();
 		let result = {
 			...data,
+			image: fileInput,
 		};
+
 		if (typeof data.description == 'object') {
 			result['description'] = JSON.stringify(data.description);
 		}
