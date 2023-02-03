@@ -9,26 +9,26 @@ import { useRouter } from 'next/router';
 import zEventCard from './WhatNext/eventCard';
 import zImage from 'next/image';
 
-const galleryArr = [
-	{
-		name: 'Launch Party',
-		imageCount: 6,
-		date: '14th september 2021',
-		folder: '1',
-	},
-	{
-		name: 'Past life regression therapy',
-		imageCount: 25,
-		date: '22nd march 2022',
-		folder: '2',
-	},
-	{
-		name: 'Second Party',
-		imageCount: 25,
-		date: '16th october 2021',
-		folder: '3',
-	},
-];
+// const galleryArr = [
+// 	{
+// 		name: 'Launch Party',
+// 		imageCount: 6,
+// 		date: '14th september 2021',
+// 		folder: '1',
+// 	},
+// 	{
+// 		name: 'Past life regression therapy',
+// 		imageCount: 25,
+// 		date: '22nd march 2022',
+// 		folder: '2',
+// 	},
+// 	{
+// 		name: 'Second Party',
+// 		imageCount: 25,
+// 		date: '16th october 2021',
+// 		folder: '3',
+// 	},
+// ];
 export default function UpcomingEvents() {
 	const [data, setData] = useState([]);
 	const router = useRouter();

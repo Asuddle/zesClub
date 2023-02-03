@@ -1,6 +1,6 @@
 // import User from '../../../models/User';
 import bcrypt from 'bcryptjs';
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
@@ -13,10 +13,8 @@ export default async function handler(req, res) {
 
 				var sql = `SELECT * FROM user WHERE email="${email}"`;
 				try {
-					db.query(sql, (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
+					try {
+						let result = await executeQuery({ query: sql });
 						if (result.length === 0) {
 							res.send({ err: 'No match found' });
 						} else if (!result[0].isVerified && result[0].role !== 'admin') {
@@ -36,7 +34,13 @@ export default async function handler(req, res) {
 								...{ token },
 							});
 						}
-					});
+						// res.status(201).send({
+						// 	success: true,
+						// 	message: 'Service added successfully',
+						// });
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				} catch (error) {
 					res.send({ error });
 				}

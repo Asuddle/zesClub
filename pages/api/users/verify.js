@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 
 export default async function handler(req, res) {
 	const { method } = req;
@@ -7,13 +7,15 @@ export default async function handler(req, res) {
 	switch (method) {
 		case 'PUT':
 			try {
-				let mysql = `UPDATE user SET isVerified = 1 WHERE id = ${req.query.userId}`;
-				await db.query(mysql, (err, result) => {
-					if (err) {
-						res.send({ err });
-					}
+				let sql = `UPDATE user SET isVerified = 1 WHERE id = ${req.query.userId}`;
+				try {
+					let result = await executeQuery({ query: sql });
+					console.log(result);
 					res.status(201).send({ message: 'User Verified Successfully' });
-				});
+				} catch (error) {
+					console.log(error);
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}

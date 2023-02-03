@@ -41,6 +41,13 @@ export default function Home() {
 			<Navigation />
 			<Header isSmall={false} />
 			<SubHeader />
+			{/* https://www.youtube.com/watch?v=cw0tqrlvcG4 */}
+			<div class='video-container'>
+				<iframe
+					class='responsive-iframe'
+					src='http://www.youtube.com/embed/cw0tqrlvcG4?autoplay=1'
+				></iframe>
+			</div>
 			<UpcomingEvents />
 
 			<WhyZES />

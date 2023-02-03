@@ -1,4 +1,4 @@
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 const userValue = {
 	// email: 'email',
 	title: 'title',
@@ -40,36 +40,33 @@ export default async function handler(req, res) {
 				const { email, password, role } = req.body;
 				const hash = await bcrypt.hash(password, 10);
 				let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','${role}')`;
-
-				await db.query(sql, async (err, result) => {
-					if (err) {
-						res.send({ err });
-					}
-					try {
-						let labelStr = '';
-						let valueStr = '';
-						for (const key in userValue) {
-							if (req.body[key]) {
-								labelStr = labelStr + userValue[key] + ', ';
-								valueStr = valueStr + `'${req.body[key]}'` + ',';
-							}
+				try {
+					let result = await executeQuery({ query: sql });
+					let labelStr = '';
+					let valueStr = '';
+					for (const key in userValue) {
+						if (req.body[key]) {
+							labelStr = labelStr + userValue[key] + ', ';
+							valueStr = valueStr + `'${req.body[key]}'` + ',';
 						}
-						labelStr = labelStr + 'user_id';
-						valueStr = valueStr + result.insertId;
+					}
+					labelStr = labelStr + 'user_id';
+					valueStr = valueStr + result.insertId;
 
-						let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
-						await db.query(sqlCustomer, (err, result) => {
-							if (err) {
-								res.send({ err });
-							}
-							sendMail(email);
-							res.status(201).send({ message: 'User Create Successfully' });
-						});
+					let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
+					try {
+						let result = await executeQuery({ query: sqlCustomer });
+						// console.log(result);
+						sendMail(email);
+						res
+							.status(201)
+							.send({ success: true, message: 'Brands Created Successfully' });
 					} catch (error) {
-						console.log('here', error);
 						res.status(400).json({ success: false, error: error });
 					}
-				});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -80,12 +77,12 @@ export default async function handler(req, res) {
 				let sql = `SELECT * FROM user INNER JOIN customers ON user.id=customers.user_id where role='user' and (email like '%${qr}%' or
 				firstName like  '%${qr}%' or
 			      lastName like  '%${qr}%' or lastName like  '%${qr}%' or country  like  '%${qr}%' or city like  '%${qr}%');`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
+				try {
+					const result = await executeQuery({ query: sql });
 					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}

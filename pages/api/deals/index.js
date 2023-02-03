@@ -13,25 +13,38 @@ export default async function handler(req, res) {
 	switch (method) {
 		case 'POST':
 			try {
+				const userValue = {
+					name: 'name',
+					description: 'description',
+					brand_id: 'brand_id',
+					price: 'price',
+				};
+				let labelStr = '';
+				let valueStr = '';
+
 				const form = new formidable.IncomingForm();
 				form.parse(req, async function (err, fields, files) {
 					if (err) {
 						res.send({ err });
 					}
-					const { name, category_id } = fields;
-					let fileName = await saveFile(
-						files,
-						'image',
-						`brands-${fields.name}`,
-					);
+					let fileName = await saveFile(files, 'image', `deal-${fields.name}`);
 
-					let sql = `INSERT INTO brands(name,image,category_id) VALUES('${name}','${fileName}','${category_id}')`;
+					for (const key in userValue) {
+						if (fields[key]) {
+							labelStr = labelStr + userValue[key] + ', ';
+							valueStr = valueStr + `'${fields[key]}'` + ',';
+						}
+					}
+					labelStr = labelStr + 'image';
+					valueStr = valueStr + `'${fileName}'`;
+
+					let sql = `INSERT INTO deals(${labelStr}) VALUES(${valueStr})`;
 					try {
 						let result = await executeQuery({ query: sql });
-						console.log(result);
+
 						res
 							.status(201)
-							.send({ success: true, message: 'Brands Created Successfully' });
+							.send({ success: true, message: 'Deals Created Successfully' });
 					} catch (error) {
 						res.status(400).json({ success: false, error: error });
 					}
@@ -44,7 +57,7 @@ export default async function handler(req, res) {
 		case 'GET':
 			try {
 				let qr = req.query.q || '';
-				let sql = `SELECT categories.name as  categoryName ,brands.name,brands.image,brands.id,brands.createdDate FROM brands  INNER JOIN categories ON categories.id=brands.category_id where brands.name like '%${qr}%';`;
+				let sql = `SELECT brands.name as  brands ,deals.name,deals.image,deals.id,deals.createdDate,deals.description,deals.price FROM deals INNER JOIN brands ON brands.id=deals.brand_id where brands.name like '%${qr}%';`;
 				try {
 					const result = await executeQuery({ query: sql });
 					res.status(200).send({ data: result, totalCount: result.length });
@@ -58,10 +71,10 @@ export default async function handler(req, res) {
 			break;
 		case 'DELETE':
 			try {
-				let sql = `DELETE FROM brands WHERE id=${req.query.id};`;
+				let sql = `DELETE FROM deals WHERE id=${req.query.id};`;
 				try {
 					const result = await executeQuery({ query: sql });
-					res.status(200).send({ message: 'Brand Deleted Successfully' });
+					res.status(200).send({ message: 'Deals Deleted Successfully' });
 				} catch (error) {
 					console.log(error);
 					res.status(400).json({ success: false, error: error });
@@ -77,17 +90,24 @@ export default async function handler(req, res) {
 					if (err) {
 						res.send({ err });
 					}
-					const { name, category_id } = fields;
-					console.log('Fields', fields);
-					let imageFile = '';
-					let isFiles = Object.keys(files).length > 0;
-					if (isFiles) {
-						imageFile = await saveFile(files, 'image', `brands-${fields.name}`);
-					}
-					let sql = `UPDATE brands SET name = '${name}',category_id=${category_id} WHERE id =${req.query.id}`;
+					const { name, brand_id, price, description } = fields;
 
+					let isFiles = Object.keys(files).length > 0;
+					let imageFile = '';
+					let sql = '';
 					if (isFiles) {
-						sql = `UPDATE brands SET name = '${name}',category_id=${category_id}, image='${imageFile}' WHERE id =${req.query.id}`;
+						imageFile = await saveFile(files, 'image', `deal-${fields.name}`);
+						sql = `UPDATE deals SET name = '${name}',brand_id=${parseInt(
+							brand_id,
+						)},description='${description}',price='${price}', image='${imageFile}' WHERE id =${
+							req.query.id
+						}`;
+					} else {
+						sql = `UPDATE deals SET name = '${name}',brand_id=${parseInt(
+							brand_id,
+						)},price='${price}',description='${description}' WHERE id =${
+							req.query.id
+						}`;
 					}
 					try {
 						let result = await executeQuery({ query: sql });

@@ -18,6 +18,20 @@ const formField5 = [
 		type: 'text',
 		name: 'name',
 		label: 'Name',
+		col: 5,
+	},
+	{
+		type: 'text',
+		name: 'price',
+		options: { type: 'number' },
+		label: 'Price',
+		col: 5,
+	},
+	{
+		type: 'autocomplete',
+		name: 'brand',
+		label: 'Brand',
+		url: '/api/brands',
 		col: 12,
 	},
 	{
@@ -27,17 +41,16 @@ const formField5 = [
 		col: 12,
 	},
 	{
-		type: 'autocomplete',
-		name: 'category',
-		label: 'Category',
-		url: '/api/promotions',
+		type: 'textarea',
+		name: 'description',
+		label: 'Description',
 		col: 12,
 	},
 ];
-export default function AddBrands({
+export default function AddDeals({
 	defaultValues = {},
 	customSubmit = false,
-	title = 'Add Brand',
+	title = 'Add Deal',
 }) {
 	const router = useRouter();
 	const [fileInput, setFileInput] = useState('');
@@ -45,7 +58,8 @@ export default function AddBrands({
 	const validationSchema = yup.object({
 		name: yup.string().required(),
 		image: yup.string().required(),
-		category: yup.mixed().required(),
+		brand: yup.mixed().required(),
+		price: yup.mixed().required(),
 	});
 
 	const onSubmit = (data) => {
@@ -56,7 +70,7 @@ export default function AddBrands({
 			let result = {
 				...data,
 				...{
-					category_id: data.category.value,
+					brand_id: data.brand.value,
 					image: fileInput,
 				},
 			};
@@ -67,16 +81,17 @@ export default function AddBrands({
 				headers: { 'content-type': 'multipart/form-data' },
 			};
 			axios
-				.post(`/api/brands`, formData, config)
+				.post(`/api/deals`, formData, config)
 				.then((res) => {
 					console.log(res.data);
 					if (res.data.success) {
-						router.push('/admin/brands');
+						router.push('/admin/deals');
 					} else {
 						toast.error('Something went wrong');
 					}
 				})
 				.catch((err) => {
+					toast.error('Something went wrong');
 					console.log(err);
 				});
 		}
@@ -102,7 +117,7 @@ export default function AddBrands({
 								control={control}
 								key={item.label}
 								item={item}
-								col={5}
+								col={item.col}
 								errors={errors}
 								setFileInput={setFileInput}
 								fileInput={fileInput}

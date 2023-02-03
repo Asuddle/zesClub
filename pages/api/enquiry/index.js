@@ -1,4 +1,4 @@
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 
 export default async function handler(req, res) {
 	const { method } = req;
@@ -10,29 +10,29 @@ export default async function handler(req, res) {
 			let sql = `INSERT INTO enquiry(email, firstName, lastName, enquiryType, title, message) VALUES ('${email}','${firstName}','${lastName}','${enquiryType}','${title}','${message}');`;
 
 			try {
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send({ err });
-					}
-					// sendMail(email);
-					res.status(201).send({ message: 'Enquiry Sent Successfully' });
-				});
+				let result = await executeQuery({ query: sql });
+				console.log(result);
+				res
+					.status(201)
+					.send({ success: true, message: 'Enquiry Created Successfully' });
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
+
 			break;
 		case 'GET':
 			try {
 				let sql = `SELECT * FROM enquiry where email like '%${req.query.q}%' or firstName like  '%${req.query.q}%' or lastName like  '%${req.query.q}%' or enquiryType like  '%${req.query.q}%' ;`;
 
 				// select * from User where fullname like %? or facebook = ? or email = ? limit 50", keyword,keyword,keyword,
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					// let finalFilData=await result.filter(item=>)
+
+				try {
+					let result = await executeQuery({ query: sql });
+					console.log(result);
 					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -40,12 +40,13 @@ export default async function handler(req, res) {
 		case 'DELETE':
 			try {
 				let sql = `DELETE FROM enquiry WHERE id='${req.query.id}';`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				try {
+					const result = await executeQuery({ query: sql });
+					res.status(200).send({ message: 'Enquiry Deleted Successfully' });
+				} catch (error) {
+					console.log(error);
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}

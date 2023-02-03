@@ -2,10 +2,28 @@ import { faCalendar, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
-import homeStyles from '../../styles/Home.module.scss';
 import styles from '../../styles/gallery.module.scss';
 
+let smallCalendar = [
+	'JAN',
+	'FEB',
+	'MAR',
+	'APR',
+	'MAY',
+	'JUN',
+	'JUL',
+	'AUG',
+	'SEP',
+	'OCT',
+	'NOV',
+	'DEC',
+];
+
 export default function GalleryCard({ idx, item }) {
+	// console.log('item', item.date);
+	let eventDate = new Date(item.date).getDate();
+	let eventMonth = new Date(item.date).getMonth();
+	// console.log(item.date, eventMonth, smallCalendar.length);
 	return (
 		<div className={styles.cardWrapper}>
 			<Image
@@ -19,9 +37,9 @@ export default function GalleryCard({ idx, item }) {
 			/>
 			<div className={styles.dataWrapper}>
 				<p className={styles.eventDate}>
-					<span>0{idx + idx * 2 + 1}</span>
+					<span>{eventDate.toString().padStart(2, '0')}</span>
 					<br />
-					Dec
+					{smallCalendar[eventMonth]}
 				</p>
 				<p className={styles.eventName}>{item.name}</p>
 				{/* <p className={styles.eventDate}>{item.name}</p> */}

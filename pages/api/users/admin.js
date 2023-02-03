@@ -1,4 +1,4 @@
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 
 export default async function handler(req, res) {
 	const { method } = req;
@@ -13,12 +13,12 @@ export default async function handler(req, res) {
 				 and (email like '%${qr}%' or
 					firstName like  '%${qr}%' or
 				      lastName like  '%${qr}%' or lastName like  '%${qr}%' or country  like  '%${qr}%' or city like  '%${qr}%') ;`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
+				try {
+					const result = await executeQuery({ query: sql });
 					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -27,20 +27,18 @@ export default async function handler(req, res) {
 			try {
 				let cusSql = `DELETE FROM customers WHERE user_id='${req.query.userId}';`;
 				let sql = `DELETE FROM user WHERE id='${req.query.userId}';`;
-				await db.query(cusSql, async (err, result) => {
-					if (err) {
-						res.send(err);
+				try {
+					await executeQuery({ query: cusSql });
+					// res.status(200).send({ data: result, totalCount: result.length });
+					try {
+						await executeQuery({ query: sql });
+						res.status(200).send({ message: 'Admin deleted Successfully' });
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
 					}
-					await db.query(sql, (err, result) => {
-						if (err) {
-							res.send({
-								success: false,
-								message: 'Customer Deleted but user is still there',
-							});
-						}
-						res.status(200).send({ message: 'User Delete Successfully' });
-					});
-				});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}

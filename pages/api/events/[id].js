@@ -1,6 +1,6 @@
 import formidable, { IncomingForm } from 'formidable';
 
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 
 export default async function handler(req, res) {
 	const { method } = req;

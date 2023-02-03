@@ -87,12 +87,15 @@ export default async function handler(req, res) {
 
 					// res.send({ cond });
 					let sql = `UPDATE customers SET ${cond} WHERE user_id = ${req.query.id}`;
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send(err);
-						}
-						res.status(200).send({ message: 'Entry Updated Successfully' });
-					});
+					try {
+						let result = await executeQuery({ query: sql });
+						// console.log(result);
+						res
+							.status(200)
+							.send({ success: true, message: 'Entry Updated Successfully' });
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
@@ -101,19 +104,19 @@ export default async function handler(req, res) {
 		case 'DELETE':
 			try {
 				let sql = `DELETE FROM customers WHERE user_id = ${req.query.id}`;
-				await db.query(sql, async (err, result) => {
-					if (err) {
-						res.send(err);
-					}
+				try {
+					const result = await executeQuery({ query: sql });
 					let sql1 = `DELETE FROM user WHERE id = ${req.query.id}`;
-					await executeQuery.query(sql1, (err, result) => {
-						if (err) {
-							res.send(err);
-						}
-						x;
-					});
-					res.status(200).send({ message: 'Entry Deleted Successfully' });
-				});
+					try {
+						await executeQuery({ query: sql1 });
+						res.status(200).send({ message: 'User Deleted Successfully' });
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
+				} catch (error) {
+					console.log(error);
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}

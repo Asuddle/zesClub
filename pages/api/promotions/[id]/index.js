@@ -19,12 +19,6 @@ export default async function handler(req, res) {
 				} catch (error) {
 					res.status(400).json({ success: false, error: error });
 				}
-				// await db.query(sql, (err, result) => {
-				// 	if (err) {
-				// 		res.send(err);
-				// 	}
-				// 	res.status(200).send({ data: result });
-				// });
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}

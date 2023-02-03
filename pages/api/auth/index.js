@@ -94,20 +94,13 @@ export default async function handler(req, res) {
 					const { email, password, role = 'user' } = fields;
 					const hash = await bcrypt.hash(password, 10);
 					let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','${role}')`;
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
+					try {
+						let result = await executeQuery({ query: sql });
 						try {
 							let photoFile = '';
 							if (files.photo) {
 								photoFile = await saveFile(files, 'photo', fields.email);
 							}
-							// let passportFileName = await saveFile(
-							// 	files,
-							// 	'passportFile',
-							// 	fields.email,
-							// );
 							let emiratesIDFileName = '';
 							if (files.emiratesIdFile) {
 								emiratesIDFileName = await saveFile(
@@ -136,30 +129,24 @@ export default async function handler(req, res) {
 							valueStr = valueStr + `'${result.insertId}'`;
 
 							let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
-							console.log('dsadsa', sqlCustomer);
 							try {
-								let result = await executeQuery({ query: sql });
+								await executeQuery({ query: sqlCustomer });
 								res.status(201).send({
 									success: true,
-									message: 'Service added successfully',
+									message: 'Customer added successfully',
 								});
+
 								sendMail(email);
 							} catch (error) {
 								res.status(400).json({ success: false, error: error });
 							}
-							// await db.query(sqlCustomer, (err, result) => {
-							// 	if (err) {
-							// 		console.log(err);
-							// 		res.send({ err });
-							// 	}
-							// 	console.log('result', result);
-							// 	res.status(201).send({ message: 'User Create Successfully' });
-							// });
 						} catch (error) {
 							console.log('here', error);
 							res.status(400).json({ success: false, error: error });
 						}
-					});
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 
 				// console.log(req.body);

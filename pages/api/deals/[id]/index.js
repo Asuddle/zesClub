@@ -1,3 +1,5 @@
+import formidable, { IncomingForm } from 'formidable';
+
 import executeQuery from '../../../../util/mongodb';
 
 export default async function handler(req, res) {
@@ -6,13 +8,13 @@ export default async function handler(req, res) {
 	switch (method) {
 		case 'GET':
 			try {
-				let sql = `SELECT * FROM testimonials where id=${req.query.id};`;
-				try {
-					const result = await executeQuery({ query: sql });
-					res.status(200).send({ data: result, totalCount: result.length });
-				} catch (error) {
-					res.status(400).json({ success: false, error: error });
-				}
+				let sql = `SELECT * from deals where id=${req.query.id};`;
+				let result = await executeQuery({ query: sql });
+
+				res.status(200).send({
+					success: true,
+					data: result,
+				});
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}

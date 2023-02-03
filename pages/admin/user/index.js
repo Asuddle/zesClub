@@ -47,6 +47,25 @@ export default function UserTable() {
 		router.push(`/admin/user/${data.user_id}/details`);
 	};
 
+	const csvHeaders = [
+		{ label: 'Id', key: 'id' },
+		{ label: 'First Name', key: 'firstName' },
+		{ label: 'Last Name', key: 'lastName' },
+		{ label: 'email', key: 'email' },
+		{ label: 'phone', key: 'mobile' },
+		{ label: 'Country', key: 'country' },
+		{ label: 'City', key: 'city' },
+		{ label: 'Website', key: 'website' },
+		{ label: 'Nationality', key: 'nationality' },
+		{ label: 'Profession', key: 'profession' },
+		{ label: 'EmiratesId', key: 'emiratesID' },
+		{ label: 'Hobbies', key: 'hobbies' },
+		{ label: 'Interest', key: 'interest' },
+		{ label: 'Age', key: 'age' },
+		{ label: 'Height', key: 'height' },
+		{ label: 'Weight', key: 'weight' },
+		{ label: 'What makes you happy?', key: 'makeHappy' },
+	];
 	const col = [
 		{ label: 'Id', name: 'id', width: '5%' },
 		{ label: 'Name', name: 'firstName', width: '20%' },
@@ -93,6 +112,7 @@ export default function UserTable() {
 	return (
 		<>
 			<TableComponent
+				csvHeaders={csvHeaders}
 				handleRowClick={handleDetails}
 				col={col}
 				addButton

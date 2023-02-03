@@ -70,12 +70,6 @@ export default async function handler(req, res) {
 				} catch (error) {
 					res.status(400).json({ success: false, error: error });
 				}
-				// await db.query(sql, (err, result) => {
-				// 	if (err) {
-				// 		res.send(err);
-				// 	}
-				// 	res.status(200).send({ message: 'Service Deleted Successfully' });
-				// });
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -107,14 +101,6 @@ export default async function handler(req, res) {
 					} catch (error) {
 						res.status(400).json({ success: false, error: error });
 					}
-					// await db.query(sql, async (err, result) => {
-					// 	if (err) {
-					// 		res.send({ err });
-					// 	}
-					// 	res
-					// 		.status(200)
-					// 		.json({ success: true, message: 'Service Updated Successfully' });
-					// });
 				});
 			} catch (error) {
 				console.log(error);

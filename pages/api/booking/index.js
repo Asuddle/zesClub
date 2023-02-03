@@ -1,4 +1,4 @@
-import db from '../../../util/mongodb';
+import executeQuery from '../../../util/mongodb';
 import formidable from 'formidable';
 import fs from 'fs';
 import { saveFile } from '../auth';
@@ -21,15 +21,16 @@ export default async function handler(req, res) {
 					}
 					const { name, description, price, audience, date, venue } = fields;
 					await saveFile(files, 'image');
-					let sql = `INSERT INTO events(name, description, price, audience, date, venue, image) VALUES('${name}','${description}','${price}','${audience}','${date}','${venue}','${files.image.originalFilename}')`;
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
-						res
-							.status(201)
-							.json({ success: true, message: 'Event Created Successfully' });
-					});
+					let sql = `INSERT INTO bookings(name, description, price, audience, date, venue, image) VALUES('${name}','${description}','${price}','${audience}','${date}','${venue}','${files.image.originalFilename}')`;
+					try {
+						let result = await executeQuery({ query: sql });
+						res.status(201).send({
+							success: true,
+							message: 'Bookings Created Successfully',
+						});
+					} catch (error) {
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 			} catch (error) {
 				console.log(error);
@@ -43,27 +44,28 @@ export default async function handler(req, res) {
 				INNER JOIN events ON bookings.event_id=events.id
 				INNER JOIN user ON bookings.user_id=user.id
 				INNER JOIN customers ON bookings.user_id=customers.user_id;`;
-
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-
+				try {
+					let result = await executeQuery({ query: sql });
+					console.log(result);
 					res.status(200).send({ data: result, totalCount: result.length });
-				});
+				} catch (error) {
+					console.log(error);
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
 			break;
 		case 'DELETE':
 			try {
-				let sql = `DELETE FROM events WHERE id=${req.query.id};`;
-				await db.query(sql, (err, result) => {
-					if (err) {
-						res.send(err);
-					}
-					res.status(200).send({ message: 'Event Deleted Successfully' });
-				});
+				let sql = `DELETE FROM bookings WHERE id=${req.query.id};`;
+				try {
+					const result = await executeQuery({ query: sql });
+					res.status(200).send({ message: 'Brand Deleted Successfully' });
+				} catch (error) {
+					console.log(error);
+					res.status(400).json({ success: false, error: error });
+				}
 			} catch (error) {
 				res.status(400).json({ success: false, error: error });
 			}
@@ -88,14 +90,15 @@ export default async function handler(req, res) {
 					}
 
 					console.log(isFiles);
-					await db.query(sql, async (err, result) => {
-						if (err) {
-							res.send({ err });
-						}
+					try {
+						await executeQuery({ query: sql });
 						res
 							.status(200)
 							.json({ success: true, message: 'Event Updated Successfully' });
-					});
+					} catch (error) {
+						console.log(error);
+						res.status(400).json({ success: false, error: error });
+					}
 				});
 			} catch (error) {
 				console.log(error);

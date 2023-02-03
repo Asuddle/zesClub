@@ -6,25 +6,12 @@ import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-export default function SelectPromotionsTable() {
-	const [id, setId] = useState([]);
+export default function DealsTable() {
 	const [refresh, setRefresh] = useState(false);
+	const [id, setId] = useState(0);
+
 	const [openDelete, setOpenDelete] = useState(false);
 	const router = useRouter();
-
-	const handleDeleteCall = () => {
-		axios
-			.delete(`/api/brands?id=${id}`)
-			.then((res) => {
-				console.log(res.data);
-				setId(0);
-				setOpenDelete(!openDelete);
-				setRefresh(!refresh);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
 
 	const handleDeleteToggle = (ev, id) => {
 		ev.stopPropagation();
@@ -34,15 +21,40 @@ export default function SelectPromotionsTable() {
 	const toggleDelete = () => {
 		setOpenDelete(!openDelete);
 	};
+	const handleDelete = () => {
+		axios
+			.delete(`/api/deals?id=${id}`)
+			.then((res) => {
+				toggleDelete();
+				// console.log(res.data);
+				setRefresh(!refresh);
+				setId(0);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	const col = [
 		{ label: 'Id', name: 'id' },
 		{ label: 'Name', name: 'name' },
 		{
 			label: 'Image',
 			name: 'image',
-			render: (data) => <img src={`/${data.image}`} width={150} />,
+			render: (data) => (
+				<div>
+					<img src={`/${data.image}`} width={150} />
+				</div>
+			),
 		},
-		{ label: 'Category', name: 'categoryName' },
+		{
+			label: 'Brand',
+			name: 'brands',
+		},
+		{
+			label: 'Price',
+			name: 'price',
+		},
 		{
 			label: 'Actions',
 			render: (data) => (
@@ -60,7 +72,7 @@ export default function SelectPromotionsTable() {
 						variant='contained'
 						color='secondary'
 						onClick={() => {
-							router.push(`/admin/brands/${data.id}/edit`);
+							router.push(`/admin/deals/${data.id}/edit`);
 						}}
 					>
 						Edit
@@ -69,20 +81,21 @@ export default function SelectPromotionsTable() {
 			),
 		},
 	];
+
 	return (
 		<>
 			<TableComponent
 				col={col}
-				url='/api/brands'
+				url='/api/deals'
 				addButton
+				addNewCallback={() => router.push('/admin/deals/add')}
+				title='Deals'
 				refresh={refresh}
-				addNewCallback={() => router.push('/admin/brands/add')}
-				title='Brands'
 			/>
 			<Modal
 				open={openDelete}
 				toggle={toggleDelete}
-				handleDelete={handleDeleteCall}
+				handleDelete={handleDelete}
 			/>
 		</>
 	);

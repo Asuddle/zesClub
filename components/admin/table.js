@@ -33,7 +33,7 @@ export default function TableComponent({
 	const [order, setOrder] = useState('asc');
 	const [orderBy, setOrderBy] = useState('calories');
 	const [page, setPage] = useState(0);
-	const [rowsPerPage, setRowsPerPage] = useState(5);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 
 	const [searchText, setSearchText] = useState('');
 	const handleSearchChange = (e) => {
@@ -89,17 +89,14 @@ export default function TableComponent({
 			setData(res.data.data);
 		});
 	}, [searchText, refresh]);
-	console.log(
-		'Dataaa Slice  ',
-		data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-	);
+
 	return (
 		<BaseCard title={title}>
 			{addButton && (
 				<Button
 					onClick={addNewCallback}
 					variant='contained'
-					style={{ float: 'right' }}
+					style={{ float: 'right', marginLeft: '16px' }}
 					color='success'
 				>
 					Add New +

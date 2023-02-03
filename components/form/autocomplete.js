@@ -15,13 +15,20 @@ export default function AutocompleteComponent({
 			.then((res) => {
 				let dt = res.data.data;
 				dt = dt.map((item) => ({ label: item.name, value: item.id }));
+				if (field.value) {
+					// console.log(
+					// 	'Field Value ### ',
+					// 	dt.filter((item) => item.value === field.value)[0],
+					// );
+					field.value = dt.filter((item) => item.value === field.value)[0];
+				}
 				setOptions(dt);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, []);
-
+	// console.log(field);
 	const promiseOptions = (inputValue = '', callback) => {
 		console.log(inputValue);
 		if (inputValue !== '') {
