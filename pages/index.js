@@ -45,7 +45,7 @@ export default function Home() {
 			<div class='video-container'>
 				<iframe
 					class='responsive-iframe'
-					src='http://www.youtube.com/embed/cw0tqrlvcG4?autoplay=1'
+					src='https://www.youtube.com/embed/cw0tqrlvcG4?autoplay=1'
 				></iframe>
 			</div>
 			<UpcomingEvents />

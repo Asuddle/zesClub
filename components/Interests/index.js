@@ -1,7 +1,9 @@
 import { Col, Row } from 'reactstrap';
+import { useEffect, useState } from 'react';
 
 import ContainerComponent from '../container';
 import Image from 'next/image';
+import axios from 'axios';
 import styles from '../../styles/Interest.module.scss';
 
 const interestArr = [
@@ -52,19 +54,33 @@ const interestArr = [
 ];
 
 export default function InterestsCategories({ handleFood }) {
+	const [interests, setInterests] = useState([]);
+	useEffect(() => {
+		axios
+			.get('api/promotions')
+			.then((res) => {
+				console.log(res.data.data);
+				setInterests(res.data.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
 	return (
 		<ContainerComponent>
 			<div className={styles.interestCategoriesWrapper}>
 				<Row>
-					{interestArr.map((item, idx) => (
+					{interests.map((item, idx) => (
 						<Col key={item.label} md={4} className='text-center mb-5'>
-							<div className={styles.overlay} onClick={handleFood}>
-								<p>{item.label}</p>
+							<div className={styles.overlay} onClick={() => handleFood(item)}>
+								<p>{item.name}</p>
 								<Image
-									src={`/interests/img${idx + 1}.png`}
+									// interests/img${idx + 1}.png
+									src={`/${item.image}`}
 									width='221px'
 									height='221px'
-									alt={item.label}
+									alt={item.name}
 								/>
 								<div></div>
 							</div>

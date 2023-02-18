@@ -3,19 +3,20 @@ import { Col, Row } from 'reactstrap';
 import ContainerComponent from '../container';
 import Image from 'next/image';
 
-export default function FoodCategory({ handleFoodRes }) {
+export default function FoodCategory({ data, handleClick }) {
+	console.log(data);
 	return (
 		<ContainerComponent>
 			<Row>
-				{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((item) => (
+				{data.map((item) => (
 					<Col md={3} key={item}>
 						<Image
 							style={{ cursor: 'pointer' }}
-							src={`/PG2/F${item}.png`}
+							src={`/${item.image}`}
 							alt='foody'
 							width='221px'
 							height='221px'
-							onClick={handleFoodRes}
+							onClick={handleClick}
 						/>
 					</Col>
 				))}

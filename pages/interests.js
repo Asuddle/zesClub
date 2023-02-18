@@ -18,23 +18,42 @@ import Image from 'next/image';
 import InterestsCategories from '../components/Interests';
 import KFCPage from '../components/Interests/kfc';
 import Navigation from '../components/Navigation';
+import axios from 'axios';
 import styles from '../styles/Interest.module.scss';
 import { useState } from 'react';
 
 export default function Interests() {
-	const [category, setCategory] = useState('');
-	const [foodRes, setFoodRes] = useState('');
+	const [menu, setMenu] = useState([]);
+	const [foodRes, setFoodRes] = useState([]);
 	const [comingSoon, setComingSoon] = useState(false);
 	const handleComingSoon = () => {
 		setComingSoon(!comingSoon);
 	};
-	const handleFood = () => {
-		handleComingSoon();
-		// setCategory('food');
+	const handleFood = (item) => {
+		console.log('item', item);
+		axios.get(`/api/brands/${item.id}/category`).then((res) => {
+			console.log(res.data.data);
+			if (res.data.data.length > 0) {
+				console.log(res.data.data);
+				setFoodRes(res.data.data);
+			} else {
+				handleComingSoon();
+			}
+		});
 	};
-	const handleFoodRes = () => {
-		setFoodRes('kfc');
+	const handleMenu = (item) => {
+		axios.get(`/api/deals/${item.id}/brand`).then((res) => {
+			console.log(res.data.data);
+			if (res.data.data.length > 0) {
+				console.log(res.data.data);
+
+				setMenu(res.data.data);
+			} else {
+				handleComingSoon();
+			}
+		});
 	};
+
 	return (
 		<div>
 			<Head>
@@ -47,8 +66,7 @@ export default function Interests() {
 			<br />
 			<br />
 			{/* Categoris */}
-
-			{category !== 'food' && foodRes == '' && (
+			{foodRes.length == 0 && (
 				<>
 					<HeadingComponent
 						heading='Enjoy Promotions'
@@ -60,8 +78,20 @@ export default function Interests() {
 					<InterestsCategories handleFood={handleFood} />
 				</>
 			)}
-
-			{/* {category === 'food' && foodRes == '' && (
+			{foodRes.length > 0 && menu.length === 0 && (
+				<div>
+					{/* <HeadingComponent
+						heading='Promotions By'
+						subHeading=''
+						subBoldHeading=''
+					/>
+					<KFCPage /> */}
+					<FoodCategory data={foodRes} handleClick={handleMenu} />
+					<br />
+					<br />
+				</div>
+			)}
+			{menu.length > 0 && (
 				<>
 					<HeadingComponent
 						heading='Enjoy Promotions'
@@ -73,19 +103,6 @@ export default function Interests() {
 					<FoodCategory handleFoodRes={handleFoodRes} />
 				</>
 			)}
-			{foodRes !== '' && (
-				<div>
-					<HeadingComponent
-						heading='Promotions By'
-						subHeading=''
-						subBoldHeading=''
-					/>
-					<KFCPage />
-					<br />
-					<br />
-				</div>
-			)} */}
-
 			<GoogleMap />
 			<HeadingComponent
 				heading='Enquiry'
