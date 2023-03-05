@@ -248,13 +248,26 @@
 
 .founderMessageWrapper {
 	padding: 80px 0px;
-	// background: $light-grey-shade !important;
+	background: $light-grey-shade;
 	.founderHeading {
 		@include caption-boldHeading;
+		margin-bottom: 0px;
 		@media screen and (max-width: 750px) {
 			margin-top: 32px !important;
 		}
 	}
+	.legalMessageHeading {
+		color: $orange-shade;
+		@include caption-boldHeading;
+	}
+
+	.legalConsultantRole {
+		margin: 0px;
+	}
+	.legalHeading {
+		@include body-Bold16;
+	}
+
 	.founderMessageHeading {
 		color: $orange-shade;
 		@include caption-boldHeading;

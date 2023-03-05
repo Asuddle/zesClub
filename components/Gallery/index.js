@@ -34,7 +34,7 @@ export default function GalleryMainComponent() {
 
 	useEffect(() => {
 		axios
-			.get('/api/events')
+			.get('/api/events/all')
 			.then((res) => {
 				console.log(res.data);
 				setData(res.data.data);

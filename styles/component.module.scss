@@ -23,7 +23,7 @@
 
 	.verticalTabWrapper {
 		position: fixed !important;
-		width: 300px !important;
+		width: 300px;
 		min-height: 100vh !important;
 		background-color: $orange-shade !important;
 		border-radius: 8px;
@@ -43,11 +43,17 @@
 			padding: 18px !important;
 			background: $black-shade !important;
 		}
+		@media screen and (max-width: 1200px) {
+			width: 150px;
+		}
 	}
 	.verticalComponentWrapper {
 		padding: 20px !important;
 		margin-left: 300px !important;
 		min-height: 100vh !important;
+		@media screen and (max-width: 1200px) {
+			margin-left: 150px !important;
+		}
 	}
 }
 .wysiwyg {

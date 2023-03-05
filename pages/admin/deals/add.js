@@ -28,6 +28,12 @@ const formField5 = [
 		col: 5,
 	},
 	{
+		type: 'text',
+		name: 'code',
+		label: 'Code',
+		col: 5,
+	},
+	{
 		type: 'autocomplete',
 		name: 'brand',
 		label: 'Brand',
@@ -60,6 +66,7 @@ export default function AddDeals({
 		image: yup.string().required(),
 		brand: yup.mixed().required(),
 		price: yup.mixed().required(),
+		code: yup.string().required(),
 	});
 
 	const onSubmit = (data) => {
@@ -83,7 +90,6 @@ export default function AddDeals({
 			axios
 				.post(`/api/deals`, formData, config)
 				.then((res) => {
-					console.log(res.data);
 					if (res.data.success) {
 						router.push('/admin/deals');
 					} else {

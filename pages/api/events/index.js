@@ -40,7 +40,7 @@ export default async function handler(req, res) {
 		case 'GET':
 			try {
 				let qr = req.query.q || '';
-				let sql = `SELECT * FROM events where name like '%${qr}%' or price like  '%${qr}%' or description like  '%${qr}%' or venue like  '%${qr}%' or audience like  '%${qr}%' ;`;
+				let sql = `SELECT * FROM events where (date >= DATE(CURRENT_TIMESTAMP)) and (name like '%${qr}%' or price like  '%${qr}%' or description like  '%${qr}%' or venue like  '%${qr}%' or audience like  '%${qr}%');`;
 				try {
 					let result = await executeQuery({ query: sql });
 					res.status(200).send({

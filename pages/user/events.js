@@ -8,14 +8,6 @@ import VerticalTab from '../../components/verticalTab';
 import { useContext } from 'react';
 
 export default function UserEvents() {
-	// const authContext = useContext(AuthContext);
-	// React.useEffect(() => {
-	// 	// checks if the user is authenticated
-	// 	authContext.isUserAuthenticated()
-	// 		? router.push('/user/profile')
-	// 		: router.push('/');
-	// }, []);
-
 	return (
 		<div>
 			<Head>

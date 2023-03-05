@@ -26,11 +26,13 @@ export default function Interests() {
 	const [menu, setMenu] = useState([]);
 	const [foodRes, setFoodRes] = useState([]);
 	const [comingSoon, setComingSoon] = useState(false);
+	const [promotion, setPromotion] = useState({});
 	const handleComingSoon = () => {
 		setComingSoon(!comingSoon);
 	};
 	const handleFood = (item) => {
 		console.log('item', item);
+		setPromotion(item);
 		axios.get(`/api/brands/${item.id}/category`).then((res) => {
 			console.log(res.data.data);
 			if (res.data.data.length > 0) {
@@ -42,6 +44,7 @@ export default function Interests() {
 		});
 	};
 	const handleMenu = (item) => {
+		console.log('item', item);
 		axios.get(`/api/deals/${item.id}/brand`).then((res) => {
 			console.log(res.data.data);
 			if (res.data.data.length > 0) {
@@ -53,7 +56,10 @@ export default function Interests() {
 			}
 		});
 	};
-
+	const handleDeal = () => {
+		handleComingSoon();
+	};
+	console.log('Promotion', promotion);
 	return (
 		<div>
 			<Head>
@@ -80,12 +86,12 @@ export default function Interests() {
 			)}
 			{foodRes.length > 0 && menu.length === 0 && (
 				<div>
-					{/* <HeadingComponent
-						heading='Promotions By'
-						subHeading=''
+					<HeadingComponent
+						heading='Brands Of'
+						subHeading={promotion.name}
 						subBoldHeading=''
 					/>
-					<KFCPage /> */}
+
 					<FoodCategory data={foodRes} handleClick={handleMenu} />
 					<br />
 					<br />
@@ -96,11 +102,11 @@ export default function Interests() {
 					<HeadingComponent
 						heading='Enjoy Promotions'
 						subHeading='Lets'
-						subBoldHeading='Enjoy Your Meal'
+						subBoldHeading='Enjoy your deal'
 					/>
 					<br />
 					<br />
-					<FoodCategory handleFoodRes={handleFoodRes} />
+					<KFCPage data={menu} handleClick={handleDeal} />
 				</>
 			)}
 			<GoogleMap />

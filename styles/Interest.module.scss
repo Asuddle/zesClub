@@ -50,26 +50,50 @@
 	}
 }
 
+.brandsImage {
+	cursor: pointer !important;
+}
+.menuImageBackground {
+	z-index: 1;
+	position: absolute;
+	height: 97%;
+	width: 60%;
+	background: linear-gradient(
+		to left,
+		rgba(0, 0, 1, 0),
+		rgba(0, 0, 0, 0.9)
+	) !important;
+}
+.dealImage {
+	z-index: 0;
+	// background: linear-gradient(to left, rgba(0, 0, 1, 0), rgba(0, 0, 0, 0.59));
+}
 .restaurantPage {
 	text-align: center;
 	.imageWrapper {
 		position: relative;
 		max-height: 272px !important;
-		max-width: 567px !important;
+		max-width: 567px;
 		margin-left: auto;
 		margin-right: auto;
 	}
+
 	.dataWrapper {
 		position: absolute;
 		width: 100%;
 		height: 100%;
 		z-index: 1 !important;
 		color: $white-shade !important;
-		right: 26%;
-		top: 27%;
+		text-align: left;
+		margin-left: 8%;
+		margin-top: 3%;
+		width: 80%;
+		@media screen and (max-width: 480px) {
+			margin-top: 1%;
+		}
 		.burgerName {
 			color: white;
-			@include body-bold;
+			@include monthFont;
 		}
 		.price {
 			@include caption-heading;
@@ -81,8 +105,10 @@
 		}
 		.scanButton {
 			background-image: linear-gradient(90deg, #d4175c 0%, #fda700 100%);
-			width: 180px;
-			height: 44px;
+			// width: 180px;
+			// height: 44px;
+			width: 129px;
+			height: 38px;
 			color: white;
 			@include body-medium-para;
 			border: none;

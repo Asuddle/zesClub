@@ -13,7 +13,10 @@ import styles from '../../styles/About.module.scss';
 
 export default function FounderMessage() {
 	return (
-		<section className={styles.founderMessageWrapper}>
+		<section
+			className={styles.founderMessageWrapper}
+			style={{ background: 'white' }}
+		>
 			<ContainerComponent container='smallContainer'>
 				<div className={styles.founderMessage}>
 					<Row className={styles.internalFounderRow}>

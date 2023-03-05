@@ -3,13 +3,21 @@ import { Col, Row } from 'reactstrap';
 import BecomeMemberModal from '../Interests/modal';
 import Image from 'next/image';
 import styles from '../../styles/WhatNext.module.scss';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export default function EventCard({ item, idx }) {
 	const [open, setOpen] = useState(false);
-	const handleClick = () => {
-		setOpen(!open);
+	const router = useRouter();
+	const handleClick = (id) => {
+		const userData = localStorage.getItem('userData');
+		if (userData) {
+			router.push(`/user/events/${item.id}`);
+		} else {
+			setOpen(!open);
+		}
 	};
+
 	return (
 		<Col
 			key={item}
@@ -52,10 +60,18 @@ export default function EventCard({ item, idx }) {
 							float: 'left',
 						}}
 					>
-						<button onClick={handleClick} className={styles.bookNow}>
+						<button
+							onClick={() => handleClick(item.id)}
+							className={styles.bookNow}
+						>
 							BOOK NOW
 						</button>
-						<p className={styles.moreDetail}>More Details</p>
+						<p
+							className={styles.moreDetail}
+							onClick={() => handleClick(item.id)}
+						>
+							More Details
+						</p>
 					</div>
 					<BecomeMemberModal open={open} handleClose={handleClick} />
 				</Col>

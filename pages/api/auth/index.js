@@ -5,33 +5,66 @@ import executeQuery from '../../../util/mongodb';
 import fs from 'fs';
 import nodemailer from 'nodemailer';
 
-function sendMail(email) {
+async function sendMail(email, res, admin = false) {
 	let transporter = nodemailer.createTransport({
-		service: 'gmail',
-		secure: false, // use SSL
-		port: 25,
+		// service: 'gmail',
+		host: 'zesclub.com',
+		secure: true, // use SSLs
+		port: 465,
 		auth: {
-			user: 'ahmad.suddle@gmail.com',
-			pass: 'urglfglbmllpfrti',
+			user: 'ataimoor@zesclub.com',
+			pass: 'librasuddle12',
 		},
 		tls: {
 			rejectUnauthorized: false,
 		},
 	});
-	let mailOptions = {
-		from: 'ahmad.suddle@gmail.com',
-		to: email,
-		subject: 'Congratulations! you have successfully registered',
-		text: 'You have successfully regsitered in ZeSClub,Ther admin will shortly approve you',
-	};
-	transporter.sendMail(mailOptions, function (error, info) {
-		if (error) {
-			console.log(error);
-		} else {
-			console.log('Email sent: ' + info.response);
-		}
+	let mailData = {};
+	if (!admin) {
+		mailData = {
+			from: 'zuyyanazaidi@zesclub.com',
+			to: email,
+			subject: 'Congratulations! you have successfully registered',
+			text: 'You have successfully registered in ZeSClub,Ther admin will shortly approve you',
+		};
+	} else {
+		mailData = {
+			from: 'zuyyanazaidi@zesclub.com',
+			to: 'zuyyanazaidi@zesclub.com',
+			subject: `New Customer Registration`,
+			text: `A new customer ${email} registered into the system`,
+		};
+	}
+
+	await new Promise((resolve, reject) => {
+		// verify connection configuration
+		transporter.verify(function (error, success) {
+			if (error) {
+				console.log(error);
+				reject(error);
+			} else {
+				console.log('Server is ready to take our messages');
+				resolve(success);
+			}
+		});
+	});
+
+	await new Promise((resolve, reject) => {
+		// send mail
+		transporter.sendMail(mailData, (err, info) => {
+			if (err) {
+				console.error(err);
+				// res.json({ data: err });
+				reject(err);
+			} else {
+				console.log(info);
+				// res.json({ data: info });
+				resolve(info);
+			}
+		});
 	});
 }
+
 export const config = {
 	api: {
 		bodyParser: false,
@@ -131,12 +164,15 @@ export default async function handler(req, res) {
 							let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
 							try {
 								await executeQuery({ query: sqlCustomer });
+								await sendMail(email, res);
+								await sendMail(email, res, true);
+
+								// await sendMail('ahmad.suddle@gmail.c', res);
+
 								res.status(201).send({
 									success: true,
 									message: 'Customer added successfully',
 								});
-
-								sendMail(email);
 							} catch (error) {
 								res.status(400).json({ success: false, error: error });
 							}

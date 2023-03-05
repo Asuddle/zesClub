@@ -10,10 +10,27 @@ export default function UserEventComponent() {
 	const router = useRouter();
 	const [activeTab, setActiveTab] = useState('1');
 	const [data, setData] = useState([]);
+	const [booking, setBooking] = useState([]);
 	const handleNav = (val) => {
 		setActiveTab(val);
 	};
+	let userData = {};
+	if (typeof window !== 'undefined') {
+		// Perform localStorage action
+		userData = JSON.parse(localStorage.getItem('userData'));
+	}
+
 	useEffect(() => {
+		axios
+			.get(`/api/booking/${userData.id}/user`)
+			.then((res) => {
+				console.log('here izz', res.data.data);
+				setBooking(() => res.data.data.map((item) => item.event_id));
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+
 		axios.get('/api/events').then((res) => {
 			console.log(res.data.data);
 			setData(res.data.data);
@@ -22,6 +39,7 @@ export default function UserEventComponent() {
 	const handleBook = (id) => {
 		router.push(`/user/events/${id}`);
 	};
+	console.log('DDDDDDDDDDDDDD', data);
 	return (
 		<div className={styles.userEventWrapper}>
 			<h1 className={styles.heading}>Dashboard</h1>
@@ -57,47 +75,53 @@ export default function UserEventComponent() {
 					</NavItem>
 				</Nav>
 			</div>
-			{data.map((item) => (
-				<Card className={styles.eventCard} key={item.name}>
-					<Row>
-						<Col md={3}>
-							<Image
-								src={`/${item.image}`}
-								// layout='responsive'
-								width={200}
-								height={150}
-							/>
-							<div className={styles.imageDivider}></div>
-						</Col>
-						<Col md={9} className={styles.eventData}>
-							<h6 className={styles.eventName}>{item.name}</h6>
-							<p className={styles.price}>AED {item.price}</p>
-							<p className={styles.description}>{item.description}</p>
-							<br />
-							<Row>
-								<Col md={3}>
-									<p className={styles.eventDetail}>{item.venue}</p>
-								</Col>
-								<Col md={3}>
-									<p className={styles.eventDetail}>{item.audience}</p>
-								</Col>
-								<Col md={2}>
-									<p className={styles.eventDetail}>{item.date}</p>
-								</Col>
-								<Col
-									md={4}
-									className='text-right'
-									onClick={() => {
-										handleBook(item.id);
-									}}
-								>
-									<Button className={styles.bookNowButton}>Book Now</Button>
-								</Col>
-							</Row>
-						</Col>
-					</Row>
-				</Card>
-			))}
+			{data.length > 0 &&
+				data.map(
+					(item) =>
+						!booking.includes(item.id) && (
+							<Card className={styles.eventCard} key={item.name}>
+								<Row>
+									<Col sm={5} md={4} lg={3} style={{ marginTop: '3px' }}>
+										<Image
+											src={`/${item.image}`}
+											layout='responsive'
+											width={200}
+											height={150}
+										/>
+										{/* <div className={styles.imageDivider}></div> */}
+									</Col>
+									<Col sm={7} md={8} lg={9} className={styles.eventData}>
+										<h6 className={styles.eventName}>{item.name}</h6>
+										<p className={styles.price}>AED {item.price}</p>
+										<p className={styles.description}>{item.description}</p>
+										<br />
+										<Row>
+											<Col md={3}>
+												<p className={styles.eventDetail}>{item.venue}</p>
+											</Col>
+											<Col md={3}>
+												<p className={styles.eventDetail}>{item.audience}</p>
+											</Col>
+											<Col md={2}>
+												<p className={styles.eventDetail}>{item.date}</p>
+											</Col>
+											<Col
+												md={4}
+												className='text-right'
+												onClick={() => {
+													handleBook(item.id);
+												}}
+											>
+												<Button className={styles.bookNowButton}>
+													Book Now
+												</Button>
+											</Col>
+										</Row>
+									</Col>
+								</Row>
+							</Card>
+						),
+				)}
 		</div>
 	);
 }

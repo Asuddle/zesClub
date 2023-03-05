@@ -1,13 +1,28 @@
 import executeQuery from '../../../util/mongodb';
-// import db from '../../../util/mongodb';
 import formidable from 'formidable';
 import { saveFile } from '../auth';
+const QRCode = require('qrcode');
 
 export const config = {
 	api: {
 		bodyParser: false,
 	},
 };
+
+const createQr = (name, text = 'testingqr') => {
+	QRCode.toFile(
+		`./public/${name}.png`,
+		text,
+		{
+			errorCorrectionLevel: 'H',
+		},
+		function (err) {
+			if (err) throw err;
+			console.log('QR code saved!');
+		},
+	);
+};
+
 export default async function handler(req, res) {
 	const { method } = req;
 	switch (method) {
@@ -18,6 +33,7 @@ export default async function handler(req, res) {
 					description: 'description',
 					brand_id: 'brand_id',
 					price: 'price',
+					code: 'code',
 				};
 				let labelStr = '';
 				let valueStr = '';
@@ -28,20 +44,24 @@ export default async function handler(req, res) {
 						res.send({ err });
 					}
 					let fileName = await saveFile(files, 'image', `deal-${fields.name}`);
-
+					await createQr(`deal-qr-${fields.name}`, fields.code);
 					for (const key in userValue) {
 						if (fields[key]) {
 							labelStr = labelStr + userValue[key] + ', ';
 							valueStr = valueStr + `'${fields[key]}'` + ',';
 						}
 					}
-					labelStr = labelStr + 'image';
-					valueStr = valueStr + `'${fileName}'`;
+					labelStr = labelStr + 'image' + ',';
+					valueStr = valueStr + `'${fileName}'` + ',';
+
+					labelStr = labelStr + 'qr';
+					valueStr = valueStr + `'deal-qr-${fields.name}.png'`;
 
 					let sql = `INSERT INTO deals(${labelStr}) VALUES(${valueStr})`;
+					console.log(sql);
 					try {
 						let result = await executeQuery({ query: sql });
-
+						console.log(result);
 						res
 							.status(201)
 							.send({ success: true, message: 'Deals Created Successfully' });
@@ -57,7 +77,7 @@ export default async function handler(req, res) {
 		case 'GET':
 			try {
 				let qr = req.query.q || '';
-				let sql = `SELECT brands.name as  brands ,deals.name,deals.image,deals.id,deals.createdDate,deals.description,deals.price FROM deals INNER JOIN brands ON brands.id=deals.brand_id where brands.name like '%${qr}%';`;
+				let sql = `SELECT brands.name as  brands ,deals.name,deals.qr,deals.code,deals.image,deals.id,deals.createdDate,deals.description,deals.price FROM deals INNER JOIN brands ON brands.id=deals.brand_id where brands.name like '%${qr}%';`;
 				try {
 					const result = await executeQuery({ query: sql });
 					res.status(200).send({ data: result, totalCount: result.length });

@@ -1,4 +1,5 @@
 import executeQuery from '../../../util/mongodb';
+
 const userValue = {
 	// email: 'email',
 	title: 'title',
@@ -57,7 +58,7 @@ export default async function handler(req, res) {
 					try {
 						let result = await executeQuery({ query: sqlCustomer });
 						// console.log(result);
-						sendMail(email);
+						// sendMail(email);
 						res
 							.status(201)
 							.send({ success: true, message: 'Brands Created Successfully' });

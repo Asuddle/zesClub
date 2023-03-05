@@ -25,6 +25,7 @@ import GoogleMap from '../components/Map';
 import Head from 'next/head';
 import Header from '../components/Header';
 import HeadingComponent from '../components/Heading';
+import LegalConsultant from '../components/About/LegalConsultant';
 import Navigation from '../components/Navigation';
 import ReadyBanner from '../components/ReadyBanner';
 import SubHeader from '../components/SubHeader';
@@ -73,6 +74,7 @@ function AboutPage() {
 			</Element>
 			{/* <CEOMessage /> */}
 			<FounderMessage />
+			<LegalConsultant />
 			<ReadyBanner />
 			<HeadingComponent
 				heading='Enquiry'

@@ -2,22 +2,27 @@ import { Col, Row } from 'reactstrap';
 
 import ContainerComponent from '../container';
 import Image from 'next/image';
+import styles from '../../styles/Interest.module.scss';
 
-export default function FoodCategory({ data, handleClick }) {
+export default function FoodCategory({ data = [], handleClick }) {
 	console.log(data);
 	return (
 		<ContainerComponent>
-			<Row>
+			<Row style={{ padding: '0px 20px' }}>
 				{data.map((item) => (
-					<Col md={3} key={item}>
+					<Col sm={12} md={3} lg={4} key={item}>
 						<Image
 							style={{ cursor: 'pointer' }}
 							src={`/${item.image}`}
 							alt='foody'
 							width='221px'
+							className={styles.brandsImage}
 							height='221px'
-							onClick={handleClick}
+							onClick={() => handleClick(item)}
 						/>
+						<h4 style={{ width: '221px' }} className='text-center'>
+							{item.name}
+						</h4>
 					</Col>
 				))}
 			</Row>

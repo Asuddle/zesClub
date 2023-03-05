@@ -45,6 +45,21 @@ export default function VerticalTab({ children }) {
 					</NavLink>
 				</NavItem>
 				<NavItem>
+					<NavLink
+						href='#'
+						className={
+							router.route === '/user/bookings'
+								? styles.selectedNavLink
+								: styles.navLink
+						}
+						onClick={() => {
+							router.push('/user/bookings');
+						}}
+					>
+						Bookings
+					</NavLink>
+				</NavItem>
+				<NavItem>
 					<NavLink className={styles.navLink} onClick={handleLogout}>
 						Logout
 					</NavLink>

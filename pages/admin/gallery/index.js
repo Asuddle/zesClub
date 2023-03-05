@@ -63,7 +63,7 @@ export default function GalleryTable() {
 	return (
 		<>
 			<TableComponent
-				url='/api/events'
+				url='/api/events/all'
 				col={col}
 				refresh={refresh}
 				// handleRowClick={handleRow}

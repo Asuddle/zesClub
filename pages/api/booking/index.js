@@ -19,9 +19,9 @@ export default async function handler(req, res) {
 					if (err) {
 						res.send({ err });
 					}
-					const { name, description, price, audience, date, venue } = fields;
-					await saveFile(files, 'image');
-					let sql = `INSERT INTO bookings(name, description, price, audience, date, venue, image) VALUES('${name}','${description}','${price}','${audience}','${date}','${venue}','${files.image.originalFilename}')`;
+					const { user_id, is_paid, event_id } = fields;
+
+					let sql = `INSERT INTO bookings( user_id, is_paid, event_id) VALUES('${user_id}','${is_paid}','${event_id}')`;
 					try {
 						let result = await executeQuery({ query: sql });
 						res.status(201).send({

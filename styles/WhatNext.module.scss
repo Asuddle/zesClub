@@ -44,6 +44,7 @@
 	.moreDetail {
 		color: $orange-shade;
 		margin-top: 11px;
+		cursor: pointer;
 		margin-left: 24px !important;
 		@include caption-mediumLink;
 	}
