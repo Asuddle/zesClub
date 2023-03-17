@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from '../../components/Footer';
 import Head from 'next/head';
 import Navigation from '../../components/Navigation';
+import SmallMenu from '../../components/users/smallMenu';
 import UserEventComponent from '../../components/users/events';
 import VerticalTab from '../../components/verticalTab';
 import { useContext } from 'react';
@@ -18,6 +19,7 @@ export default function UserEvents() {
 			<Navigation />
 			<div>
 				<VerticalTab>
+					<SmallMenu />
 					<UserEventComponent />
 				</VerticalTab>
 			</div>

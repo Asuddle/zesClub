@@ -60,7 +60,7 @@ a {
 	cursor: pointer !important;
 	right: 20% !important;
 	top: 9% !important;
-	margin-top: 24px !important;
+	margin-top: 30px !important;
 	left: 87% !important;
 	border-radius: 6px !important;
 }
@@ -76,7 +76,7 @@ a {
 	top: 9% !important;
 	left: 87% !important;
 	z-index: 1;
-	margin-top: 24px !important;
+	margin-top: 30px !important;
 	display: none;
 	padding: 5px !important;
 }
@@ -87,6 +87,24 @@ a {
 	}
 	.bm-burger-button svg {
 		display: block !important;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	#react-burger-menu-btn {
+		left: 84% !important;
+	}
+	.bm-burger-button svg {
+		left: 84% !important;
+	}
+}
+
+@media only screen and (max-width: 410px) {
+	#react-burger-menu-btn {
+		left: 78% !important;
+	}
+	.bm-burger-button svg {
+		left: 78% !important;
 	}
 }
 

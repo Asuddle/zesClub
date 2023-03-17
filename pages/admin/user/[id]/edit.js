@@ -13,7 +13,6 @@ export default function EditCustomer() {
 			.get(`/api/users/${id}`)
 			.then((res) => {
 				let tempData = res.data.data[0];
-				console.log('realData', res.data.data[0]);
 				tempData.country = { value: tempData.country, label: tempData.country };
 				tempData.title = { value: tempData.title, label: tempData.title };
 				tempData.city = { value: tempData.city, label: tempData.city };
@@ -47,7 +46,6 @@ export default function EditCustomer() {
 						label: tempData.spouse_nationality,
 					};
 				}
-				console.log(tempData);
 				setData(tempData);
 			})
 			.catch((err) => {

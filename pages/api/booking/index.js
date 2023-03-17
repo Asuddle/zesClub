@@ -2,6 +2,7 @@ import executeQuery from '../../../util/mongodb';
 import formidable from 'formidable';
 import fs from 'fs';
 import { saveFile } from '../auth';
+import { sendBookedTickets } from '../../../util/eventTicket';
 
 export const config = {
 	api: {
@@ -24,6 +25,22 @@ export default async function handler(req, res) {
 					let sql = `INSERT INTO bookings( user_id, is_paid, event_id) VALUES('${user_id}','${is_paid}','${event_id}')`;
 					try {
 						let result = await executeQuery({ query: sql });
+						// console.log('Ress::: ', result);
+						let userSql = `SELECT * from user where id = ${user_id}`;
+						let eventSql = `SELECT * from events where id=${event_id}`;
+						let userResult = await executeQuery({ query: userSql });
+						let eventResult = await executeQuery({ query: eventSql });
+						// console.log('=========================================');
+						// console.log(userResult, eventResult);
+						// console.log('=========================================');
+						await sendBookedTickets(
+							userResult[0].email,
+							eventResult[0].name,
+							eventResult[0].date,
+							eventResult[0].image,
+							eventResult[0],
+						);
+
 						res.status(201).send({
 							success: true,
 							message: 'Bookings Created Successfully',
@@ -46,7 +63,7 @@ export default async function handler(req, res) {
 				INNER JOIN customers ON bookings.user_id=customers.user_id;`;
 				try {
 					let result = await executeQuery({ query: sql });
-					console.log(result);
+					// console.log(result);
 					res.status(200).send({ data: result, totalCount: result.length });
 				} catch (error) {
 					console.log(error);

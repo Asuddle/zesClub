@@ -123,6 +123,28 @@
 	margin: 7px 0px !important;
 }
 
+.smallMenuNavSelected {
+	background-image: linear-gradient(136deg, #d4175c 0%, #fda700 100%);
+	border: 1px solid white;
+	color: white !important;
+	@include body-medium-para;
+	width: 95%;
+	// height: 30px !important;
+}
+.smallMenuNav {
+	// background-image: linear-gradient(136deg, #d4175c 0%, #fda700 100%);
+	border: 1px solid $dark-grey-shade !important;
+	color: black !important;
+	@include body-medium-para;
+	width: 95%;
+	// height: 30px !important;
+}
+.smallMenu {
+	display: none !important;
+	@media screen and (max-width: 510px) {
+		display: block !important;
+	}
+}
 .buyTicketButton {
 	background-image: linear-gradient(136deg, #d4175c 0%, #fda700 100%);
 	padding: 10px 14px !important;

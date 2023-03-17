@@ -12,16 +12,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useState } from 'react';
 
-import { AuthContext } from '../src/context/auth-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Head from 'next/head';
 import axios from 'axios';
-import styles from '../styles/login.module.scss';
+import styles from '../../../styles/login.module.scss';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export default function LoginPage() {
-	const authContext = useContext(AuthContext);
+export default function ResetPasswordPage() {
 	const router = useRouter();
 	const [errorMess, setErrorMess] = useState('');
 	const handleRegister = () => {
@@ -32,37 +30,37 @@ export default function LoginPage() {
 	};
 
 	const validationSchema = yup.object({
-		email: yup.string().email().required('Email is a required field'),
 		password: yup
 			.string()
 			.required('Password is a required field')
 			.min(8, 'Password should be at least 8 characters'),
+		confirmPassword: yup
+			.string()
+			.required('Password is a required field')
+			.min(8, 'Password should be at least 8 characters'),
 	});
-	console.log(authContext);
 	const onSubmit = (data) => {
-		axios
-			.post('/api/auth/login', data)
-			.then((res) => {
-				if (res.data.err) {
-					setErrorMess(res.data.err);
-				} else {
-					console.log(authContext, res.data);
-					authContext.setAuthState({
-						token: res.data.token,
-						role: res.data.role,
-					});
-					setErrorMess('');
-					localStorage.setItem('userData', JSON.stringify(res.data));
-					if (res.data.role === 'admin') {
-						router.push('/admin');
-					} else {
-						router.push('/user/profile');
-					}
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		console.log(data);
+		if (data.password === data.confirmPassword) {
+			console.log(router);
+			const { token, email } = router.query;
+			const dt = { ...data, ...{ token, email } };
+			console.log(dt);
+			axios
+				.post('/api/auth/reset-password', dt)
+				.then((res) => {
+					console.log(res.data.data);
+					setErrorMess(res.data.data);
+					setTimeout(() => {
+						router.push('/login');
+					}, 2000);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			setErrorMess('Please enter same password and confirm password');
+		}
 	};
 
 	const {
@@ -71,8 +69,8 @@ export default function LoginPage() {
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
-			email: '',
 			password: '',
+			confirmPassword: '',
 		},
 		resolver: yupResolver(validationSchema),
 	});
@@ -87,47 +85,24 @@ export default function LoginPage() {
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className={styles.content}>
 					<div className={styles.innerLogin}>
-						<p className={styles.signInHeading}>Sign In</p>
+						<h1 style={{ paddingTop: '24px' }}>New Password</h1>
+						<p>Please Enter New Password</p>
 						<p>{errorMess}</p>
-						<Controller
-							name={'email'}
-							control={control}
-							render={({ field }) => (
-								<InputGroup size='lg' className={styles.inputGroup}>
-									<InputGroupText className={styles.fieldLoginText}>
-										<FontAwesomeIcon icon={faUser} />
-									</InputGroupText>
-									<Input
-										size={'lg'}
-										placeholder='Email'
-										width={500}
-										className={styles.textField}
-										{...field}
-									/>
-									{errors['email'] && (
-										<p className={styles.errorMessage}>
-											{errors['email'].message}
-										</p>
-									)}
-								</InputGroup>
-							)}
-						/>
-						<br />
 						<Controller
 							name={'password'}
 							control={control}
 							render={({ field }) => (
 								<InputGroup size='lg' className={styles.inputGroup}>
-									<InputGroupText className={styles.passwordFieldLoginText}>
+									<InputGroupText className={styles.fieldLoginText}>
 										<FontAwesomeIcon icon={faLock} />
 									</InputGroupText>
 									<Input
 										size={'lg'}
+										placeholder='Password'
 										type='password'
-										placeholder='***********'
 										width={500}
-										{...field}
 										className={styles.textField}
+										{...field}
 									/>
 									{errors['password'] && (
 										<p className={styles.errorMessage}>
@@ -138,20 +113,35 @@ export default function LoginPage() {
 							)}
 						/>
 						<br />
-						<div className={styles.linksWrapper}>
-							<div style={{ float: 'left' }}>
-								<p>Remember me</p>
-							</div>
-							<div>
-								<p onClick={handleForgotPassword}>
-									<i>Forgot Password?</i>
-								</p>
-							</div>
-						</div>
+						<Controller
+							name={'confirmPassword'}
+							control={control}
+							render={({ field }) => (
+								<InputGroup size='lg' className={styles.inputGroup}>
+									<InputGroupText className={styles.passwordFieldLoginText}>
+										<FontAwesomeIcon icon={faLock} />
+									</InputGroupText>
+									<Input
+										size={'lg'}
+										type='password'
+										placeholder='Confirm Password'
+										width={500}
+										{...field}
+										className={styles.textField}
+									/>
+									{errors['confirmPassword'] && (
+										<p className={styles.errorMessage}>
+											{errors['confirmPassword'].message}
+										</p>
+									)}
+								</InputGroup>
+							)}
+						/>
+						<br />
 						<br />
 						<br />
 						<button className={styles.loginButton} type='submit'>
-							LOGIN
+							Submit
 						</button>
 						<br />
 						<br />

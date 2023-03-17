@@ -29,6 +29,9 @@
 		border-radius: 8px;
 		border-top-right-radius: 0px !important;
 		border-bottom-right-radius: 0px !important;
+		@media screen and (max-width: 510px) {
+			display: none;
+		}
 		.navLink {
 			color: $white-shade !important;
 			@include body-Regular16;
@@ -53,6 +56,9 @@
 		min-height: 100vh !important;
 		@media screen and (max-width: 1200px) {
 			margin-left: 150px !important;
+		}
+		@media screen and (max-width: 510px) {
+			margin-left: 1px !important;
 		}
 	}
 }

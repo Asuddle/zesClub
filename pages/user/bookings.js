@@ -7,6 +7,7 @@ import { Chip } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/dist/client/image';
 import Navigation from '../../components/Navigation';
+import SmallMenu from '../../components/users/smallMenu';
 import VerticalTab from '../../components/verticalTab';
 import axios from 'axios';
 import styles from '../../styles/user.module.scss';
@@ -39,6 +40,7 @@ export default function BookingsPage() {
 			</Head>
 			<Navigation />
 			<VerticalTab>
+				<SmallMenu />
 				<h1 className={styles.heading}>Bookings</h1>
 				<div>
 					{data.map((item) => (

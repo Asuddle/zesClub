@@ -1,17 +1,17 @@
-import React from "react";
-
 import {
+  Box,
   Card,
   CardContent,
-  Divider,
-  Box,
-  Typography,
   Chip,
+  Divider,
+  Typography,
 } from "@mui/material";
+
+import React from "react";
 
 const BaseCard = (props) => {
   return (
-    <Card>
+    <Card style={{overFlow:'auto'}}>
       <Box p={2} display="flex" alignItems="center">
         <Typography variant="h4">{props.title}</Typography>
       </Box>

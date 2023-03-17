@@ -27,8 +27,13 @@ export default function DetailComponent({
 			.get(`${url}/${id}`)
 			.then((res) => {
 				let tempData = res.data.data[0];
-				console.log(tempData);
-				setData(tempData);
+				let filteredData = {};
+				for (const key in tempData) {
+					if (tempData[key]) {
+						filteredData[key] = tempData[key];
+					}
+				}
+				setData(filteredData);
 			})
 			.catch((err) => {
 				console.log(err);

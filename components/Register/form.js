@@ -334,6 +334,7 @@ export default function RegisterForm({
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [confirm1, setConfirm1] = useState(false);
 	const [confirm2, setConfirm2] = useState(false);
+	const [disabled, setDisabled] = useState(false);
 	// const [isSubmit,setIsSubmit]
 	let validationObj = {
 		title: yup.mixed().required(),
@@ -390,6 +391,7 @@ export default function RegisterForm({
 						'Must be in emirates id format',
 					),
 				spouse_nationality: yup.mixed().required(),
+
 				// spouse_
 			},
 		};
@@ -401,16 +403,19 @@ export default function RegisterForm({
 		control,
 		handleSubmit,
 		setValue,
-		formState: { errors },
+		formState: { errors, isSubmitted },
 	} = useForm({
 		defaultValues: defaultValue,
 		resolver: yupResolver(validationSchema),
 	});
-	console.log(errors);
+
 	const handleTab = (val) => {
 		setZesClub(val);
 	};
+
 	const onSubmit = (data) => {
+		setConfirm1(false);
+		// console.log('data', data);
 		if (onCustomSubmit) {
 			onCustomSubmit(data, fileInput, passportInput, emiratesIdInput);
 		} else {
@@ -435,13 +440,34 @@ export default function RegisterForm({
 				},
 			};
 
+			if (result.spouse_firstName == undefined) {
+				delete result['spouse_firstName'];
+				delete result['spouse_lastName'];
+				delete result['spouse_middleName'];
+				delete result['spouse_emiratesID'];
+				delete result['spouse_profession'];
+				delete result['spouse_nationality'];
+				delete result['spouse_country'];
+				delete result['spouse_title'];
+				delete result['spouse_city'];
+			}
+
 			if (zesClub === 2) {
 				result['spouse_nationality'] = data.spouse_nationality.value;
 				result['spouse_country'] = data.spouse_country.value;
 				result['spouse_title'] = data.spouse_title.value;
 				result['spouse_city'] = data.spouse_city.value;
-			}
+				result['spouse_lastName'] = data.spouse_lastName || '';
+				result['spouse_middleName'] = data.spouse_middleName || '';
+				result['spouse_firstName'] = data.spouse_firstName || '';
+				result['spouse_emiratesID'] = data.spouse_emiratesID || '';
+				result['spouse_profession'] = data.spouse_profession || '';
 
+				// spouse_firstName: yup.string().required(),
+				// spouse_lastName: yup.string().required(),
+				// spouse_emiratesID:
+			}
+			// console.log('Result', result);
 			for (const key in result) {
 				formData.append(key, result[key]);
 			}
@@ -454,11 +480,11 @@ export default function RegisterForm({
 			axios
 				.post('/api/auth', formData, config)
 				.then((res) => {
-					console.log(res.status === 201);
 					if (res.status === 201) {
 						setIsSuccess(true);
 						// successCallback();
 					} else {
+						setConfirm1(true);
 						toast.error('Something went wrong', { theme: 'colored' });
 					}
 				})
@@ -630,6 +656,7 @@ export default function RegisterForm({
 						type='submit'
 						disabled={!(confirm2 && confirm1)}
 					>
+						{/* disabled */}
 						Submit
 					</button>
 

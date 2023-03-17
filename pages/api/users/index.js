@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import executeQuery from '../../../util/mongodb';
 
 const userValue = {

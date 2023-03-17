@@ -42,9 +42,9 @@ export default function Home() {
 			<Header isSmall={false} />
 			<SubHeader />
 			{/* https://www.youtube.com/watch?v=cw0tqrlvcG4 */}
-			<div class='video-container'>
+			<div className='video-container'>
 				<iframe
-					class='responsive-iframe'
+					className='responsive-iframe'
 					src='https://www.youtube.com/embed/cw0tqrlvcG4?autoplay=1'
 				></iframe>
 			</div>

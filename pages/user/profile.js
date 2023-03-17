@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Head from 'next/head';
 import Navigation from '../../components/Navigation';
+import SmallMenu from '../../components/users/smallMenu';
 import UserProfileComponent from '../../components/users/profile';
 import VerticalTab from '../../components/verticalTab';
 
@@ -16,6 +17,7 @@ export default function UserProfile() {
 			<Navigation />
 			<div>
 				<VerticalTab>
+					<SmallMenu />
 					<UserProfileComponent />
 				</VerticalTab>
 			</div>

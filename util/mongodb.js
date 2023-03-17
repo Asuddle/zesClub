@@ -66,6 +66,7 @@ export default async function executeQuery({ query, values }) {
 		await db.end();
 		return results;
 	} catch (error) {
+		console.log(error);
 		return { error };
 	}
 }

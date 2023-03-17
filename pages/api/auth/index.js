@@ -76,12 +76,20 @@ export const saveFile = async (
 	attachment = '',
 ) => {
 	const data = fs.readFileSync(file[fileName].filepath);
+
 	fs.writeFileSync(
-		`./public/${attachment}${file[fileName].originalFilename}`,
+		`./public/${attachment}-${file[fileName].originalFilename}`,
 		data,
 	);
 	await fs.unlinkSync(file[fileName].filepath);
-	return `${attachment}${file[fileName].originalFilename}`;
+	return `${attachment}-${file[fileName].originalFilename}`;
+
+	// fs.writeFileSync(
+	// 	`./public/${attachment}${file[fileName].originalFilename}`,
+	// 	data,
+	// );
+	// await fs.unlinkSync(file[fileName].filepath);
+	// return `${attachment}${file[fileName].originalFilename}`;
 };
 
 const userValue = {
@@ -132,17 +140,21 @@ export default async function handler(req, res) {
 						try {
 							let photoFile = '';
 							if (files.photo) {
-								photoFile = await saveFile(files, 'photo', fields.email);
+								photoFile = await saveFile(
+									files,
+									'photo',
+									`photo-${fields.email}`,
+								);
 							}
 							let emiratesIDFileName = '';
 							if (files.emiratesIdFile) {
 								emiratesIDFileName = await saveFile(
 									files,
 									'emiratesIdFile',
-									fields.email,
+									`emirateId-${fields.email}`,
 								);
 							}
-
+							console.log(emiratesIDFileName, photoFile);
 							let labelStr = '';
 							let valueStr = '';
 							// res.send({});
@@ -162,17 +174,21 @@ export default async function handler(req, res) {
 							valueStr = valueStr + `'${result.insertId}'`;
 
 							let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
+
 							try {
-								await executeQuery({ query: sqlCustomer });
-								await sendMail(email, res);
-								await sendMail(email, res, true);
-
+								try {
+									let ress = await executeQuery({ query: sqlCustomer });
+									await sendMail(email, res);
+									await sendMail(email, res, true);
+									res.status(201).send({
+										success: true,
+										message: 'Customer added successfully',
+									});
+								} catch (error) {
+									console.log(error);
+									res.status(400).json({ success: false, error: error });
+								}
 								// await sendMail('ahmad.suddle@gmail.c', res);
-
-								res.status(201).send({
-									success: true,
-									message: 'Customer added successfully',
-								});
 							} catch (error) {
 								res.status(400).json({ success: false, error: error });
 							}

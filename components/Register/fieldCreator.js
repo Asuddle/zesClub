@@ -233,6 +233,7 @@ export default function FieldCreator({
 									<Input
 										type='file'
 										{...field}
+										accept='image/*'
 										onChange={(e) => handleFileChange(e, field)}
 										invalid={errors[field.name]}
 										value={fileInput ? field.value : ''}
