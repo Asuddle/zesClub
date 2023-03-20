@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import FieldCreator from '../../../components/Register/fieldCreator';
 import { Row } from 'reactstrap';
 import axios from 'axios';
+import { putCall } from '../../../util/axios';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -82,8 +83,7 @@ export default function AddTestimonial({
 					console.log(err);
 				});
 		} else {
-			axios
-				.put(`/api/testimonials?id=${testimonialId}`, formData, config)
+			putCall(`/api/testimonials?id=${testimonialId}`, formData)
 				.then((res) => {
 					router.push('/admin/testimonials');
 				})

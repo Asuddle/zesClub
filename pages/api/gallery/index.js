@@ -1,6 +1,7 @@
 import executeQuery from '../../../util/mongodb';
 import formidable from 'formidable';
 import { saveFile } from '../auth';
+import { verifyJwt } from '../../../util/jwtVerify';
 
 export const config = {
 	api: {
@@ -52,6 +53,9 @@ export default async function handler(req, res) {
 			break;
 		case 'DELETE':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
+
 				let sql = `DELETE FROM gallery WHERE id=${req.query.id};`;
 				try {
 					const result = await executeQuery({ query: sql });

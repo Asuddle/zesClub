@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import executeQuery from '../../../util/mongodb';
+import { verifyJwt } from '../../../util/jwtVerify';
 
 const userValue = {
 	// email: 'email',
@@ -75,6 +76,8 @@ export default async function handler(req, res) {
 			break;
 		case 'GET':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
 				let qr = req.query.q || '';
 				let sql = `SELECT * FROM user INNER JOIN customers ON user.id=customers.user_id where role='user' and (email like '%${qr}%' or
 				firstName like  '%${qr}%' or

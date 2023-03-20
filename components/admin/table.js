@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import BaseCard from '../baseCard/BaseCard';
 import { CSVLink } from 'react-csv';
 import axios from 'axios';
+import { getCall } from '../../util/axios';
 import styles from '../../styles/component.module.scss';
 
 export default function TableComponent({
@@ -85,7 +86,7 @@ export default function TableComponent({
 
 	useEffect(() => {
 		setData([]);
-		axios.get(`${url}?q=${searchText}`).then((res) => {
+		getCall(`${url}?q=${searchText}`).then((res) => {
 			setData(res.data.data);
 		});
 	}, [searchText, refresh]);

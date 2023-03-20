@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Modal from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
+import { deleteCall } from '../../../util/axios';
 import { useRouter } from 'next/router';
 
 export default function PromotionTable() {
@@ -22,8 +23,7 @@ export default function PromotionTable() {
 		setOpenDelete(!openDelete);
 	};
 	const handleDelete = () => {
-		axios
-			.delete(`/api/promotions?id=${id}`)
+		deleteCall(`/api/promotions?id=${id}`)
 			.then((res) => {
 				toggleDelete();
 				// console.log(res.data);

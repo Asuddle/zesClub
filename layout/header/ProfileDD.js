@@ -13,6 +13,7 @@ import {
 import FeatherIcon from 'feather-icons-react';
 import Image from 'next/image';
 import React from 'react';
+import { handleLogout } from '../../components/Navigation';
 
 // import userimg from "../../../assets/images/users/user2.jpg";
 
@@ -67,7 +68,7 @@ const ProfileDD = () => {
 								ml: 1,
 							}}
 						>
-							Julia
+							Admin
 						</Typography>
 						<FeatherIcon icon='chevron-down' width='20' height='20' />
 					</Box>
@@ -92,7 +93,7 @@ const ProfileDD = () => {
 							aria-label='secondary mailbox folder'
 							onClick={handleClose4}
 						>
-							<ListItemButton>
+							{/* <ListItemButton>
 								<ListItemText primary='Edit Profile' />
 							</ListItemButton>
 							<ListItemButton>
@@ -103,13 +104,18 @@ const ProfileDD = () => {
 							</ListItemButton>
 							<ListItemButton>
 								<ListItemText primary='My Settings' />
-							</ListItemButton>
+							</ListItemButton> */}
 						</List>
 					</Box>
 					<Divider />
 					<Box p={2}>
 						<Link to='/'>
-							<Button fullWidth variant='contained' color='primary'>
+							<Button
+								fullWidth
+								variant='contained'
+								color='primary'
+								onClick={handleLogout}
+							>
 								Logout
 							</Button>
 						</Link>

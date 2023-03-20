@@ -1,3 +1,5 @@
+import { deleteCall, putCall } from '../../../util/axios';
+
 import { Button } from '@mui/material';
 import Modal from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
@@ -18,8 +20,7 @@ export default function UserTable() {
 	};
 
 	const verifyUser = (id) => {
-		axios
-			.put(`/api/users/verify?userId=${id}`)
+		putCall(`/api/users/verify?userId=${id}`)
 			.then((res) => {
 				setRefresh(!refresh);
 			})
@@ -32,8 +33,7 @@ export default function UserTable() {
 		router.push(`/admin/user/${id}/edit`);
 	};
 	const handleDelete = () => {
-		axios
-			.delete(`/api/users/${id}`)
+		deleteCall(`/api/users/${id}`)
 			.then((res) => {
 				setOpenDelete(!openDelete);
 				setRefresh(!refresh);

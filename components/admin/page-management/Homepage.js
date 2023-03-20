@@ -8,6 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { Typography } from '@mui/material';
 import axios from 'axios';
+import { putCall } from '../../../util/axios';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -19,8 +20,7 @@ export const onPageSubmit = (data) => {
 	const config = {
 		headers: { 'content-type': 'multipart/form-data' },
 	};
-	axios
-		.put('/api/pages', formData, config)
+	putCall('/api/pages', formData)
 		.then((res) => {
 			console.log(res.data);
 			toast.success('Saved Successfully!', { theme: 'colored' });

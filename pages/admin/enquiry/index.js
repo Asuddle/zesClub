@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import ModalComponent from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
+import { deleteCall } from '../../../util/axios';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -27,8 +28,7 @@ export default function EnquiryTable() {
 		setOpenDelete(!openDelete);
 	};
 	const handleDelete = () => {
-		axios
-			.delete(`/api/enquiry?id=${deleteId}`)
+		deleteCall(`/api/enquiry?id=${deleteId}`)
 			.then((res) => {
 				setOpenDelete(false);
 				setDeleteId(0);

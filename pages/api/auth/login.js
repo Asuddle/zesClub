@@ -25,8 +25,8 @@ export default async function handler(req, res) {
 								res.send({ err: 'No match found' });
 							}
 
-							const token = jwt.sign({ sub: data.id }, 'newsecret', {
-								expiresIn: '7d',
+							const token = jwt.sign({ sub: data.email }, 'newsecret', {
+								expiresIn: '1d',
 							});
 
 							return res.status(200).json({

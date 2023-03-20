@@ -1,4 +1,5 @@
 import executeQuery from '../../../util/mongodb';
+import { verifyJwt } from '../../../util/jwtVerify';
 
 export default async function handler(req, res) {
 	const { method } = req;
@@ -22,6 +23,9 @@ export default async function handler(req, res) {
 			break;
 		case 'GET':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
+
 				let sql = `SELECT * FROM enquiry where email like '%${req.query.q}%' or firstName like  '%${req.query.q}%' or lastName like  '%${req.query.q}%' or enquiryType like  '%${req.query.q}%' ;`;
 
 				// select * from User where fullname like %? or facebook = ? or email = ? limit 50", keyword,keyword,keyword,
@@ -39,6 +43,9 @@ export default async function handler(req, res) {
 			break;
 		case 'DELETE':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
+
 				let sql = `DELETE FROM enquiry WHERE id='${req.query.id}';`;
 				try {
 					const result = await executeQuery({ query: sql });

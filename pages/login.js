@@ -51,6 +51,10 @@ export default function LoginPage() {
 						token: res.data.token,
 						role: res.data.role,
 					});
+					axios.defaults.headers.common = {
+						Authorization: res.data.token,
+					};
+
 					setErrorMess('');
 					localStorage.setItem('userData', JSON.stringify(res.data));
 					if (res.data.role === 'admin') {

@@ -9,6 +9,7 @@ import { Button } from '@mui/material';
 import Modal from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
+import { deleteCall } from '../../../util/axios';
 import draftToHtml from 'draftjs-to-html';
 import { stateToHTML } from 'draft-js-export-html';
 import { useRouter } from 'next/router';
@@ -29,8 +30,7 @@ export default function ServicesTable() {
 	};
 
 	const handleDelete = () => {
-		axios
-			.delete(`/api/services?id=${id}`)
+		deleteCall(`/api/services?id=${id}`)
 			.then((res) => {
 				setId(0);
 				setRefresh(!refresh);

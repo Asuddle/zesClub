@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import RegisterForm from '../../../../components/Register/form';
 import axios from 'axios';
+import { putCall } from '../../../../util/axios';
 import { useRouter } from 'next/router';
 
 export default function EditCustomer() {
@@ -80,8 +81,8 @@ export default function EditCustomer() {
 		for (const key in result) {
 			formData.append(key, result[key]);
 		}
-		axios
-			.put(`/api/users/${id}`, result, config)
+
+		putCall(`/api/users/${id}`, result)
 			.then((res) => {
 				router.push('/admin/user');
 				// setData(res.dat	a.data[0]);

@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { Col, Row } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { useEffect, useState } from 'react';
 
 import FieldCreator from '../Register/fieldCreator';
@@ -9,7 +9,9 @@ import Image from 'next/image';
 import axios from 'axios';
 import { countryArr } from '../countryArr';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { putCall } from '../../util/axios';
 import styles from '../../styles/user.module.scss';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -136,12 +138,51 @@ export const formField1 = [
 		type: 'file',
 		name: 'profile',
 		label: 'Profile Photo',
-		name: 'profilePhoto',
 	},
 ];
 export default function UserProfileComponent({ defaultValue = {} }) {
 	const [data, setData] = useState({});
-	const onSubmit = () => {};
+	const [fileInput, setFileInput] = useState('');
+	const onSubmit = (data) => {
+		const formData = new FormData();
+		let result = {
+			...data,
+			...{
+				title: data.title.value,
+				interest: data.interest.value,
+				city: data.city.value,
+				haveOwnBusiness: 0,
+				photo: fileInput,
+				// photo: file,
+				// passportFile: passportInput,
+				// emiratesIdFile: emiratesIdInput,
+				country: data.country.value,
+				nationality: data.nationality.value,
+				spouse_nationality: data.spouse_nationality?.value || '',
+				spouse_title: data.spouse_title?.value || '',
+				spouse_city: data.spouse_city?.value || '',
+				spouse_country: data.spouse_country?.value || '',
+			},
+		};
+
+		const config = {
+			headers: { 'content-type': 'multipart/form-data' },
+		};
+		for (const key in result) {
+			formData.append(key, result[key]);
+		}
+		// axios
+		// 	.put(`/api/users/${data.id}`, result, config)
+		putCall(`/api/users/${data.user_id}`, result)
+			.then((res) => {
+				toast.success('Updated Successfully');
+				// router.push('/admin/user');
+				// setData(res.dat	a.data[0]);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
 
 	const validationSchema = yup.object({
 		title: yup.mixed().required(),
@@ -200,36 +241,41 @@ export default function UserProfileComponent({ defaultValue = {} }) {
 			<h1 className={styles.heading}>Profile</h1>
 			<br />
 			<br />
-			<Row>
-				<Col md={2}>
-					<Image
-						className={styles.userImage}
-						src={`/${data.photo}`}
-						width={130}
-						height={130}
-					/>
-				</Col>
-				<Col md={6}>
-					<p className={styles.userName}>
-						{data.firstName} {data.middleName} {data.lastName}
-					</p>
-					<p className={styles.userID}>{data.user_id}</p>
-					<p className={styles.verifiedAccount}>Verified account</p>
-				</Col>
-				<Col md={4}>
-					<div className={styles.editPhone}>
-						<div>
-							<p className={styles.verifiedMobileLabel}>
-								Verified mobile number
-							</p>
-							<p className={styles.phone}>{data.mobile}</p>
-						</div>
-						<FontAwesomeIcon size='2x' color='#fda700' icon={faPencil} />
-					</div>
-				</Col>
-			</Row>
-			<br />
 			<form onSubmit={handleSubmit(onSubmit)}>
+				<Row>
+					<Col md={2}>
+						<Image
+							className={styles.userImage}
+							src={`/${data.photo}`}
+							width={130}
+							height={130}
+						/>
+					</Col>
+					<Col md={6}>
+						<p className={styles.userName}>
+							{data.firstName} {data.middleName} {data.lastName}
+						</p>
+						<p className={styles.userID}>{data.user_id}</p>
+						<p className={styles.verifiedAccount}>Verified account</p>
+					</Col>
+					<Col md={4}>
+						<div className={styles.editPhone}>
+							<div>
+								<p className={styles.verifiedMobileLabel}>
+									Verified mobile number
+								</p>
+								<p className={styles.phone}>{data.mobile}</p>
+							</div>
+							<FontAwesomeIcon size='2x' color='#fda700' icon={faPencil} />
+						</div>
+						<br />
+						<Button type='submit' style={{ float: 'right', marginTop: '12px' }}>
+							Submit
+						</Button>
+					</Col>
+				</Row>
+				<br />
+
 				<Row className='row g-3'>
 					{formField1.map((item) => (
 						<FieldCreator
@@ -237,6 +283,8 @@ export default function UserProfileComponent({ defaultValue = {} }) {
 							item={item}
 							control={control}
 							errors={errors}
+							fileInput={fileInput}
+							setFileInput={setFileInput}
 						/>
 					))}
 				</Row>

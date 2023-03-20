@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Typography } from '@mui/material';
 import axios from 'axios';
+import { getCall } from '../util/axios';
 import { useRouter } from 'next/router';
 
 export default function DetailComponent({
@@ -23,8 +24,7 @@ export default function DetailComponent({
 	const { id } = router.query;
 
 	useEffect(() => {
-		axios
-			.get(`${url}/${id}`)
+		getCall(`${url}/${id}`)
 			.then((res) => {
 				let tempData = res.data.data[0];
 				let filteredData = {};

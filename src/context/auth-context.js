@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import axios from 'axios';
 import { useRouter } from 'next/router';
 
 const AuthContext = React.createContext();
@@ -34,7 +35,27 @@ const AuthProvider = ({ children }) => {
 			return false;
 		}
 	};
-
+	if (typeof window !== 'undefined') {
+		window.onload = function () {
+			console.log('Check if it is', localStorage.getItem('token'));
+			// axios.defaults.headers.common = {
+			// 	Authorization: localStorage.getItem('token'),
+			// };
+		};
+	}
+	axios.interceptors.request.use(
+		function (config) {
+			config.headers.common = {
+				Authorization: () => localStorage.getItem('token'),
+			};
+			return config;
+		},
+		function (error) {
+			// Do something with request error
+			logger.error(error);
+			return Promise.reject(error);
+		},
+	);
 	return (
 		<Provider
 			value={{

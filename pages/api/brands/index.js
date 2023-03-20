@@ -2,6 +2,7 @@ import executeQuery from '../../../util/mongodb';
 // import db from '../../../util/mongodb';
 import formidable from 'formidable';
 import { saveFile } from '../auth';
+import { verifyJwt } from '../../../util/jwtVerify';
 
 export const config = {
 	api: {
@@ -58,6 +59,9 @@ export default async function handler(req, res) {
 			break;
 		case 'DELETE':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
+
 				let sql = `DELETE FROM brands WHERE id=${req.query.id};`;
 				try {
 					const result = await executeQuery({ query: sql });
@@ -72,6 +76,9 @@ export default async function handler(req, res) {
 			break;
 		case 'PUT':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
+
 				const form = new formidable.IncomingForm();
 				form.parse(req, async function (err, fields, files) {
 					if (err) {

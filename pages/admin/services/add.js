@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import FieldCreator from '../../../components/Register/fieldCreator';
 import { Row } from 'reactstrap';
 import axios from 'axios';
+import { putCall } from '../../../util/axios';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -80,8 +81,7 @@ export default function AddService({
 					console.log(err);
 				});
 		} else {
-			axios
-				.put(`/api/services?id=${serviceId}`, formData, config)
+			putCall(`/api/services?id=${serviceId}`, formData)
 				.then((res) => {
 					router.push('/admin/services');
 				})

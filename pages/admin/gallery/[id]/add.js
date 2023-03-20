@@ -5,6 +5,7 @@ import { Col, Row } from 'reactstrap';
 
 import BaseCard from '../../../../components/baseCard/BaseCard';
 import axios from 'axios';
+import { deleteCall } from '../../../../util/axios';
 import styles from '../../../../styles/gallery.module.scss';
 import { useEffect } from 'react';
 import { useRouter } from 'next/dist/client/router';
@@ -52,8 +53,7 @@ export default function AddGallery() {
 	};
 
 	const handleDelete = (id) => {
-		axios
-			.delete(`/api/gallery?id=${id}`)
+		deleteCall(`/api/gallery?id=${id}`)
 			.then((res) => {
 				setRefresh(!refresh);
 			})

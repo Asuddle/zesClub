@@ -1,5 +1,6 @@
 import AddPromotions from '../add';
 import axios from 'axios';
+import { putCall } from '../../../../util/axios';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -34,8 +35,7 @@ export default function EditPromotions() {
 		const config = {
 			headers: { 'content-type': 'multipart/form-data' },
 		};
-		axios
-			.put(`/api/promotions/?id=${data.id}`, formData, config)
+		putCall(`/api/promotions/?id=${data.id}`, formData)
 			.then((res) => {
 				if (res.data.success) {
 					console.log(res.data.success);

@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import executeQuery from '../../../util/mongodb';
 import fs from 'fs';
 import nodemailer from 'nodemailer';
+import { verifyJwt } from '../../../util/jwtVerify';
 
 async function sendMail(email, res, admin = false) {
 	let transporter = nodemailer.createTransport({
@@ -209,7 +210,7 @@ export default async function handler(req, res) {
 			break;
 		case 'GET':
 			try {
-				let sql = `SELECT * FROM user	 where role='user';`;
+				let sql = `SELECT * FROM user where role='user';`;
 				try {
 					let result = await executeQuery({ query: sql });
 					res.status(200).send({
@@ -226,6 +227,8 @@ export default async function handler(req, res) {
 			break;
 		case 'DELETE':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
 				let result = await executeQuery({ query: sql });
 				res.status(200).send({
 					success: true,

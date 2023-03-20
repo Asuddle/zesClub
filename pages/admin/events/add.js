@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import FieldCreator from '../../../components/Register/fieldCreator';
 import { Row } from 'reactstrap';
 import axios from 'axios';
+import { putCall } from '../../../util/axios';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -112,8 +113,7 @@ export default function AddEvent({
 					console.log(err);
 				});
 		} else {
-			axios
-				.put(`/api/events?id=${router.query.id}`, formData, config)
+			putCall(`/api/events?id=${router.query.id}`, formData)
 				.then((res) => {
 					router.push('/admin/events');
 				})

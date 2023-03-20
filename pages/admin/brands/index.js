@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Modal from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
+import { deleteCall } from '../../../util/axios';
 import { useRouter } from 'next/router';
 
 export default function SelectPromotionsTable() {
@@ -13,8 +14,7 @@ export default function SelectPromotionsTable() {
 	const router = useRouter();
 
 	const handleDeleteCall = () => {
-		axios
-			.delete(`/api/brands?id=${id}`)
+		deleteCall(`/api/brands?id=${id}`)
 			.then((res) => {
 				console.log(res.data);
 				setId(0);

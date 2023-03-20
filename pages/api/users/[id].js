@@ -2,6 +2,7 @@ import formidable, { IncomingForm } from 'formidable';
 
 import executeQuery from '../../../util/mongodb';
 import { saveFile } from '../auth';
+import { verifyJwt } from '../../../util/jwtVerify';
 
 const userValue = {
 	// email: 'email',
@@ -61,6 +62,9 @@ export default async function handler(req, res) {
 			break;
 		case 'PUT':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
+
 				const form = new formidable.IncomingForm();
 				form.parse(req, async function (err, fields, files) {
 					let cond = '';
@@ -87,6 +91,7 @@ export default async function handler(req, res) {
 
 					// res.send({ cond });
 					let sql = `UPDATE customers SET ${cond} WHERE user_id = ${req.query.id}`;
+					console.log(sql);
 					try {
 						let result = await executeQuery({ query: sql });
 						// console.log(result);
@@ -103,6 +108,9 @@ export default async function handler(req, res) {
 			break;
 		case 'DELETE':
 			try {
+				let authheader = req.headers.authorization;
+				await verifyJwt(authheader, res);
+
 				let sql = `DELETE FROM customers WHERE user_id = ${req.query.id}`;
 				try {
 					const result = await executeQuery({ query: sql });

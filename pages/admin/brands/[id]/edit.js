@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import AddBrand from '../add';
 import axios from 'axios';
+import { putCall } from '../../../../util/axios';
 import { useRouter } from 'next/router';
 
 export default function EditBrand() {
@@ -39,8 +40,7 @@ export default function EditBrand() {
 		const config = {
 			headers: { 'content-type': 'multipart/form-data' },
 		};
-		axios
-			.put(`/api/brands?id=${data.id}`, formData, config)
+		putCall(`/api/brands?id=${data.id}`, formData)
 			.then((res) => {
 				router.push('/admin/brands');
 				console.log(res.data);

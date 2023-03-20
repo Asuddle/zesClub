@@ -75,16 +75,16 @@ const Menuitems = [
 		icon: 'map-pin',
 		href: '/admin/location',
 	},
-	{
-		title: 'System Settings',
-		icon: 'settings',
-		href: '/admin/rating',
-	},
-	{
-		title: 'Change Password',
-		icon: 'lock',
-		href: '/admin/image',
-	},
+	// {
+	// 	title: 'System Settings',
+	// 	icon: 'settings',
+	// 	href: '/admin/rating',
+	// },
+	// {
+	// 	title: 'Change Password',
+	// 	icon: 'lock',
+	// 	href: '/admin/image',
+	// },
 	{
 		title: 'Log out',
 		icon: 'log-out',

@@ -24,22 +24,28 @@ export default function UserEventComponent() {
 		axios
 			.get(`/api/booking/${userData.id}/user`)
 			.then((res) => {
-				console.log('here izz', res.data.data);
 				setBooking(() => res.data.data.map((item) => item.event_id));
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-
-		axios.get('/api/events').then((res) => {
+	}, []);
+	useEffect(() => {
+		setData([]);
+		let url = '/api/events';
+		if (activeTab == '2') {
+			url = `/api/events/sorts?sort=DESC`;
+		} else if (activeTab == '3') {
+			url = `/api/events?/sorts?sort=ASC`;
+		}
+		axios.get(url).then((res) => {
 			console.log(res.data.data);
 			setData(res.data.data);
 		});
-	}, []);
+	}, [activeTab]);
 	const handleBook = (id) => {
 		router.push(`/user/events/${id}`);
 	};
-	console.log('DDDDDDDDDDDDDD', data);
 	return (
 		<div className={styles.userEventWrapper}>
 			<h1 className={styles.heading}>Dashboard</h1>

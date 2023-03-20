@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Modal from '../../../components/admin/dialog';
 import TableComponent from '../../../components/admin/table';
 import axios from 'axios';
+import { deleteCall } from '../../../util/axios';
 import { useRouter } from 'next/router';
 
 export default function DealsTable() {
@@ -22,8 +23,7 @@ export default function DealsTable() {
 		setOpenDelete(!openDelete);
 	};
 	const handleDelete = () => {
-		axios
-			.delete(`/api/deals?id=${id}`)
+		deleteCall(`/api/deals?id=${id}`)
 			.then((res) => {
 				toggleDelete();
 				// console.log(res.data);

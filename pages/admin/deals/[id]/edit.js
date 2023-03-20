@@ -1,5 +1,6 @@
 import AddDeals from '../add';
 import axios from 'axios';
+import { putCall } from '../../../../util/axios';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -42,8 +43,7 @@ export default function EditDeals() {
 		const config = {
 			headers: { 'content-type': 'multipart/form-data' },
 		};
-		axios
-			.put(`/api/deals?id=${router.query.id}`, formData, config)
+		putCall(`/api/deals?id=${router.query.id}`, formData)
 			.then((res) => {
 				console.log(res.data);
 				if (res.data.success) {
