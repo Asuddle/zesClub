@@ -33,10 +33,11 @@ export default function KFCPage({ data = burgerArr }) {
 			setOpen(!open);
 		}
 	};
+	console.log(data[0].brand_image);
 	return (
 		<ContainerComponent container='mediumContainer'>
 			<div className={styles.restaurantPage}>
-				<Image
+				<img
 					src={`/${data[0].brand_image}`}
 					width='300px'
 					style={{ marginBottom: '40px' }}
@@ -67,7 +68,7 @@ export default function KFCPage({ data = burgerArr }) {
 									Scan Now
 								</button>
 							</div>{' '}
-							<Image
+							<img
 								key={item}
 								src={`/${item.image}`}
 								className={styles.dealImage}
@@ -82,7 +83,11 @@ export default function KFCPage({ data = burgerArr }) {
 				<br />
 				<br />
 			</div>
-			<BecomeMemberModal open={open} handleClose={handleChange} />
+			<BecomeMemberModal
+				open={open}
+				handleClose={handleChange}
+				showGuest={false}
+			/>
 
 			<Modal
 				isOpen={qrModal}

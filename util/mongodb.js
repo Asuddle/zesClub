@@ -18,6 +18,7 @@ const db = mysql({
 	},
 	// host: 'az1-ts106.a2hosting.com',
 	// port: 3306,
+
 	// database: 'zesclubc_res',
 	// user: 'zesclubc_ahmad',
 	// password: 'password',

@@ -26,7 +26,7 @@ export default function GalleryCard({ idx, item }) {
 	// console.log(item.date, eventMonth, smallCalendar.length);
 	return (
 		<div className={styles.cardWrapper}>
-			<Image
+			<img
 				className='img-fluid'
 				src={`/${item.image}`}
 				alt=''

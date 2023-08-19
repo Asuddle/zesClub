@@ -17,7 +17,12 @@ export default function EventDetails() {
 	const router = useRouter();
 	const [data, setData] = useState({});
 	const [isBuy, setIsBuy] = useState(false);
-	console.log();
+	const [isClicked, setIsClicked] = useState(false);
+	let userData = {};
+	if (typeof window !== 'undefined') {
+		// Perform localStorage action
+		userData = JSON.parse(localStorage.getItem('userData'));
+	}
 	useEffect(() => {
 		if (Object.keys(router.query).length > 0) {
 			axios
@@ -31,11 +36,34 @@ export default function EventDetails() {
 				});
 		}
 	}, [router.query.id]);
+
 	const handleCancel = () => {
 		router.push('/user/events');
 	};
-	const handleBuy = () => {
-		setIsBuy(!isBuy);
+	const handleBuy = (event) => {
+		if (event.price == 0) {
+			if (!isClicked) {
+				setIsClicked(true);
+				axios
+					.post('/api/booking', {
+						is_paid: 1,
+						event_id: data.id,
+						user_id: userData.id,
+					})
+					.then((res) => {
+						router.push('/user/bookings');
+
+						setIsClicked(false);
+						console.log(res.data);
+					})
+					.catch((err) => {
+						console.log(err);
+						setIsClicked(false);
+					});
+			}
+		} else {
+			setIsBuy(!isBuy);
+		}
 	};
 	return (
 		<div>
@@ -73,9 +101,9 @@ export default function EventDetails() {
 										<div style={{ marginTop: '12px' }}>
 											<Button
 												className={styles.buyTicketButton}
-												onClick={handleBuy}
+												onClick={() => handleBuy(data)}
 											>
-												BUY TICKET
+												{data.price == 0 ? 'GET' : 'BUY'} TICKET
 											</Button>
 											<Button
 												className={styles.cancelEventButton}

@@ -23,7 +23,6 @@ const createQr = (name, text = 'testingqr') => {
 		},
 	);
 };
-
 export default async function handler(req, res) {
 	const { method } = req;
 	switch (method) {
@@ -44,6 +43,7 @@ export default async function handler(req, res) {
 					if (err) {
 						res.send({ err });
 					}
+
 					let fileName = await saveFile(files, 'image', `deal-${fields.name}`);
 					await createQr(`deal-qr-${fields.name}`, fields.code);
 					for (const key in userValue) {

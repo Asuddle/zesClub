@@ -31,36 +31,34 @@ export default function FounderMessage() {
 							<div className={styles.socialMedia}>
 								<div style={{ textAlign: 'center', padding: '17px 0px' }}>
 									<FontAwesomeIcon
-										icon={faFacebookF}
+									icon={faFacebookF}
 										onClick={() =>
-											window.open('https://www.facebook.com/zuyyana.zaidi')
+											window.open('https://www.facebook.com/zoyyanazaidi')
 										}
 									/>
 									<FontAwesomeIcon
 										icon={faInstagram}
 										onClick={() =>
-											window.open('https://instagram.com/zuyyanazaidi')
+											window.open('https://instagram.com/zoyyanazaidi')
 										}
 									/>
 									<FontAwesomeIcon
 										icon={faTwitter}
 										onClick={() =>
-											window.open(
-												'https://twitter.com/Zuyyana_Zaidi?t=6sBMgDlO1j4UsmFW1ZAr6g&s=09',
-											)
+											window.open('https://twitter.com/Zuyyana_Zaidi')
 										}
 									/>
 									<FontAwesomeIcon
 										icon={faLinkedinIn}
 										onClick={() =>
-											window.open('https://www.linkedin.com/in/zuyyanazaidi')
+											window.open('https://www.linkedin.com/in/zoyyanazaidi')
 										}
 									/>
 								</div>
 							</div>
 						</Col>
 						<Col md={6}>
-							<p className={styles.founderHeading}>Zuyyana Zaidi</p>
+							<p className={styles.founderHeading}>Zoyyana Zaidi</p>
 							<p>Zes Founder</p>
 							<p className={styles.founderMessageHeading}>
 								Message from founder

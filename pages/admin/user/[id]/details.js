@@ -23,7 +23,7 @@ export default function UserDetails() {
 		{ name: 'email', label: 'Email' },
 		{ name: 'photo', label: 'Profile Photo' },
 		// { name: 'passportFile', label: 'Passport' },
-		{ name: 'emiratesIdFile', label: 'Emirates ID / Passport Photo ' },
+		{ name: 'emiratesIdFile', label: 'Cover Photo' },
 		{ name: 'country', label: 'Country' },
 		{ name: 'city', label: 'Emirates City' },
 		{ name: 'nationality', label: 'Nationality' },

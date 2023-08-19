@@ -1,4 +1,3 @@
-import { Autocomplete, CircularProgress, TextField } from '@mui/material';
 import {
 	Col,
 	FormFeedback,
@@ -10,10 +9,9 @@ import {
 	Label,
 	Row,
 } from 'reactstrap';
-import { Controller, useForm } from 'react-hook-form';
 
-import AsyncSelect from 'react-select/async';
 import AutocompleteComponent from '../form/autocomplete';
+import { Controller } from 'react-hook-form';
 import { SelectField } from './select';
 import WysiwygComponent from '../form/wysiwyg';
 import styles from '../../styles/Register.module.scss';
@@ -217,7 +215,6 @@ export default function FieldCreator({
 						name={item.name}
 						control={control}
 						render={({ field }) => {
-							// console.log(field);
 							return (
 								<>
 									{fileInput && (

@@ -20,9 +20,10 @@ export default async function handler(req, res) {
 					if (err) {
 						res.send({ err });
 					}
+
 					const { name, description, price, audience, date, venue } = fields;
-					await saveFile(files, 'image');
-					let sql = `INSERT INTO events(name, description, price, audience, date, venue, image) VALUES('${name}','${description}','${price}','${audience}','${date}','${venue}','${files.image.originalFilename}')`;
+					let eventPhoto = await saveFile(files, 'image', 'events');
+					let sql = `INSERT INTO events(name, description, price, audience, date, venue, image) VALUES('${name}','${description}','${price}','${audience}','${date}','${venue}','${`events-${files.image.originalFilename}`}')`;
 					try {
 						let result = await executeQuery({ query: sql });
 						res.status(201).send({

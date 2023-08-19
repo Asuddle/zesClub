@@ -78,12 +78,20 @@ export const saveFile = async (
 ) => {
 	const data = fs.readFileSync(file[fileName].filepath);
 
-	fs.writeFileSync(
-		`./public/${attachment}-${file[fileName].originalFilename}`,
-		data,
-	);
-	await fs.unlinkSync(file[fileName].filepath);
-	return `${attachment}-${file[fileName].originalFilename}`;
+	if (attachment !== '') {
+		fs.writeFileSync(
+			`./public/${attachment}-${file[fileName].originalFilename}`,
+			data,
+		);
+
+		await fs.unlinkSync(file[fileName].filepath);
+		return `${attachment}-${file[fileName].originalFilename}`;
+	} else {
+		fs.writeFileSync(`./public/${file[fileName].originalFilename}`, data);
+
+		await fs.unlinkSync(file[fileName].filepath);
+		return `${file[fileName].originalFilename}`;
+	}
 
 	// fs.writeFileSync(
 	// 	`./public/${attachment}${file[fileName].originalFilename}`,
@@ -130,83 +138,75 @@ export default async function handler(req, res) {
 
 	switch (method) {
 		case 'POST':
-			try {
-				const form = new formidable.IncomingForm();
-				form.parse(req, async function (err, fields, files) {
-					const { email, password, role = 'user' } = fields;
-					const hash = await bcrypt.hash(password, 10);
-					let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','${role}')`;
-					try {
-						let result = await executeQuery({ query: sql });
-						try {
-							let photoFile = '';
-							if (files.photo) {
-								photoFile = await saveFile(
-									files,
-									'photo',
-									`photo-${fields.email}`,
-								);
-							}
-							let emiratesIDFileName = '';
-							if (files.emiratesIdFile) {
-								emiratesIDFileName = await saveFile(
-									files,
-									'emiratesIdFile',
-									`emirateId-${fields.email}`,
-								);
-							}
-							console.log(emiratesIDFileName, photoFile);
-							let labelStr = '';
-							let valueStr = '';
-							// res.send({});
-							for (const key in userValue) {
-								if (fields[key]) {
-									labelStr = labelStr + userValue[key] + ', ';
-									valueStr = valueStr + `'${fields[key]}'` + ',';
-								}
-							}
-							labelStr = labelStr + 'photo' + ',';
-							valueStr = valueStr + `'${photoFile}'` + ',';
+			const form = new formidable.IncomingForm();
+			form.parse(req, async function (err, fields, files) {
+				const { email, password, role = 'user' } = fields;
+				const hash = await bcrypt.hash(password, 10);
+				let sql = `INSERT INTO user(email,password,role) VALUES ('${email}','${hash}','${role}')`;
+				try {
+					let result = await executeQuery({ query: sql });
+					let photoFile = '';
+					if (files.photo) {
+						photoFile = await saveFile(files, 'photo', `photo-${fields.email}`);
+					}
+					let emiratesIDFileName = '';
+					if (files.emiratesIdFile) {
+						emiratesIDFileName = await saveFile(
+							files,
+							'emiratesIdFile',
+							`emirateId-${fields.email}`,
+						);
+					}
+					let labelStr = '';
+					let valueStr = '';
+					// res.send({});
+					for (const key in userValue) {
+						if (fields[key]) {
+							labelStr = labelStr + userValue[key] + ', ';
+							valueStr = valueStr + `'${fields[key]}'` + ',';
+						}
+					}
+					if (photoFile) {
+						labelStr = labelStr + 'photo' + ',';
+						valueStr = valueStr + `'${photoFile}'` + ',';
+					}
+					if (emiratesIDFileName) {
+						labelStr = labelStr + 'emiratesIdFile' + ',';
+						valueStr = valueStr + `'${emiratesIDFileName}'` + ',';
+					}
 
-							labelStr = labelStr + 'emiratesIdFile' + ',';
-							valueStr = valueStr + `'${emiratesIDFileName}'` + ',';
+					labelStr = labelStr + 'user_id';
+					valueStr = valueStr + `'${result.insertId}'`;
 
-							labelStr = labelStr + 'user_id';
-							valueStr = valueStr + `'${result.insertId}'`;
+					let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
 
-							let sqlCustomer = `INSERT INTO customers(${labelStr}) VALUES  (${valueStr})`;
-
-							try {
-								try {
-									let ress = await executeQuery({ query: sqlCustomer });
-									await sendMail(email, res);
-									await sendMail(email, res, true);
+					executeQuery({ query: sqlCustomer })
+						.then((resp) => {
+							sendMail(email, resp)
+								.then((abc) => {
+									sendMail(email, resp, true);
 									res.status(201).send({
 										success: true,
 										message: 'Customer added successfully',
 									});
-								} catch (error) {
-									console.log(error);
-									res.status(400).json({ success: false, error: error });
-								}
-								// await sendMail('ahmad.suddle@gmail.c', res);
-							} catch (error) {
-								res.status(400).json({ success: false, error: error });
-							}
-						} catch (error) {
-							console.log('here', error);
+									return false;
+								})
+								.catch((err) => {
+									res.status(400).json({ success: false, error: err });
+									console.log(err);
+									return false;
+								});
+						})
+						.catch((err) => {
+							console.log(err);
 							res.status(400).json({ success: false, error: error });
-						}
-					} catch (error) {
-						res.status(400).json({ success: false, error: error });
-					}
-				});
-
-				// console.log(req.body);
-			} catch (error) {
-				console.log(error);
-				res.status(400).json({ success: false, error: error });
-			}
+							return false;
+						});
+				} catch (error) {
+					res.status(400).json({ success: false, error: error });
+					return false;
+				}
+			});
 			break;
 		case 'GET':
 			try {

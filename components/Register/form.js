@@ -307,14 +307,8 @@ export const formField5 = [
 	{
 		type: 'file',
 		name: 'emiratesIdFile',
-		label: 'Emirates Id / Passport Photo',
+		label: 'Cover Photo',
 	},
-	// {
-	// 	type: 'file',
-	// 	name: 'passportFile',
-	// 	label: 'Passport Photo',
-	// },
-	// { type: 'text', label: 'Weight', name: 'weight' },
 	{
 		type: 'textarea',
 		name: 'expectations',
@@ -334,7 +328,6 @@ export default function RegisterForm({
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [confirm1, setConfirm1] = useState(false);
 	const [confirm2, setConfirm2] = useState(false);
-	const [disabled, setDisabled] = useState(false);
 	// const [isSubmit,setIsSubmit]
 	let validationObj = {
 		title: yup.mixed().required(),
@@ -379,8 +372,8 @@ export default function RegisterForm({
 			...validationObj,
 			...{
 				spouse_title: yup.mixed().required(),
-				spouse_firstName: yup.string().required(),
-				spouse_lastName: yup.string().required(),
+				spouse_firstName: yup.string().max(45).required(),
+				spouse_lastName: yup.string().max(45).required(),
 				spouse_country: yup.mixed().required(),
 				spouse_city: yup.mixed().required(),
 				spouse_emiratesID: yup
@@ -398,12 +391,11 @@ export default function RegisterForm({
 	}
 
 	const validationSchema = yup.object(validationObj);
-	// console.log('defaultVal', formField5);
 	const {
 		control,
 		handleSubmit,
 		setValue,
-		formState: { errors, isSubmitted },
+		formState: { errors },
 	} = useForm({
 		defaultValues: defaultValue,
 		resolver: yupResolver(validationSchema),
@@ -415,7 +407,6 @@ export default function RegisterForm({
 
 	const onSubmit = (data) => {
 		setConfirm1(false);
-		// console.log('data', data);
 		if (onCustomSubmit) {
 			onCustomSubmit(data, fileInput, passportInput, emiratesIdInput);
 		} else {
@@ -462,12 +453,7 @@ export default function RegisterForm({
 				result['spouse_firstName'] = data.spouse_firstName || '';
 				result['spouse_emiratesID'] = data.spouse_emiratesID || '';
 				result['spouse_profession'] = data.spouse_profession || '';
-
-				// spouse_firstName: yup.string().required(),
-				// spouse_lastName: yup.string().required(),
-				// spouse_emiratesID:
 			}
-			// console.log('Result', result);
 			for (const key in result) {
 				formData.append(key, result[key]);
 			}
@@ -476,13 +462,11 @@ export default function RegisterForm({
 				headers: { 'content-type': 'multipart/form-data' },
 			};
 
-			// console.log('formData', formData);
 			axios
 				.post('/api/auth', formData, config)
 				.then((res) => {
 					if (res.status === 201) {
 						setIsSuccess(true);
-						// successCallback();
 					} else {
 						setConfirm1(true);
 						toast.error('Something went wrong', { theme: 'colored' });
@@ -654,7 +638,7 @@ export default function RegisterForm({
 						className={homeStyles.aboutZesButton}
 						style={{ textTransform: 'uppercase' }}
 						type='submit'
-						disabled={!(confirm2 && confirm1)}
+						// disabled={!(confirm2 && confirm1)}
 					>
 						{/* disabled */}
 						Submit
@@ -665,18 +649,4 @@ export default function RegisterForm({
 			)}
 		</ContainerComponent>
 	);
-}
-export async function getServerSideProps({
-	params,
-	req,
-	res,
-	query,
-	preview,
-	previewData,
-	resolvedUrl,
-	locale,
-	locales,
-	defaultLocale,
-}) {
-	console.log('Logging : ' + res);
 }

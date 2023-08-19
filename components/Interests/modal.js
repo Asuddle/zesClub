@@ -3,7 +3,11 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import styles from '../../styles/Interest.module.scss';
 import { useRouter } from 'next/router';
 
-export default function BecomeMemberModal({ open, handleClose }) {
+export default function BecomeMemberModal({
+	open,
+	handleClose,
+	showGuest = true,
+}) {
 	const router = useRouter();
 	const handleLogin = () => {
 		router.push('/login');
@@ -19,10 +23,14 @@ export default function BecomeMemberModal({ open, handleClose }) {
 				<Button className={styles.becomeMemberButton} onClick={handleLogin}>
 					Become Member
 				</Button>
-				<p className={styles.orText}>or</p>
-				<Button className={styles.continueButton} onClick={handleClose}>
-					Continue as Guest
-				</Button>
+				{showGuest && (
+					<>
+						<p className={styles.orText}>or</p>
+						<Button className={styles.continueButton} onClick={handleClose}>
+							Continue as Guest
+						</Button>
+					</>
+				)}{' '}
 				<p className={styles.alreadyLink} onClick={handleLogin}>
 					Already have account. <span>Login</span>
 				</p>

@@ -62,7 +62,7 @@ export default function DetailComponent({
 										<TableCell>{item.label}</TableCell>
 										<TableCell>
 											{images.includes(item.name) ? (
-												<Image
+												<img
 													src={`/${data[item.name]}`.replace('//', '/')}
 													width='200'
 													height='200'

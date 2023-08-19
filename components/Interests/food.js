@@ -11,13 +11,22 @@ export default function FoodCategory({ data = [], handleClick }) {
 			<Row style={{ padding: '0px 20px' }}>
 				{data.map((item) => (
 					<Col sm={12} md={3} lg={4} key={item}>
-						<Image
+						{/* <Image
 							style={{ cursor: 'pointer' }}
 							src={`/${item.image}`}
 							alt='foody'
 							width='221px'
 							className={styles.brandsImage}
 							height='221px'
+							onClick={() => handleClick(item)}
+						/> */}
+						<img
+							src={`/${item.image}`}
+							className={styles.brandsImage}
+							height='221px'
+							alt='foody'
+							width='221px'
+							style={{ cursor: 'pointer' }}
 							onClick={() => handleClick(item)}
 						/>
 						<h4 style={{ width: '221px' }} className='text-center'>

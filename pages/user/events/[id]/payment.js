@@ -74,9 +74,9 @@ const CheckoutForm = ({ data }) => {
 				},
 				config,
 			);
-			console.log('ree', response.data.paymentIntent.client_secret);
+			// console.log('ree', response.data.paymentIntent.client_secret);
 
-			console.log('response', response.data.paymentIntent.client_secret);
+			// console.log('response', response.data.paymentIntent.client_secret);
 
 			if (error) {
 				setErrorMessage(error.message);
